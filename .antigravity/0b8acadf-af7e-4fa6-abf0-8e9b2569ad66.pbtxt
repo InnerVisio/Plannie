@@ -1,0 +1,5665 @@
+steps {
+  type: CORTEX_STEP_TYPE_USER_INPUT
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209374
+      nanos: 958421000
+    }
+    source: CORTEX_STEP_SOURCE_SYSTEM
+    completed_at {
+      seconds: 1781209374
+      nanos: 958421000
+    }
+  }
+  user_input {
+    user_response: "Here is the full initial file tree for the application:\n/.env.example\n/.gitignore\n/index.html\n/metadata.json\n/package-lock.json\n/package.json\n/src/App.tsx\n/src/components/AddPostModal.tsx\n/src/components/ClientPostModal.tsx\n/src/components/PostModal.tsx\n/src/contexts/AuthContext.tsx\n/src/firebase.ts\n/src/index.css\n/src/lib/firestore-errors.ts\n/src/main.tsx\n/src/pages/AdminDashboard.tsx\n/src/pages/ClientCalendar.tsx\n/src/pages/Login.tsx\n/src/pages/MasterDashboard.tsx\n/src/types.ts\n/tsconfig.json\n/vite.config.ts"
+    items {
+      text: "Here is the full initial file tree for the application:\n/.env.example\n/.gitignore\n/index.html\n/metadata.json\n/package-lock.json\n/package.json\n/src/App.tsx\n/src/components/AddPostModal.tsx\n/src/components/ClientPostModal.tsx\n/src/components/PostModal.tsx\n/src/contexts/AuthContext.tsx\n/src/firebase.ts\n/src/index.css\n/src/lib/firestore-errors.ts\n/src/main.tsx\n/src/pages/AdminDashboard.tsx\n/src/pages/ClientCalendar.tsx\n/src/pages/Login.tsx\n/src/pages/MasterDashboard.tsx\n/src/types.ts\n/tsconfig.json\n/vite.config.ts"
+    }
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_USER_INPUT
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209376
+      nanos: 924808171
+    }
+    source: CORTEX_STEP_SOURCE_USER_EXPLICIT
+  }
+  user_input {
+    user_response: "this still has problems with veiwing the background the color shifts halfway into some other color and look weird\nApply style changes to the selected element(s).\n[AIS_METADATA_SECTION_START]\nCSS selector 1: div#root:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)\nCSS 1: {\n\n}\n[AIS_METADATA_SECTION_END]"
+    items {
+      text: "this still has problems with veiwing the background the color shifts halfway into some other color and look weird\nApply style changes to the selected element(s).\n[AIS_METADATA_SECTION_START]\nCSS selector 1: div#root:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)\nCSS 1: {\n\n}\n[AIS_METADATA_SECTION_END]"
+    }
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_PLANNER_RESPONSE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209376
+      nanos: 925566476
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    viewable_at {
+      seconds: 1781209379
+      nanos: 967026595
+    }
+    finished_generating_at {
+      seconds: 1781209379
+      nanos: 976369611
+    }
+    completed_at {
+      seconds: 1781209379
+      nanos: 976369611
+    }
+    model_usage {
+      input_tokens: 24970
+      output_tokens: 183
+      message_id: "IRkraoT8BuqBxs0P9-XMyAk"
+      thinking_output_tokens: 134
+      response_output_tokens: 49
+      response_id: "IRkraoT8BuqBxs0P9-XMyAk"
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 2
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    started_at {
+      seconds: 1781209379
+      nanos: 976369611
+    }
+  }
+  planner_response {
+    stop_reason: STOP_REASON_STOP_PATTERN
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_VIEW_FILE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209379
+      nanos: 967075884
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    arguments_order: "AbsolutePath"
+    arguments_order: "toolAction"
+    arguments_order: "toolSummary"
+    viewable_at {
+      seconds: 1781209379
+      nanos: 976225357
+    }
+    finished_generating_at {
+      seconds: 1781209379
+      nanos: 976224626
+    }
+    completed_at {
+      seconds: 1781209379
+      nanos: 977003871
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 3
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    last_completed_chunk_at {
+      seconds: 1781209379
+      nanos: 976213378
+    }
+    tool_call_output_tokens: 33
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    tool_summary: "View focus skill"
+    tool_action: "Viewing focus mode skill"
+    started_at {
+      seconds: 1781209379
+      nanos: 976476279
+    }
+  }
+  view_file {
+    absolute_path_uri: "file:///skills/system_skills/focus_mode/SKILL.md"
+    end_line: 57
+    num_lines: 58
+    num_bytes: 2632
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_CHECKPOINT
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209379
+      nanos: 977096091
+    }
+    source: CORTEX_STEP_SOURCE_SYSTEM
+    completed_at {
+      seconds: 1781209381
+      nanos: 594249916
+    }
+    model_usage {
+      input_tokens: 345
+      output_tokens: 3
+      message_id: "JBkraqGoDreJvdIP9fjg2AQ"
+      response_output_tokens: 3
+      response_id: "JBkraqGoDreJvdIP9fjg2AQ"
+    }
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    retry_infos {
+      usage {
+        input_tokens: 345
+        output_tokens: 3
+        message_id: "JBkraqGoDreJvdIP9fjg2AQ"
+        response_output_tokens: 3
+        response_id: "JBkraqGoDreJvdIP9fjg2AQ"
+      }
+    }
+    started_at {
+      seconds: 1781209379
+      nanos: 977293746
+    }
+  }
+  checkpoint {
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_PLANNER_RESPONSE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209379
+      nanos: 980219023
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    viewable_at {
+      seconds: 1781209382
+      nanos: 307324963
+    }
+    finished_generating_at {
+      seconds: 1781209382
+      nanos: 795042460
+    }
+    completed_at {
+      seconds: 1781209382
+      nanos: 795042460
+    }
+    model_usage {
+      input_tokens: 1728
+      output_tokens: 159
+      cache_read_tokens: 24386
+      message_id: "JBkrav-JC9T4xN8PpPvNuQo"
+      thinking_output_tokens: 107
+      response_output_tokens: 52
+      response_id: "JBkrav-JC9T4xN8PpPvNuQo"
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 5
+      metadata_index: 1
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    started_at {
+      seconds: 1781209382
+      nanos: 795042460
+    }
+  }
+  planner_response {
+    thinking: "**Diagnosing Visual Glitch**\n\nI\'ve homed in on a potential cause for the odd color shift: a background color being applied to an element that isn\'t expanding to fill its container. I\'m thinking the element might be of a fixed size, leading to the visual issue.\n\n\n"
+    thinking_duration {
+      nanos: 487528960
+    }
+    stop_reason: STOP_REASON_STOP_PATTERN
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_SYSTEM_MESSAGE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209382
+      nanos: 781188925
+    }
+    source: CORTEX_STEP_SOURCE_SYSTEM
+    arguments_order: "command"
+    arguments_order: "toolAction"
+    arguments_order: "toolSummary"
+    viewable_at {
+      seconds: 1781209382
+      nanos: 794921943
+    }
+    finished_generating_at {
+      seconds: 1781209382
+      nanos: 794921207
+    }
+    completed_at {
+      seconds: 1781209383
+      nanos: 148299492
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 6
+      metadata_index: 1
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    last_completed_chunk_at {
+      seconds: 1781209382
+      nanos: 794909799
+    }
+    tool_call_output_tokens: 29
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    tool_summary: "Search min-h-screen"
+    tool_action: "Search for min-h-screen"
+    started_at {
+      seconds: 1781209382
+      nanos: 795222806
+    }
+  }
+  system_message {
+    message: "Ran command: grep -rn \"min-h-screen\" src/"
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_PLANNER_RESPONSE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209383
+      nanos: 150058505
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    viewable_at {
+      seconds: 1781209385
+      nanos: 470557707
+    }
+    finished_generating_at {
+      seconds: 1781209385
+      nanos: 479943947
+    }
+    completed_at {
+      seconds: 1781209385
+      nanos: 479943947
+    }
+    model_usage {
+      input_tokens: 2306
+      output_tokens: 83
+      cache_read_tokens: 24438
+      message_id: "JxkrarOcJvKAxs0PkuaigA4"
+      thinking_output_tokens: 42
+      response_output_tokens: 41
+      response_id: "JxkrarOcJvKAxs0PkuaigA4"
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 7
+      metadata_index: 2
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    started_at {
+      seconds: 1781209385
+      nanos: 479943947
+    }
+  }
+  planner_response {
+    stop_reason: STOP_REASON_STOP_PATTERN
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_VIEW_FILE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209385
+      nanos: 470667226
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    arguments_order: "AbsolutePath"
+    arguments_order: "toolAction"
+    arguments_order: "toolSummary"
+    viewable_at {
+      seconds: 1781209385
+      nanos: 479747874
+    }
+    finished_generating_at {
+      seconds: 1781209385
+      nanos: 479746800
+    }
+    completed_at {
+      seconds: 1781209386
+      nanos: 604635251
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 8
+      metadata_index: 2
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    last_completed_chunk_at {
+      seconds: 1781209385
+      nanos: 479729218
+    }
+    tool_call_output_tokens: 22
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    tool_summary: "View App.tsx"
+    tool_action: "Viewing App.tsx"
+    started_at {
+      seconds: 1781209385
+      nanos: 480096456
+    }
+  }
+  view_file {
+    absolute_path_uri: "file:///src/App.tsx"
+    end_line: 92
+    num_lines: 93
+    num_bytes: 3154
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_PLANNER_RESPONSE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209386
+      nanos: 606856415
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    viewable_at {
+      seconds: 1781209389
+      nanos: 416706400
+    }
+    finished_generating_at {
+      seconds: 1781209394
+      nanos: 64387889
+    }
+    completed_at {
+      seconds: 1781209394
+      nanos: 64387889
+    }
+    model_usage {
+      input_tokens: 3672
+      output_tokens: 742
+      cache_read_tokens: 24436
+      message_id: "KhkraoTJMY34vdIP9u22sAU"
+      thinking_output_tokens: 701
+      response_output_tokens: 41
+      response_id: "KhkraoTJMY34vdIP9u22sAU"
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 9
+      metadata_index: 3
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    started_at {
+      seconds: 1781209394
+      nanos: 64387889
+    }
+  }
+  planner_response {
+    thinking: "**Refining UI Hierarchy**\n\nI\'ve realized that applying `min-h-screen bg-slate-900` to both `App.tsx` and child routes like `AdminDashboard`, `MasterDashboard`, and `Login` creates background overlapping issues. The child route backgrounds obscure the parent\'s. I\'m reassessing where these styles should reside to ensure the intended visual hierarchy.\n\n\n**Analyzing Height Expansion**\n\nI\'m now focusing on how `min-h-screen` behaves when content overflows the viewport. It seems the height expands correctly to encompass the content, which means the initial issue might stem from the application of `min-h-screen` across multiple components, specifically `App.tsx` and child routes like `AdminDashboard`. The critical observation is that if a child route, like the `AdminDashboard`, has its own `min-h-screen`, and the content exceeds this height, it should correctly expand, right? If so, why is there a visual issue? I\'m going back to the basics of the visual structure.\n\n\n"
+    thinking_duration {
+      seconds: 4
+      nanos: 647254244
+    }
+    stop_reason: STOP_REASON_STOP_PATTERN
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_VIEW_FILE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209394
+      nanos: 49256211
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    arguments_order: "AbsolutePath"
+    arguments_order: "toolAction"
+    arguments_order: "toolSummary"
+    viewable_at {
+      seconds: 1781209394
+      nanos: 64125531
+    }
+    finished_generating_at {
+      seconds: 1781209394
+      nanos: 64124121
+    }
+    completed_at {
+      seconds: 1781209394
+      nanos: 502111871
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 10
+      metadata_index: 3
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    last_completed_chunk_at {
+      seconds: 1781209394
+      nanos: 64063093
+    }
+    tool_call_output_tokens: 24
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    tool_summary: "View index.css"
+    tool_action: "Viewing index.css"
+    started_at {
+      seconds: 1781209394
+      nanos: 64440495
+    }
+  }
+  view_file {
+    absolute_path_uri: "file:///src/index.css"
+    end_line: 1
+    num_lines: 2
+    num_bytes: 23
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_PLANNER_RESPONSE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209394
+      nanos: 504853516
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    viewable_at {
+      seconds: 1781209397
+      nanos: 252775699
+    }
+    finished_generating_at {
+      seconds: 1781209399
+      nanos: 235400379
+    }
+    completed_at {
+      seconds: 1781209399
+      nanos: 235400379
+    }
+    model_usage {
+      input_tokens: 4626
+      output_tokens: 423
+      cache_read_tokens: 24618
+      message_id: "Mhkrap3BKpLPvdIPhYiX-Aw"
+      thinking_output_tokens: 368
+      response_output_tokens: 55
+      response_id: "Mhkrap3BKpLPvdIPhYiX-Aw"
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 11
+      metadata_index: 4
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    started_at {
+      seconds: 1781209399
+      nanos: 235400379
+    }
+  }
+  planner_response {
+    thinking: "**Analyzing the Styling Structure**\n\nI\'ve discovered the root of the white background! The base styling relies heavily on Tailwind, specifically importing it in `index.css`. The minimal styles defined on `html` and `body` are likely causing the initial background appearance. I am now looking into how the background color is then set in `App.tsx` using Tailwind classes to confirm the intended appearance.\n\n\n"
+    thinking_duration {
+      seconds: 1
+      nanos: 982175781
+    }
+    stop_reason: STOP_REASON_STOP_PATTERN
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_VIEW_FILE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209399
+      nanos: 222507196
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    arguments_order: "AbsolutePath"
+    arguments_order: "EndLine"
+    arguments_order: "StartLine"
+    arguments_order: "toolAction"
+    arguments_order: "toolSummary"
+    viewable_at {
+      seconds: 1781209399
+      nanos: 235138818
+    }
+    finished_generating_at {
+      seconds: 1781209399
+      nanos: 235137524
+    }
+    completed_at {
+      seconds: 1781209400
+      nanos: 301636951
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 12
+      metadata_index: 4
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    last_completed_chunk_at {
+      seconds: 1781209399
+      nanos: 235105829
+    }
+    tool_call_output_tokens: 37
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    tool_summary: "View AdminDashboard"
+    tool_action: "Viewing AdminDashboard"
+    started_at {
+      seconds: 1781209399
+      nanos: 235577237
+    }
+  }
+  view_file {
+    absolute_path_uri: "file:///src/pages/AdminDashboard.tsx"
+    start_line: 94
+    end_line: 149
+    num_lines: 318
+    num_bytes: 16541
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_PLANNER_RESPONSE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209400
+      nanos: 306624827
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    viewable_at {
+      seconds: 1781209403
+      nanos: 143889123
+    }
+    finished_generating_at {
+      seconds: 1781209428
+      nanos: 110261266
+    }
+    completed_at {
+      seconds: 1781209428
+      nanos: 110261266
+    }
+    model_usage {
+      input_tokens: 2389
+      output_tokens: 2941
+      cache_read_tokens: 28785
+      message_id: "OBkrarnYHontxN8PytK9kA0"
+      thinking_output_tokens: 2682
+      response_output_tokens: 259
+      response_id: "OBkrarnYHontxN8PytK9kA0"
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 13
+      metadata_index: 5
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    started_at {
+      seconds: 1781209428
+      nanos: 110261266
+    }
+  }
+  planner_response {
+    thinking: "**Analyzing Color Shift Issue**\n\nI\'m focusing on the user\'s report of a background color shift. The CSS provided is empty, `{ }`, which is unhelpful on its own. It\'s clear that applying any background properties is causing this issue. I must explore what the user may have done to generate this problem.\n\n\n**Tracing the React Component Tree**\n\nI\'m now tracing the React component tree to understand how the problematic CSS is being applied. I\'ve mapped the DOM elements to the corresponding React components and their rendered elements. I\'ve identified the root div and how the relevant styling is applied through the component hierarchy. The `div#root` in the `index.html` file is rendered to the `div.min-h-screen` in `App.tsx` and further styled from there.\n\n\n**Revisiting Component Hierarchy**\n\nI\'m revisiting the component hierarchy, specifically the `AdminDashboard.tsx` structure. I\'ve re-established that the root div of `AdminDashboard.tsx` is located at `main > div:nth-of-type(1)`. The path through `App.tsx` confirms the initial rendering structure. Now, `main > div` represents the first wrapper with the `min-h-screen` class, and the subsequent divs are correctly identified in their nested roles. I am reviewing the gradient application and its location, focusing on the user\'s report of a halfway color shift.\n\n\n**Examining Gradient Behavior**\n\nI\'m now zeroing in on the gradient\'s behavior, especially the \"halfway shift\" description. I suspect either `min-h-screen` isn\'t stretching fully, or the gradient itself might be repeating unexpectedly. The issue might be caused if the `AdminDashboard` div expands beyond the viewport, and the gradient\'s properties, particularly its attachment, could cause this issue. A `min-h-screen` background gradient will stretch to the full height of the div.\n\n\n**Pinpointing Gradient Issues**\n\nI\'m now honing in on the background gradient. I was looking into height issues, considering the user may have applied `300vh`, and now suspecting it might be repeating. I\'m thinking the best way to fix it is to set the `background-attachment` to `fixed`, or apply the style to a fixed or `body` element. I\'m noting the Tailwind `bg-fixed` utility, and also considering setting the gradient in `index.css` or the parent `App.tsx` component, instead of the child components that are currently using it. I\'m also reviewing components like `AdminDashboard` and `Login` to assess if background gradients are being used.\n\n\n**Interpreting User Intent**\n\nI\'m now trying to interpret the user\'s intent based on their interaction. The CSS selector they provided points to a very specific, deeply nested div within the `AdminDashboard`. However, the user\'s focus on the background might mean they intend to affect the whole page, and clicked on a div as a proxy. I\'m considering if applying `bg-fixed` at a higher level, like `App.tsx`, would solve the issue and align with the user\'s probable goal, although the user *did* select a very specific element. I am thinking of the *div* as being a \"proxy\".\n\n\n**Clarifying the DOM Structure**\n\nOkay, I\'ve re-established the target div, the `.flex.justify-between` element, which I now recognize as the header. I\'m thinking the user might have clicked there, which brought them to that div selector. Thinking about the implications of the color shift while scrolling.\n\nI\'m now tracing through the root cause: when there\'s long content with a `min-h-screen`, and scrolling happens. If another div has a different background, the colors could shift, which confirms the reported issue. Specifically, in `App.tsx`, the `Navigation` component sits above the `main` element with the potential for different backgrounds. This explains the \"halfway\" shift. The total height will be the height of the `Navigation` and the `AdminDashboard`.\n\n\n**Confirming Background Color Source**\n\nI\'m now investigating the potential for background color \"leakage\" during overscroll, especially on macOS. I\'ve realized that if the `html` and `body` elements lack a background color, overscrolling might reveal the default white background instead of the intended `bg-slate-900`. I\'m going to add the dark slate color to the `body` element in `index.html` or `index.css` to fix this potential leak. I am verifying now.\n\n\n"
+    thinking_duration {
+      seconds: 24
+      nanos: 966008450
+    }
+    stop_reason: STOP_REASON_STOP_PATTERN
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_FILE_CHANGE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209428
+      nanos: 83550819
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    arguments_order: "Instruction"
+    arguments_order: "ReplacementContent"
+    arguments_order: "TargetContent"
+    arguments_order: "TargetFile"
+    arguments_order: "toolAction"
+    arguments_order: "toolSummary"
+    viewable_at {
+      seconds: 1781209428
+      nanos: 110067900
+    }
+    finished_generating_at {
+      seconds: 1781209428
+      nanos: 110067025
+    }
+    completed_at {
+      seconds: 1781209431
+      nanos: 295364152
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 14
+      metadata_index: 5
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    last_completed_chunk_at {
+      seconds: 1781209428
+      nanos: 110040941
+    }
+    tool_call_output_tokens: 188
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    tool_summary: "Fix AdminDashboard bg"
+    tool_action: "Fixing gradient stretch"
+    started_at {
+      seconds: 1781209428
+      nanos: 110425453
+    }
+  }
+  file_change {
+    absolute_path_uri: "file:///src/pages/AdminDashboard.tsx"
+    file_change_type: FILE_CHANGE_TYPE_EDIT
+    replacement_chunks {
+      target_content: "    <div className=\"min-h-screen bg-slate-900 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-indigo-950 to-slate-900 py-8 px-4 sm:px-6 lg:px-8 transition-all duration-700\">"
+      replacement_content: "    <div className=\"min-h-screen bg-slate-900 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] bg-fixed from-slate-900 via-indigo-950 to-slate-900 py-8 px-4 sm:px-6 lg:px-8 transition-all duration-700\">"
+    }
+    diff {
+      end_line: 317
+      unified_diff {
+        lines {
+          text: "import React, { useState, useEffect } from \'react\';"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "import { collection, addDoc, onSnapshot, query, orderBy, doc, updateDoc, deleteDoc } from \'firebase/firestore\';"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "import { db } from \'../firebase\';"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "import { Client } from \'../types\';"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "import { Link } from \'react-router-dom\';"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "import { ExternalLink, Copy, Plus, Users, CheckCircle2, XCircle, Trash2, Loader2, Calendar, AlertTriangle } from \'lucide-react\';"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "import { handleFirestoreError, OperationType } from \'../lib/firestore-errors\';"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "import AddPostModal from \'../components/AddPostModal\';"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "export default function AdminDashboard() {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const [clients, setClients] = useState<Client[]>([]);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const [newClientName, setNewClientName] = useState(\'\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const [newDriveLink, setNewDriveLink] = useState(\'\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const [newDriveFolderUrl, setNewDriveFolderUrl] = useState(\'\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const [newLogoUrl, setNewLogoUrl] = useState(\'\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const [newBrandColor, setNewBrandColor] = useState(\'slate\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const [isSubmitting, setIsSubmitting] = useState(false);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const [isLoading, setIsLoading] = useState(true);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  // State for modals"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const [clientToDelete, setClientToDelete] = useState<Client | null>(null);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const [isDeleting, setIsDeleting] = useState(false);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const [activeClientForPost, setActiveClientForPost] = useState<Client | null>(null);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  // Real-time listener for clients"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  useEffect(() => {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    const q = query(collection(db, \'clients\'), orderBy(\'createdAt\', \'desc\'));"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    const unsubscribe = onSnapshot(q, (snapshot) => {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      const clientsData = snapshot.docs.map(doc => ({"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        id: doc.id,"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        ...doc.data()"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      })) as Client[];"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      setClients(clientsData);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      setIsLoading(false);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    }, (error) => {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      handleFirestoreError(error, OperationType.LIST, \'clients\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      setIsLoading(false);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    });"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    return () => unsubscribe();"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  }, []);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const handleAddClient = async (e: React.FormEvent) => {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    e.preventDefault();"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    if (!newClientName.trim()) return;"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    setIsSubmitting(true);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    try {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      const secureSlug = crypto.randomUUID();"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      await addDoc(collection(db, \'clients\'), {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        name: newClientName.trim(),"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        shareableLinkId: secureSlug,"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        googleDriveLink: newDriveLink.trim(),"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        driveFolderUrl: newDriveFolderUrl.trim(),"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        logoUrl: newLogoUrl.trim(),"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        brandColor: newBrandColor,"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        isActive: true,"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        createdAt: Date.now()"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      });"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      setNewClientName(\'\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      setNewDriveLink(\'\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      setNewDriveFolderUrl(\'\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      setNewLogoUrl(\'\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      setNewBrandColor(\'slate\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    } catch (error) {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      handleFirestoreError(error, OperationType.CREATE, \'clients\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      alert(\"Failed to add client. Check your Firebase rules.\");"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    } finally {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      setIsSubmitting(false);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    }"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  };"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const toggleClientStatus = async (clientId: string, currentStatus: boolean) => {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    try {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      const clientRef = doc(db, \'clients\', clientId);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      await updateDoc(clientRef, { isActive: !currentStatus });"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    } catch (error) {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      handleFirestoreError(error, OperationType.UPDATE, `clients/${clientId}`);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    }"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  };"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const confirmDelete = async () => {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    if (!clientToDelete) return;"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    setIsDeleting(true);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    try {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      await deleteDoc(doc(db, \'clients\', clientToDelete.id));"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      setClientToDelete(null);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    } catch (error) {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      handleFirestoreError(error, OperationType.DELETE, `clients/${clientToDelete.id}`);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      alert(\"Failed to delete client.\");"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    } finally {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      setIsDeleting(false);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    }"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  };"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const copyLink = (linkId: string) => {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    const url = `${window.location.origin}/client/${linkId}`;"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    navigator.clipboard.writeText(url);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    alert(\'Secure link copied to clipboard!\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  };"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  return ("
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    <div className=\"min-h-screen bg-slate-900 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-indigo-950 to-slate-900 py-8 px-4 sm:px-6 lg:px-8 transition-all duration-700\">"
+          type: UNIFIED_DIFF_LINE_TYPE_DELETE
+        }
+        lines {
+          text: "    <div className=\"min-h-screen bg-slate-900 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] bg-fixed from-slate-900 via-indigo-950 to-slate-900 py-8 px-4 sm:px-6 lg:px-8 transition-all duration-700\">"
+          type: UNIFIED_DIFF_LINE_TYPE_INSERT
+        }
+        lines {
+          text: "      <div className=\"max-w-7xl mx-auto space-y-8 relative\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        <div className=\"flex justify-between items-start\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          <div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            <h1 className=\"text-4xl font-black tracking-tight text-white\">Agency Dashboard</h1>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            <p className=\"text-indigo-300 font-medium mt-2 uppercase tracking-widest text-xs\">Command Center \342\200\242 {clients.length} Clients</p>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        <div className=\"grid grid-cols-1 xl:grid-cols-3 gap-8\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          {/* Add Client Form */}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          <div className=\"bg-white/10 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/20 h-fit xl:sticky xl:top-8\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            <div className=\"flex items-center gap-3 mb-8\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <div className=\"p-3 bg-indigo-600 rounded-2xl shadow-lg shadow-indigo-500/20\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <Users className=\"w-6 h-6 text-white\" />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <h2 className=\"text-2xl font-black text-white tracking-tight\">New Client</h2>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            <form onSubmit={handleAddClient} className=\"space-y-6\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <label className=\"block text-xs font-black text-indigo-300 uppercase tracking-widest mb-2\">Client Name</label>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <input "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  type=\"text\" required value={newClientName}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  onChange={(e) => setNewClientName(e.target.value)}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  className=\"w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-white/30 focus:bg-white/10 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 outline-none transition-all\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  placeholder=\"e.g. Acme Corp\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <label className=\"block text-xs font-black text-indigo-300 uppercase tracking-widest mb-2\">Google Drive Link</label>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <input "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  type=\"url\" value={newDriveLink}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  onChange={(e) => setNewDriveLink(e.target.value)}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  className=\"w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-white/30 focus:bg-white/10 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 outline-none transition-all\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  placeholder=\"https://drive.google.com/...\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <label className=\"block text-xs font-black text-indigo-300 uppercase tracking-widest mb-2\">Drive Folder URL</label>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <input "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  type=\"url\" value={newDriveFolderUrl}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  onChange={(e) => setNewDriveFolderUrl(e.target.value)}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  className=\"w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-white/30 focus:bg-white/10 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 outline-none transition-all\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  placeholder=\"https://drive.google.com/folder/...\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <label className=\"block text-xs font-black text-indigo-300 uppercase tracking-widest mb-2\">Logo Image URL</label>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <input "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  type=\"url\" value={newLogoUrl}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  onChange={(e) => setNewLogoUrl(e.target.value)}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  className=\"w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-white/30 focus:bg-white/10 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 outline-none transition-all\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  placeholder=\"https://example.com/logo.png\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <label className=\"block text-xs font-black text-indigo-300 uppercase tracking-widest mb-3\">Brand Accent</label>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <div className=\"flex flex-wrap gap-2\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  {["
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                    { id: \'slate\', color: \'bg-slate-900\' },"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                    { id: \'indigo\', color: \'bg-indigo-950\' },"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                    { id: \'emerald\', color: \'bg-emerald-950\' },"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                    { id: \'rose\', color: \'bg-rose-950\' },"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                    { id: \'amber\', color: \'bg-amber-950\' },"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                    { id: \'violet\', color: \'bg-violet-950\' },"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                    { id: \'cyan\', color: \'bg-cyan-950\' },"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                    { id: \'blue\', color: \'bg-blue-950\' },"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                    { id: \'zinc\', color: \'bg-zinc-900\' },"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                    { id: \'neutral\', color: \'bg-neutral-900\' },"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  ].map((c) => ("
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                    <button"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                      key={c.id}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                      type=\"button\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                      onClick={() => setNewBrandColor(c.id)}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                      className={`w-6 h-6 rounded-full transition-all border ${"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        newBrandColor === c.id "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          ? \'border-white scale-125 ring-2 ring-white/20\' "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          : \'border-white/10 hover:scale-110\'"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                      } ${c.color}`}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                    />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  ))}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <button "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                type=\"submit\" disabled={isSubmitting || !newClientName.trim()}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                className=\"w-full bg-indigo-600 hover:bg-indigo-500 disabled:bg-indigo-400 text-white font-black uppercase tracking-widest py-4 px-6 rounded-2xl transition-all flex items-center justify-center gap-3 shadow-xl shadow-indigo-500/20 active:scale-95\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              >"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                {isSubmitting ? <Loader2 className=\"w-6 h-6 animate-spin\" /> : <Plus className=\"w-6 h-6\" />}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                Add Client"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              </button>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            </form>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          {/* Clients List */}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          <div className=\"xl:col-span-2\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            <div className=\"bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 overflow-hidden\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <div className=\"px-8 py-6 border-b border-white/10 bg-white/5\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <h2 className=\"text-xl font-black text-white tracking-tight\">Active Clients</h2>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              {isLoading ? ("
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <div className=\"p-20 flex justify-center\"><Loader2 className=\"w-10 h-10 text-indigo-400 animate-spin\" /></div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              ) : clients.length === 0 ? ("
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <div className=\"p-20 text-center text-white/40 font-medium\">No clients yet. Start by adding one!</div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              ) : ("
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <div className=\"divide-y divide-white/10\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  {clients.map(client => ("
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                    <div key={client.id} className=\"p-8 hover:bg-white/5 transition-all group flex flex-col sm:flex-row sm:items-center justify-between gap-8\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                      <div className=\"flex-1 flex items-center gap-6\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        {client.logoUrl ? ("
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          <img "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                            src={client.logoUrl} "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                            alt=\"\" "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                            className=\"w-14 h-14 rounded-2xl object-contain bg-white/10 p-2 border border-white/10 shadow-inner\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                            referrerPolicy=\"no-referrer\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        ) : ("
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          <div className=\"w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/20\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                            <Users className=\"w-6 h-6\" />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        )}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        <div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          <div className=\"flex items-center gap-4 mb-2\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                            <h3 className=\"text-2xl font-black text-white tracking-tight\">{client.name}</h3>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                            <button "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                              onClick={() => toggleClientStatus(client.id, client.isActive)}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                              className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                                client.isActive ? \'bg-emerald-500/20 text-emerald-400 border-emerald-500/30\' : \'bg-white/5 text-white/40 border-white/10\'"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                              }`}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                            >"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                              {client.isActive ? <CheckCircle2 className=\"w-3 h-3\" /> : <XCircle className=\"w-3 h-3\" />}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                              {client.isActive ? \'Active\' : \'Inactive\'}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                            </button>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          <div className=\"flex items-center gap-6 text-xs font-bold text-indigo-300/60\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                            {client.googleDriveLink && ("
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                              <a href={client.googleDriveLink} target=\"_blank\" rel=\"noreferrer\" className=\"flex items-center gap-2 hover:text-white transition-colors\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                                <ExternalLink className=\"w-4 h-4\" /> Drive"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                              </a>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                            )}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                            <span className=\"flex items-center gap-2\"><Calendar className=\"w-4 h-4\" /> {new Date(client.createdAt).toLocaleDateString()}</span>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                      </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                      "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                      <div className=\"flex items-center gap-3\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        <button "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          onClick={() => setActiveClientForPost(client)}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          className=\"px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-lg shadow-indigo-500/20 flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all active:scale-95\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        >"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          <Plus className=\"w-4 h-4\" /> Post"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        </button>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        <button "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          onClick={() => copyLink(client.shareableLinkId)} "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          className=\"p-3 text-white/70 hover:text-white hover:bg-white/10 rounded-xl border border-white/10 transition-all active:scale-95\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          title=\"Copy Link\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        >"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          <Copy className=\"w-5 h-5\" />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        </button>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        <Link "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          to={`/client/${client.shareableLinkId}`} "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          className=\"p-3 text-white/70 hover:text-white hover:bg-white/10 rounded-xl border border-white/10 transition-all active:scale-95\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          title=\"View Calendar\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        >"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          <Calendar className=\"w-5 h-5\" />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        </Link>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        <button "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          onClick={() => setClientToDelete(client)} "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          className=\"p-3 text-white/20 hover:text-rose-500 hover:bg-rose-500/10 rounded-xl transition-all active:scale-95\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          title=\"Delete Client\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        >"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                          <Trash2 className=\"w-5 h-5\" />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                        </button>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                      </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                    </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  ))}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              )}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      {/* Add Post Modal */}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      {activeClientForPost && ("
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        <AddPostModal "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          clientId={activeClientForPost.id} "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          onClose={() => setActiveClientForPost(null)} "
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      )}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      {/* Delete Confirmation Modal */}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      {clientToDelete && ("
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        <div className=\"fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          <div className=\"bg-white rounded-2xl shadow-xl max-w-md w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            <div className=\"p-6\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <div className=\"w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-4\"><AlertTriangle className=\"w-6 h-6 text-red-600\" /></div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <h3 className=\"text-xl font-bold text-slate-900 mb-2\">Delete Client?</h3>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <p className=\"text-slate-500 mb-6\">Are you sure you want to delete <strong className=\"text-slate-900\">{clientToDelete.name}</strong>? This cannot be undone.</p>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <div className=\"flex gap-3 justify-end\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <button onClick={() => setClientToDelete(null)} disabled={isDeleting} className=\"px-4 py-2.5 text-slate-600 hover:bg-slate-100 rounded-xl font-medium\">Cancel</button>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <button onClick={confirmDelete} disabled={isDeleting} className=\"px-4 py-2.5 bg-red-600 hover:bg-red-700 disabled:bg-red-400 text-white rounded-xl font-medium flex items-center gap-2\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                  {isDeleting ? <Loader2 className=\"w-4 h-4 animate-spin\" /> : \'Yes, Delete\'}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                </button>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      )}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  );"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+      }
+    }
+    instruction: "Add bg-fixed to the AdminDashboard to prevent the radial gradient from stretching over the entire tall content and shifting halfway."
+    replacement_infos {
+      original_chunk {
+        target_content: "    <div className=\"min-h-screen bg-slate-900 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-indigo-950 to-slate-900 py-8 px-4 sm:px-6 lg:px-8 transition-all duration-700\">"
+        replacement_content: "    <div className=\"min-h-screen bg-slate-900 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] bg-fixed from-slate-900 via-indigo-950 to-slate-900 py-8 px-4 sm:px-6 lg:px-8 transition-all duration-700\">"
+      }
+      num_matches: 1
+    }
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_PLANNER_RESPONSE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209431
+      nanos: 301290005
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    viewable_at {
+      seconds: 1781209433
+      nanos: 275563344
+    }
+    finished_generating_at {
+      seconds: 1781209433
+      nanos: 322289682
+    }
+    completed_at {
+      seconds: 1781209433
+      nanos: 322289682
+    }
+    model_usage {
+      input_tokens: 5900
+      output_tokens: 66
+      cache_read_tokens: 29589
+      message_id: "VxkraubPHv6CvdIPrrPpyAw"
+      thinking_output_tokens: 23
+      response_output_tokens: 43
+      response_id: "VxkraubPHv6CvdIPrrPpyAw"
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 15
+      metadata_index: 6
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    started_at {
+      seconds: 1781209433
+      nanos: 322289682
+    }
+  }
+  planner_response {
+    stop_reason: STOP_REASON_STOP_PATTERN
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_VIEW_FILE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209433
+      nanos: 275626773
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    arguments_order: "AbsolutePath"
+    arguments_order: "toolAction"
+    arguments_order: "toolSummary"
+    viewable_at {
+      seconds: 1781209433
+      nanos: 322086740
+    }
+    finished_generating_at {
+      seconds: 1781209433
+      nanos: 322085581
+    }
+    completed_at {
+      seconds: 1781209433
+      nanos: 775716620
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 16
+      metadata_index: 6
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    last_completed_chunk_at {
+      seconds: 1781209433
+      nanos: 322061765
+    }
+    tool_call_output_tokens: 25
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    tool_summary: "View Login.tsx"
+    tool_action: "Viewing Login.tsx"
+    started_at {
+      seconds: 1781209433
+      nanos: 322411194
+    }
+  }
+  view_file {
+    absolute_path_uri: "file:///src/pages/Login.tsx"
+    end_line: 91
+    num_lines: 92
+    num_bytes: 4273
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_PLANNER_RESPONSE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209433
+      nanos: 782247649
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    viewable_at {
+      seconds: 1781209437
+      nanos: 135640585
+    }
+    finished_generating_at {
+      seconds: 1781209437
+      nanos: 148951219
+    }
+    completed_at {
+      seconds: 1781209437
+      nanos: 148951219
+    }
+    model_usage {
+      input_tokens: 3484
+      output_tokens: 251
+      cache_read_tokens: 33756
+      message_id: "WRkraoKsPP_qvdIP-Le9uQQ"
+      thinking_output_tokens: 39
+      response_output_tokens: 212
+      response_id: "WRkraoKsPP_qvdIP-Le9uQQ"
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 17
+      metadata_index: 7
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    started_at {
+      seconds: 1781209437
+      nanos: 148951219
+    }
+  }
+  planner_response {
+    stop_reason: STOP_REASON_STOP_PATTERN
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_FILE_CHANGE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209437
+      nanos: 135707803
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    arguments_order: "Instruction"
+    arguments_order: "ReplacementContent"
+    arguments_order: "TargetContent"
+    arguments_order: "TargetFile"
+    arguments_order: "toolAction"
+    arguments_order: "toolSummary"
+    viewable_at {
+      seconds: 1781209437
+      nanos: 148670648
+    }
+    finished_generating_at {
+      seconds: 1781209437
+      nanos: 148669281
+    }
+    completed_at {
+      seconds: 1781209441
+      nanos: 313362683
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 18
+      metadata_index: 7
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    last_completed_chunk_at {
+      seconds: 1781209437
+      nanos: 148624564
+    }
+    tool_call_output_tokens: 147
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    tool_summary: "Fix Login bg"
+    tool_action: "Fix login bg"
+    started_at {
+      seconds: 1781209437
+      nanos: 149192334
+    }
+  }
+  file_change {
+    absolute_path_uri: "file:///src/pages/Login.tsx"
+    file_change_type: FILE_CHANGE_TYPE_EDIT
+    replacement_chunks {
+      target_content: "    <div className=\"min-h-screen bg-slate-900 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-indigo-950 to-slate-900 flex items-center justify-center p-6\">"
+      replacement_content: "    <div className=\"min-h-screen bg-slate-900 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] bg-fixed from-slate-900 via-indigo-950 to-slate-900 flex items-center justify-center p-6\">"
+    }
+    diff {
+      end_line: 91
+      unified_diff {
+        lines {
+          text: "import React, { useState } from \'react\';"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "import { signInWithEmailAndPassword } from \'firebase/auth\';"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "import { auth } from \'../firebase\';"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "import { useNavigate } from \'react-router-dom\';"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "import { Lock, Mail, Loader2, Calendar } from \'lucide-react\';"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "export default function Login() {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const [email, setEmail] = useState(\'\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const [password, setPassword] = useState(\'\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const [error, setError] = useState(\'\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const [loading, setLoading] = useState(false);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const navigate = useNavigate();"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  const handleLogin = async (e: React.FormEvent) => {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    e.preventDefault();"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    setError(\'\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    setLoading(true);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    try {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      await signInWithEmailAndPassword(auth, email, password);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      navigate(\'/\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    } catch (err: any) {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      setError(\'Invalid email or password. Please try again.\');"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    } finally {"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      setLoading(false);"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    }"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  };"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  return ("
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    <div className=\"min-h-screen bg-slate-900 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-indigo-950 to-slate-900 flex items-center justify-center p-6\">"
+          type: UNIFIED_DIFF_LINE_TYPE_DELETE
+        }
+        lines {
+          text: "    <div className=\"min-h-screen bg-slate-900 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] bg-fixed from-slate-900 via-indigo-950 to-slate-900 flex items-center justify-center p-6\">"
+          type: UNIFIED_DIFF_LINE_TYPE_INSERT
+        }
+        lines {
+          text: "      <div className=\"bg-white/10 backdrop-blur-xl p-10 rounded-3xl shadow-2xl border border-white/20 w-full max-w-md animate-in fade-in zoom-in-95 duration-500\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        <div className=\"flex flex-col items-center mb-10\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          <div className=\"w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center mb-6 shadow-xl shadow-indigo-600/20\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            <Calendar className=\"w-8 h-8 text-white\" />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          <h1 className=\"text-3xl font-black text-white tracking-tight\">Agency Login</h1>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          <p className=\"text-indigo-300 mt-2 text-xs uppercase tracking-widest font-bold\">Secure Command Access</p>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        {error && ("
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          <div className=\"mb-8 p-4 bg-rose-500/20 border border-rose-500/30 text-rose-200 rounded-2xl text-xs font-black uppercase tracking-widest text-center\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            {error}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        )}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        <form onSubmit={handleLogin} className=\"space-y-6\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          <div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            <label className=\"block text-xs font-black text-indigo-300 uppercase tracking-widest mb-2 ml-1\">Email Address</label>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            <div className=\"relative\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <div className=\"absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <Mail className=\"h-5 w-5 text-white/30\" />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <input"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                type=\"email\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                required"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                value={email}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                onChange={(e) => setEmail(e.target.value)}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                className=\"w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-white/20 focus:bg-white/10 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 outline-none transition-all\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                placeholder=\"admin@agency.com\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          <div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            <label className=\"block text-xs font-black text-indigo-300 uppercase tracking-widest mb-2 ml-1\">Password</label>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            <div className=\"relative\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <div className=\"absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none\">"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                <Lock className=\"h-5 w-5 text-white/30\" />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              <input"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                type=\"password\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                required"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                value={password}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                onChange={(e) => setPassword(e.target.value)}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                className=\"w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-white/20 focus:bg-white/10 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 outline-none transition-all\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "                placeholder=\"\342\200\242\342\200\242\342\200\242\342\200\242\342\200\242\342\200\242\342\200\242\342\200\242\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "              />"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          <button"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            type=\"submit\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            disabled={loading || !email || !password}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            className=\"w-full bg-indigo-600 hover:bg-indigo-500 disabled:bg-indigo-400 text-white font-black uppercase tracking-widest py-4 px-6 rounded-2xl transition-all flex items-center justify-center gap-3 shadow-xl shadow-indigo-500/20 mt-4 active:scale-95\""
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          >"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "            {loading ? <Loader2 className=\"w-6 h-6 animate-spin\" /> : \'Sign In\'}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "          </button>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "        </form>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "      </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "    </div>"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "  );"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          text: "}"
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+        lines {
+          type: UNIFIED_DIFF_LINE_TYPE_UNCHANGED
+        }
+      }
+    }
+    instruction: "Add bg-fixed to Login gradient."
+    replacement_infos {
+      original_chunk {
+        target_content: "    <div className=\"min-h-screen bg-slate-900 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-indigo-950 to-slate-900 flex items-center justify-center p-6\">"
+        replacement_content: "    <div className=\"min-h-screen bg-slate-900 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] bg-fixed from-slate-900 via-indigo-950 to-slate-900 flex items-center justify-center p-6\">"
+      }
+      num_matches: 1
+    }
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_PLANNER_RESPONSE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209441
+      nanos: 319232593
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    viewable_at {
+      seconds: 1781209444
+      nanos: 462421370
+    }
+    finished_generating_at {
+      seconds: 1781209445
+      nanos: 905587613
+    }
+    completed_at {
+      seconds: 1781209445
+      nanos: 905587613
+    }
+    model_usage {
+      input_tokens: 4211
+      output_tokens: 388
+      cache_read_tokens: 33728
+      message_id: "YRkravv-H6zyxs0P0uGi0Q0"
+      thinking_output_tokens: 343
+      response_output_tokens: 45
+      response_id: "YRkravv-H6zyxs0P0uGi0Q0"
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 19
+      metadata_index: 8
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    started_at {
+      seconds: 1781209445
+      nanos: 905587613
+    }
+  }
+  planner_response {
+    thinking: "**Verifying CSS Specificity**\n\nI\'m currently confirming that CSS rule 1 correctly targets the specified element: `div#root:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)`. The focus is avoiding any application of CSS.\n\n\n"
+    thinking_duration {
+      seconds: 1
+      nanos: 442883282
+    }
+    stop_reason: STOP_REASON_STOP_PATTERN
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_SYSTEM_MESSAGE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209445
+      nanos: 895374845
+    }
+    source: CORTEX_STEP_SOURCE_SYSTEM
+    arguments_order: "command"
+    arguments_order: "toolAction"
+    arguments_order: "toolSummary"
+    viewable_at {
+      seconds: 1781209445
+      nanos: 905405037
+    }
+    finished_generating_at {
+      seconds: 1781209445
+      nanos: 905403905
+    }
+    completed_at {
+      seconds: 1781209445
+      nanos: 951402875
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 20
+      metadata_index: 8
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    last_completed_chunk_at {
+      seconds: 1781209445
+      nanos: 905389487
+    }
+    tool_call_output_tokens: 28
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    tool_summary: "Check for gradients"
+    tool_action: "Search bg gradients"
+    started_at {
+      seconds: 1781209445
+      nanos: 905711677
+    }
+  }
+  system_message {
+    message: "Ran command: grep -rI \"bg-\\[\" src/pages/"
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_PLANNER_RESPONSE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209445
+      nanos: 957050999
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    viewable_at {
+      seconds: 1781209448
+      nanos: 118543380
+    }
+    finished_generating_at {
+      seconds: 1781209448
+      nanos: 129804009
+    }
+    completed_at {
+      seconds: 1781209448
+      nanos: 129804009
+    }
+    model_usage {
+      input_tokens: 4895
+      output_tokens: 54
+      cache_read_tokens: 33792
+      message_id: "ZhkraqGtCoyvxN8PsqfK2A0"
+      thinking_output_tokens: 26
+      response_output_tokens: 28
+      response_id: "ZhkraqGtCoyvxN8PsqfK2A0"
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 21
+      metadata_index: 9
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    started_at {
+      seconds: 1781209448
+      nanos: 129804009
+    }
+  }
+  planner_response {
+    stop_reason: STOP_REASON_STOP_PATTERN
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_SYSTEM_MESSAGE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209448
+      nanos: 118628511
+    }
+    source: CORTEX_STEP_SOURCE_SYSTEM
+    arguments_order: "toolAction"
+    arguments_order: "toolSummary"
+    viewable_at {
+      seconds: 1781209448
+      nanos: 129567394
+    }
+    finished_generating_at {
+      seconds: 1781209448
+      nanos: 129566118
+    }
+    completed_at {
+      seconds: 1781209455
+      nanos: 397988871
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 22
+      metadata_index: 9
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    last_completed_chunk_at {
+      seconds: 1781209448
+      nanos: 129544924
+    }
+    tool_call_output_tokens: 14
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    tool_summary: "Compile app"
+    tool_action: "Compiling app"
+    started_at {
+      seconds: 1781209448
+      nanos: 129992149
+    }
+  }
+  system_message {
+    message: "Compiled application"
+  }
+}
+steps {
+  type: CORTEX_STEP_TYPE_PLANNER_RESPONSE
+  status: CORTEX_STEP_STATUS_DONE
+  metadata {
+    created_at {
+      seconds: 1781209455
+      nanos: 404185063
+    }
+    source: CORTEX_STEP_SOURCE_MODEL
+    viewable_at {
+      seconds: 1781209457
+      nanos: 598840396
+    }
+    finished_generating_at {
+      seconds: 1781209458
+      nanos: 847459314
+    }
+    completed_at {
+      seconds: 1781209458
+      nanos: 847459314
+    }
+    model_usage {
+      input_tokens: 811
+      output_tokens: 181
+      cache_read_tokens: 38002
+      message_id: "bxkrasv8JeP5xN8PoK-x8Qg"
+      thinking_output_tokens: 69
+      response_output_tokens: 112
+      response_id: "bxkrasv8JeP5xN8PoK-x8Qg"
+    }
+    generator_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    source_trajectory_step_info {
+      trajectory_id: "0b8acadf-af7e-4fa6-abf0-8e9b2569ad66"
+      step_index: 23
+      metadata_index: 10
+      cascade_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+    }
+    step_generation_version: 1
+    model_info {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    started_at {
+      seconds: 1781209458
+      nanos: 847459314
+    }
+  }
+  planner_response {
+    modified_response: "I have applied the `bg-fixed` utility to the background gradients to ensure they remain anchored to the viewport. This prevents the radial gradient from stretching over the entire height of the content, which was causing the dark-to-light color shift to appear awkwardly in the middle of tall, scrollable pages. \n\n- **Fixed Checkpoint Gradients**: The `AdminDashboard` and `Login` backgrounds will now correctly maintain their slate-to-indigo atmospheric fade relative to the screen, providing a cohesive layout even when scrolling through large lists of clients."
+    stop_reason: STOP_REASON_STOP_PATTERN
+  }
+}
+generator_metadata {
+  step_indices: 23
+  planner_config {
+    plan_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    max_output_tokens: 32768
+    no_tool_explanation: true
+    tool_config {
+      code {
+        disable_extensions: ".ipynb"
+        apply_edits: true
+        replace_content_tool_config {
+          max_fuzzy_edit_distance_fraction: 0.001
+          allow_partial_replacement_success: true
+          fast_apply_fallback_config {
+            enabled: true
+            prompt_unchanged_threshold: 5
+            content_view_radius_lines: 200
+            content_edit_radius_lines: 5
+            fast_apply_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+          }
+          show_triggered_memories: true
+          disable_allow_multiple: false
+          use_line_range: true
+        }
+        auto_fix_lints_config {
+          enabled: false
+          notifying_prompt: "As IDE feedback, the following lint errors may be related to your recent edits up to this point. Consider whether they deserve immediate attention. If worth addressing, clearly comment on them and/or fix them. Be explicit in acknowledging lints and explaining your fix\'s approach. AVOID unproductive loops; if you detect yourself repeatedly creating/fixing lints in a short period, offer some thoughts but MOVE ON."
+        }
+        allow_edit_gitignore: false
+        use_replace_content_propose_code: false
+        classify_edit: false
+        skip_await_lint_errors: false
+        provide_importance: false
+        use_sed_edit: false
+      }
+      intent {
+        intent_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+        max_context_tokens: 40000
+      }
+      grep {
+        max_grep_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+      }
+      find {
+        max_find_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+        force_disable: true
+      }
+      run_command {
+        max_chars_command_stdout: 8192
+        force_disable: false
+        auto_command_config {
+          auto_execution_policy: CASCADE_COMMANDS_AUTO_EXECUTION_EAGER
+        }
+        enable_ide_terminal_execution: false
+        shell_name: "bash"
+        shell_path: "bash"
+        forbid_search_commands: false
+        force_go_terminal_execution: false
+        enable_pty: false
+        enable_persistent_mode: false
+      }
+      view_file {
+        allow_view_gitignore: false
+        split_outline_tool: true
+        max_total_outline_bytes: 8192
+        show_full_file_bytes: 8192
+        max_bytes_per_outline_item: 512
+        show_triggered_memories: true
+        max_lines_per_view: 800
+        include_line_numbers: true
+        max_bytes_per_view: 51200
+      }
+      suggested_response {
+        force_disable: true
+      }
+      search_web {
+        force_disable: false
+        third_party_config {
+          provider: THIRD_PARTY_WEB_SEARCH_PROVIDER_GEMINI
+        }
+      }
+      mcp {
+        force_disable: false
+        max_output_bytes: 4096
+      }
+      list_dir {
+      }
+      command_status {
+        use_delta: true
+        max_output_characters: 8192
+        min_output_characters: 1024
+        max_wait_duration_seconds: 300
+        output_stabilization_duration_seconds: 5
+        enable_input_detection: true
+        input_detection_model: MODEL_GOOGLE_GEMINI_2_5_FLASH_LITE
+      }
+      antigravity_browser {
+        enabled: false
+        capture_browser_screenshot {
+          enable_saving: true
+        }
+        browser_subagent {
+          mode: BROWSER_SUBAGENT_MODE_SUBAGENT_ONLY
+          browser_subagent_model: MODEL_PLACEHOLDER_M18
+          use_detailed_converter: true
+          disable_onboarding: false
+          subagent_reminder_mode {
+            verify_screenshots {
+            }
+          }
+          max_context_tokens: 67420
+          context_config {
+            type: CONTEXT_TYPE_WITH_MARKDOWN_TRAJECTORY_SUMMARY
+            max_chars: 10000
+          }
+          dom_extraction_config {
+            include_coordinates: true
+          }
+          low_level_tools_config {
+            enable_low_level_tools_instructions: true
+            enable_mouse_tools: true
+          }
+          enable_scratchpad: true
+        }
+        click_browser_pixel {
+          click_feedback {
+            display_color: "red"
+            red: 255
+            green: 0
+            blue: 0
+            alpha: 255
+            radius: 25
+            enabled: true
+            feedback_type: FEEDBACK_TYPE_MOUSE_POINTER
+          }
+        }
+        tool_set_mode: BROWSER_TOOL_SET_MODE_ALL_INPUT_PIXEL_OUTPUT
+        disable_open_url: false
+        browser_state_diffing_config {
+          capture_agent_action_diffs: true
+          include_dom_tree_in_diffs: false
+        }
+        variable_wait_tool: true
+        dom_extraction_config {
+          include_coordinates: true
+        }
+        browser_list_network_requests_tool_config {
+          enabled: true
+        }
+        browser_get_network_request_tool_config {
+          enabled: true
+        }
+        use_antigravity_as_browser_prompting: false
+        enable_refresh_tool: false
+        disable_read_browser_page: false
+        use_extended_timeout: false
+        log_timeout_errors_instead_of_sentry: false
+        skip_permission_checks: false
+        display_on_crd: true
+        generate_recording_synchronously: false
+        enable_browser_subagent_v2: false
+        enable_ark: false
+      }
+      code_search {
+        force_disable: false
+      }
+      internal_search {
+        max_results: 10
+        max_content_length: 5000
+      }
+      notify_user {
+        artifact_review_mode: ARTIFACT_REVIEW_MODE_ALWAYS
+      }
+      finish {
+      }
+      notebook_edit {
+        enabled: false
+      }
+      invoke_subagent {
+        enabled: false
+        max_nesting_depth: 10
+        allow_task_mode: false
+        always_inherit_model: true
+      }
+      generate_image {
+        output_directory: "/src/assets/images"
+      }
+      permission_config {
+        enterprise_config {
+          enforce_workspace_validation: true
+        }
+        effective_grants {
+        }
+      }
+      auto_allow_all_interactions: false
+      schedule {
+        enabled: true
+      }
+    }
+    ephemeral_messages_config {
+      enabled: false
+      persistence_level: EPHEMERAL_MESSAGE_PERSISTENCE_LEVEL_LATEST_ONLY
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_SCREENSHOT
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_DOM
+      use_allowlist: true
+    }
+    google {
+      planner_mode: CONVERSATIONAL_PLANNER_MODE_DEFAULT
+      eval_mode: false
+      agentic_mode: false
+    }
+    custom_model_info_override {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    retry_config {
+      model_output_retry {
+        max_retries: 4
+        forbid_tool_use: true
+      }
+      api_retry {
+        max_retries: 2
+        initial_sleep_duration_ms: 1000
+        exponential_multiplier: 2.0
+        include_error_feedback: true
+        range: 0.4
+      }
+    }
+    knowledge_config {
+      enabled: false
+      model: MODEL_PLACEHOLDER_M18
+      max_context_tokens: 200000
+      max_invocations: 20
+      min_turns_between_knowledge_generation: 10000
+      max_knowledge_items: 20
+      max_artifacts_per_ki: 20
+      max_title_length: 100
+      max_summary_length: 1000
+    }
+    no_tool_summary: false
+    no_wait_for_previous_tools: false
+    disable_loop_detection: false
+    context_engine_config {
+      enable_tools: false
+      enable_reflection_agent: false
+    }
+  }
+  execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+}
+generator_metadata {
+  step_indices: 21
+  step_indices: 22
+  planner_config {
+    plan_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    max_output_tokens: 32768
+    no_tool_explanation: true
+    tool_config {
+      code {
+        disable_extensions: ".ipynb"
+        apply_edits: true
+        replace_content_tool_config {
+          max_fuzzy_edit_distance_fraction: 0.001
+          allow_partial_replacement_success: true
+          fast_apply_fallback_config {
+            enabled: true
+            prompt_unchanged_threshold: 5
+            content_view_radius_lines: 200
+            content_edit_radius_lines: 5
+            fast_apply_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+          }
+          show_triggered_memories: true
+          disable_allow_multiple: false
+          use_line_range: true
+        }
+        auto_fix_lints_config {
+          enabled: false
+          notifying_prompt: "As IDE feedback, the following lint errors may be related to your recent edits up to this point. Consider whether they deserve immediate attention. If worth addressing, clearly comment on them and/or fix them. Be explicit in acknowledging lints and explaining your fix\'s approach. AVOID unproductive loops; if you detect yourself repeatedly creating/fixing lints in a short period, offer some thoughts but MOVE ON."
+        }
+        allow_edit_gitignore: false
+        use_replace_content_propose_code: false
+        classify_edit: false
+        skip_await_lint_errors: false
+        provide_importance: false
+        use_sed_edit: false
+      }
+      intent {
+        intent_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+        max_context_tokens: 40000
+      }
+      grep {
+        max_grep_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+      }
+      find {
+        max_find_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+        force_disable: true
+      }
+      run_command {
+        max_chars_command_stdout: 8192
+        force_disable: false
+        auto_command_config {
+          auto_execution_policy: CASCADE_COMMANDS_AUTO_EXECUTION_EAGER
+        }
+        enable_ide_terminal_execution: false
+        shell_name: "bash"
+        shell_path: "bash"
+        forbid_search_commands: false
+        force_go_terminal_execution: false
+        enable_pty: false
+        enable_persistent_mode: false
+      }
+      view_file {
+        allow_view_gitignore: false
+        split_outline_tool: true
+        max_total_outline_bytes: 8192
+        show_full_file_bytes: 8192
+        max_bytes_per_outline_item: 512
+        show_triggered_memories: true
+        max_lines_per_view: 800
+        include_line_numbers: true
+        max_bytes_per_view: 51200
+      }
+      suggested_response {
+        force_disable: true
+      }
+      search_web {
+        force_disable: false
+        third_party_config {
+          provider: THIRD_PARTY_WEB_SEARCH_PROVIDER_GEMINI
+        }
+      }
+      mcp {
+        force_disable: false
+        max_output_bytes: 4096
+      }
+      list_dir {
+      }
+      command_status {
+        use_delta: true
+        max_output_characters: 8192
+        min_output_characters: 1024
+        max_wait_duration_seconds: 300
+        output_stabilization_duration_seconds: 5
+        enable_input_detection: true
+        input_detection_model: MODEL_GOOGLE_GEMINI_2_5_FLASH_LITE
+      }
+      antigravity_browser {
+        enabled: false
+        capture_browser_screenshot {
+          enable_saving: true
+        }
+        browser_subagent {
+          mode: BROWSER_SUBAGENT_MODE_SUBAGENT_ONLY
+          browser_subagent_model: MODEL_PLACEHOLDER_M18
+          use_detailed_converter: true
+          disable_onboarding: false
+          subagent_reminder_mode {
+            verify_screenshots {
+            }
+          }
+          max_context_tokens: 67420
+          context_config {
+            type: CONTEXT_TYPE_WITH_MARKDOWN_TRAJECTORY_SUMMARY
+            max_chars: 10000
+          }
+          dom_extraction_config {
+            include_coordinates: true
+          }
+          low_level_tools_config {
+            enable_low_level_tools_instructions: true
+            enable_mouse_tools: true
+          }
+          enable_scratchpad: true
+        }
+        click_browser_pixel {
+          click_feedback {
+            display_color: "red"
+            red: 255
+            green: 0
+            blue: 0
+            alpha: 255
+            radius: 25
+            enabled: true
+            feedback_type: FEEDBACK_TYPE_MOUSE_POINTER
+          }
+        }
+        tool_set_mode: BROWSER_TOOL_SET_MODE_ALL_INPUT_PIXEL_OUTPUT
+        disable_open_url: false
+        browser_state_diffing_config {
+          capture_agent_action_diffs: true
+          include_dom_tree_in_diffs: false
+        }
+        variable_wait_tool: true
+        dom_extraction_config {
+          include_coordinates: true
+        }
+        browser_list_network_requests_tool_config {
+          enabled: true
+        }
+        browser_get_network_request_tool_config {
+          enabled: true
+        }
+        use_antigravity_as_browser_prompting: false
+        enable_refresh_tool: false
+        disable_read_browser_page: false
+        use_extended_timeout: false
+        log_timeout_errors_instead_of_sentry: false
+        skip_permission_checks: false
+        display_on_crd: true
+        generate_recording_synchronously: false
+        enable_browser_subagent_v2: false
+        enable_ark: false
+      }
+      code_search {
+        force_disable: false
+      }
+      internal_search {
+        max_results: 10
+        max_content_length: 5000
+      }
+      notify_user {
+        artifact_review_mode: ARTIFACT_REVIEW_MODE_ALWAYS
+      }
+      finish {
+      }
+      notebook_edit {
+        enabled: false
+      }
+      invoke_subagent {
+        enabled: false
+        max_nesting_depth: 10
+        allow_task_mode: false
+        always_inherit_model: true
+      }
+      generate_image {
+        output_directory: "/src/assets/images"
+      }
+      permission_config {
+        enterprise_config {
+          enforce_workspace_validation: true
+        }
+        effective_grants {
+        }
+      }
+      auto_allow_all_interactions: false
+      schedule {
+        enabled: true
+      }
+    }
+    ephemeral_messages_config {
+      enabled: false
+      persistence_level: EPHEMERAL_MESSAGE_PERSISTENCE_LEVEL_LATEST_ONLY
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_SCREENSHOT
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_DOM
+      use_allowlist: true
+    }
+    google {
+      planner_mode: CONVERSATIONAL_PLANNER_MODE_DEFAULT
+      eval_mode: false
+      agentic_mode: false
+    }
+    custom_model_info_override {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    retry_config {
+      model_output_retry {
+        max_retries: 4
+        forbid_tool_use: true
+      }
+      api_retry {
+        max_retries: 2
+        initial_sleep_duration_ms: 1000
+        exponential_multiplier: 2.0
+        include_error_feedback: true
+        range: 0.4
+      }
+    }
+    knowledge_config {
+      enabled: false
+      model: MODEL_PLACEHOLDER_M18
+      max_context_tokens: 200000
+      max_invocations: 20
+      min_turns_between_knowledge_generation: 10000
+      max_knowledge_items: 20
+      max_artifacts_per_ki: 20
+      max_title_length: 100
+      max_summary_length: 1000
+    }
+    no_tool_summary: false
+    no_wait_for_previous_tools: false
+    disable_loop_detection: false
+    context_engine_config {
+      enable_tools: false
+      enable_reflection_agent: false
+    }
+  }
+  execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+}
+generator_metadata {
+  step_indices: 19
+  step_indices: 20
+  planner_config {
+    plan_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    max_output_tokens: 32768
+    no_tool_explanation: true
+    tool_config {
+      code {
+        disable_extensions: ".ipynb"
+        apply_edits: true
+        replace_content_tool_config {
+          max_fuzzy_edit_distance_fraction: 0.001
+          allow_partial_replacement_success: true
+          fast_apply_fallback_config {
+            enabled: true
+            prompt_unchanged_threshold: 5
+            content_view_radius_lines: 200
+            content_edit_radius_lines: 5
+            fast_apply_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+          }
+          show_triggered_memories: true
+          disable_allow_multiple: false
+          use_line_range: true
+        }
+        auto_fix_lints_config {
+          enabled: false
+          notifying_prompt: "As IDE feedback, the following lint errors may be related to your recent edits up to this point. Consider whether they deserve immediate attention. If worth addressing, clearly comment on them and/or fix them. Be explicit in acknowledging lints and explaining your fix\'s approach. AVOID unproductive loops; if you detect yourself repeatedly creating/fixing lints in a short period, offer some thoughts but MOVE ON."
+        }
+        allow_edit_gitignore: false
+        use_replace_content_propose_code: false
+        classify_edit: false
+        skip_await_lint_errors: false
+        provide_importance: false
+        use_sed_edit: false
+      }
+      intent {
+        intent_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+        max_context_tokens: 40000
+      }
+      grep {
+        max_grep_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+      }
+      find {
+        max_find_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+        force_disable: true
+      }
+      run_command {
+        max_chars_command_stdout: 8192
+        force_disable: false
+        auto_command_config {
+          auto_execution_policy: CASCADE_COMMANDS_AUTO_EXECUTION_EAGER
+        }
+        enable_ide_terminal_execution: false
+        shell_name: "bash"
+        shell_path: "bash"
+        forbid_search_commands: false
+        force_go_terminal_execution: false
+        enable_pty: false
+        enable_persistent_mode: false
+      }
+      view_file {
+        allow_view_gitignore: false
+        split_outline_tool: true
+        max_total_outline_bytes: 8192
+        show_full_file_bytes: 8192
+        max_bytes_per_outline_item: 512
+        show_triggered_memories: true
+        max_lines_per_view: 800
+        include_line_numbers: true
+        max_bytes_per_view: 51200
+      }
+      suggested_response {
+        force_disable: true
+      }
+      search_web {
+        force_disable: false
+        third_party_config {
+          provider: THIRD_PARTY_WEB_SEARCH_PROVIDER_GEMINI
+        }
+      }
+      mcp {
+        force_disable: false
+        max_output_bytes: 4096
+      }
+      list_dir {
+      }
+      command_status {
+        use_delta: true
+        max_output_characters: 8192
+        min_output_characters: 1024
+        max_wait_duration_seconds: 300
+        output_stabilization_duration_seconds: 5
+        enable_input_detection: true
+        input_detection_model: MODEL_GOOGLE_GEMINI_2_5_FLASH_LITE
+      }
+      antigravity_browser {
+        enabled: false
+        capture_browser_screenshot {
+          enable_saving: true
+        }
+        browser_subagent {
+          mode: BROWSER_SUBAGENT_MODE_SUBAGENT_ONLY
+          browser_subagent_model: MODEL_PLACEHOLDER_M18
+          use_detailed_converter: true
+          disable_onboarding: false
+          subagent_reminder_mode {
+            verify_screenshots {
+            }
+          }
+          max_context_tokens: 67420
+          context_config {
+            type: CONTEXT_TYPE_WITH_MARKDOWN_TRAJECTORY_SUMMARY
+            max_chars: 10000
+          }
+          dom_extraction_config {
+            include_coordinates: true
+          }
+          low_level_tools_config {
+            enable_low_level_tools_instructions: true
+            enable_mouse_tools: true
+          }
+          enable_scratchpad: true
+        }
+        click_browser_pixel {
+          click_feedback {
+            display_color: "red"
+            red: 255
+            green: 0
+            blue: 0
+            alpha: 255
+            radius: 25
+            enabled: true
+            feedback_type: FEEDBACK_TYPE_MOUSE_POINTER
+          }
+        }
+        tool_set_mode: BROWSER_TOOL_SET_MODE_ALL_INPUT_PIXEL_OUTPUT
+        disable_open_url: false
+        browser_state_diffing_config {
+          capture_agent_action_diffs: true
+          include_dom_tree_in_diffs: false
+        }
+        variable_wait_tool: true
+        dom_extraction_config {
+          include_coordinates: true
+        }
+        browser_list_network_requests_tool_config {
+          enabled: true
+        }
+        browser_get_network_request_tool_config {
+          enabled: true
+        }
+        use_antigravity_as_browser_prompting: false
+        enable_refresh_tool: false
+        disable_read_browser_page: false
+        use_extended_timeout: false
+        log_timeout_errors_instead_of_sentry: false
+        skip_permission_checks: false
+        display_on_crd: true
+        generate_recording_synchronously: false
+        enable_browser_subagent_v2: false
+        enable_ark: false
+      }
+      code_search {
+        force_disable: false
+      }
+      internal_search {
+        max_results: 10
+        max_content_length: 5000
+      }
+      notify_user {
+        artifact_review_mode: ARTIFACT_REVIEW_MODE_ALWAYS
+      }
+      finish {
+      }
+      notebook_edit {
+        enabled: false
+      }
+      invoke_subagent {
+        enabled: false
+        max_nesting_depth: 10
+        allow_task_mode: false
+        always_inherit_model: true
+      }
+      generate_image {
+        output_directory: "/src/assets/images"
+      }
+      permission_config {
+        enterprise_config {
+          enforce_workspace_validation: true
+        }
+        effective_grants {
+        }
+      }
+      auto_allow_all_interactions: false
+      schedule {
+        enabled: true
+      }
+    }
+    ephemeral_messages_config {
+      enabled: false
+      persistence_level: EPHEMERAL_MESSAGE_PERSISTENCE_LEVEL_LATEST_ONLY
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_SCREENSHOT
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_DOM
+      use_allowlist: true
+    }
+    google {
+      planner_mode: CONVERSATIONAL_PLANNER_MODE_DEFAULT
+      eval_mode: false
+      agentic_mode: false
+    }
+    custom_model_info_override {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    retry_config {
+      model_output_retry {
+        max_retries: 4
+        forbid_tool_use: true
+      }
+      api_retry {
+        max_retries: 2
+        initial_sleep_duration_ms: 1000
+        exponential_multiplier: 2.0
+        include_error_feedback: true
+        range: 0.4
+      }
+    }
+    knowledge_config {
+      enabled: false
+      model: MODEL_PLACEHOLDER_M18
+      max_context_tokens: 200000
+      max_invocations: 20
+      min_turns_between_knowledge_generation: 10000
+      max_knowledge_items: 20
+      max_artifacts_per_ki: 20
+      max_title_length: 100
+      max_summary_length: 1000
+    }
+    no_tool_summary: false
+    no_wait_for_previous_tools: false
+    disable_loop_detection: false
+    context_engine_config {
+      enable_tools: false
+      enable_reflection_agent: false
+    }
+  }
+  execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+}
+generator_metadata {
+  step_indices: 17
+  step_indices: 18
+  planner_config {
+    plan_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    max_output_tokens: 32768
+    no_tool_explanation: true
+    tool_config {
+      code {
+        disable_extensions: ".ipynb"
+        apply_edits: true
+        replace_content_tool_config {
+          max_fuzzy_edit_distance_fraction: 0.001
+          allow_partial_replacement_success: true
+          fast_apply_fallback_config {
+            enabled: true
+            prompt_unchanged_threshold: 5
+            content_view_radius_lines: 200
+            content_edit_radius_lines: 5
+            fast_apply_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+          }
+          show_triggered_memories: true
+          disable_allow_multiple: false
+          use_line_range: true
+        }
+        auto_fix_lints_config {
+          enabled: false
+          notifying_prompt: "As IDE feedback, the following lint errors may be related to your recent edits up to this point. Consider whether they deserve immediate attention. If worth addressing, clearly comment on them and/or fix them. Be explicit in acknowledging lints and explaining your fix\'s approach. AVOID unproductive loops; if you detect yourself repeatedly creating/fixing lints in a short period, offer some thoughts but MOVE ON."
+        }
+        allow_edit_gitignore: false
+        use_replace_content_propose_code: false
+        classify_edit: false
+        skip_await_lint_errors: false
+        provide_importance: false
+        use_sed_edit: false
+      }
+      intent {
+        intent_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+        max_context_tokens: 40000
+      }
+      grep {
+        max_grep_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+      }
+      find {
+        max_find_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+        force_disable: true
+      }
+      run_command {
+        max_chars_command_stdout: 8192
+        force_disable: false
+        auto_command_config {
+          auto_execution_policy: CASCADE_COMMANDS_AUTO_EXECUTION_EAGER
+        }
+        enable_ide_terminal_execution: false
+        shell_name: "bash"
+        shell_path: "bash"
+        forbid_search_commands: false
+        force_go_terminal_execution: false
+        enable_pty: false
+        enable_persistent_mode: false
+      }
+      view_file {
+        allow_view_gitignore: false
+        split_outline_tool: true
+        max_total_outline_bytes: 8192
+        show_full_file_bytes: 8192
+        max_bytes_per_outline_item: 512
+        show_triggered_memories: true
+        max_lines_per_view: 800
+        include_line_numbers: true
+        max_bytes_per_view: 51200
+      }
+      suggested_response {
+        force_disable: true
+      }
+      search_web {
+        force_disable: false
+        third_party_config {
+          provider: THIRD_PARTY_WEB_SEARCH_PROVIDER_GEMINI
+        }
+      }
+      mcp {
+        force_disable: false
+        max_output_bytes: 4096
+      }
+      list_dir {
+      }
+      command_status {
+        use_delta: true
+        max_output_characters: 8192
+        min_output_characters: 1024
+        max_wait_duration_seconds: 300
+        output_stabilization_duration_seconds: 5
+        enable_input_detection: true
+        input_detection_model: MODEL_GOOGLE_GEMINI_2_5_FLASH_LITE
+      }
+      antigravity_browser {
+        enabled: false
+        capture_browser_screenshot {
+          enable_saving: true
+        }
+        browser_subagent {
+          mode: BROWSER_SUBAGENT_MODE_SUBAGENT_ONLY
+          browser_subagent_model: MODEL_PLACEHOLDER_M18
+          use_detailed_converter: true
+          disable_onboarding: false
+          subagent_reminder_mode {
+            verify_screenshots {
+            }
+          }
+          max_context_tokens: 67420
+          context_config {
+            type: CONTEXT_TYPE_WITH_MARKDOWN_TRAJECTORY_SUMMARY
+            max_chars: 10000
+          }
+          dom_extraction_config {
+            include_coordinates: true
+          }
+          low_level_tools_config {
+            enable_low_level_tools_instructions: true
+            enable_mouse_tools: true
+          }
+          enable_scratchpad: true
+        }
+        click_browser_pixel {
+          click_feedback {
+            display_color: "red"
+            red: 255
+            green: 0
+            blue: 0
+            alpha: 255
+            radius: 25
+            enabled: true
+            feedback_type: FEEDBACK_TYPE_MOUSE_POINTER
+          }
+        }
+        tool_set_mode: BROWSER_TOOL_SET_MODE_ALL_INPUT_PIXEL_OUTPUT
+        disable_open_url: false
+        browser_state_diffing_config {
+          capture_agent_action_diffs: true
+          include_dom_tree_in_diffs: false
+        }
+        variable_wait_tool: true
+        dom_extraction_config {
+          include_coordinates: true
+        }
+        browser_list_network_requests_tool_config {
+          enabled: true
+        }
+        browser_get_network_request_tool_config {
+          enabled: true
+        }
+        use_antigravity_as_browser_prompting: false
+        enable_refresh_tool: false
+        disable_read_browser_page: false
+        use_extended_timeout: false
+        log_timeout_errors_instead_of_sentry: false
+        skip_permission_checks: false
+        display_on_crd: true
+        generate_recording_synchronously: false
+        enable_browser_subagent_v2: false
+        enable_ark: false
+      }
+      code_search {
+        force_disable: false
+      }
+      internal_search {
+        max_results: 10
+        max_content_length: 5000
+      }
+      notify_user {
+        artifact_review_mode: ARTIFACT_REVIEW_MODE_ALWAYS
+      }
+      finish {
+      }
+      notebook_edit {
+        enabled: false
+      }
+      invoke_subagent {
+        enabled: false
+        max_nesting_depth: 10
+        allow_task_mode: false
+        always_inherit_model: true
+      }
+      generate_image {
+        output_directory: "/src/assets/images"
+      }
+      permission_config {
+        enterprise_config {
+          enforce_workspace_validation: true
+        }
+        effective_grants {
+        }
+      }
+      auto_allow_all_interactions: false
+      schedule {
+        enabled: true
+      }
+    }
+    ephemeral_messages_config {
+      enabled: false
+      persistence_level: EPHEMERAL_MESSAGE_PERSISTENCE_LEVEL_LATEST_ONLY
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_SCREENSHOT
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_DOM
+      use_allowlist: true
+    }
+    google {
+      planner_mode: CONVERSATIONAL_PLANNER_MODE_DEFAULT
+      eval_mode: false
+      agentic_mode: false
+    }
+    custom_model_info_override {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    retry_config {
+      model_output_retry {
+        max_retries: 4
+        forbid_tool_use: true
+      }
+      api_retry {
+        max_retries: 2
+        initial_sleep_duration_ms: 1000
+        exponential_multiplier: 2.0
+        include_error_feedback: true
+        range: 0.4
+      }
+    }
+    knowledge_config {
+      enabled: false
+      model: MODEL_PLACEHOLDER_M18
+      max_context_tokens: 200000
+      max_invocations: 20
+      min_turns_between_knowledge_generation: 10000
+      max_knowledge_items: 20
+      max_artifacts_per_ki: 20
+      max_title_length: 100
+      max_summary_length: 1000
+    }
+    no_tool_summary: false
+    no_wait_for_previous_tools: false
+    disable_loop_detection: false
+    context_engine_config {
+      enable_tools: false
+      enable_reflection_agent: false
+    }
+  }
+  execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+}
+generator_metadata {
+  step_indices: 15
+  step_indices: 16
+  planner_config {
+    plan_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    max_output_tokens: 32768
+    no_tool_explanation: true
+    tool_config {
+      code {
+        disable_extensions: ".ipynb"
+        apply_edits: true
+        replace_content_tool_config {
+          max_fuzzy_edit_distance_fraction: 0.001
+          allow_partial_replacement_success: true
+          fast_apply_fallback_config {
+            enabled: true
+            prompt_unchanged_threshold: 5
+            content_view_radius_lines: 200
+            content_edit_radius_lines: 5
+            fast_apply_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+          }
+          show_triggered_memories: true
+          disable_allow_multiple: false
+          use_line_range: true
+        }
+        auto_fix_lints_config {
+          enabled: false
+          notifying_prompt: "As IDE feedback, the following lint errors may be related to your recent edits up to this point. Consider whether they deserve immediate attention. If worth addressing, clearly comment on them and/or fix them. Be explicit in acknowledging lints and explaining your fix\'s approach. AVOID unproductive loops; if you detect yourself repeatedly creating/fixing lints in a short period, offer some thoughts but MOVE ON."
+        }
+        allow_edit_gitignore: false
+        use_replace_content_propose_code: false
+        classify_edit: false
+        skip_await_lint_errors: false
+        provide_importance: false
+        use_sed_edit: false
+      }
+      intent {
+        intent_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+        max_context_tokens: 40000
+      }
+      grep {
+        max_grep_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+      }
+      find {
+        max_find_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+        force_disable: true
+      }
+      run_command {
+        max_chars_command_stdout: 8192
+        force_disable: false
+        auto_command_config {
+          auto_execution_policy: CASCADE_COMMANDS_AUTO_EXECUTION_EAGER
+        }
+        enable_ide_terminal_execution: false
+        shell_name: "bash"
+        shell_path: "bash"
+        forbid_search_commands: false
+        force_go_terminal_execution: false
+        enable_pty: false
+        enable_persistent_mode: false
+      }
+      view_file {
+        allow_view_gitignore: false
+        split_outline_tool: true
+        max_total_outline_bytes: 8192
+        show_full_file_bytes: 8192
+        max_bytes_per_outline_item: 512
+        show_triggered_memories: true
+        max_lines_per_view: 800
+        include_line_numbers: true
+        max_bytes_per_view: 51200
+      }
+      suggested_response {
+        force_disable: true
+      }
+      search_web {
+        force_disable: false
+        third_party_config {
+          provider: THIRD_PARTY_WEB_SEARCH_PROVIDER_GEMINI
+        }
+      }
+      mcp {
+        force_disable: false
+        max_output_bytes: 4096
+      }
+      list_dir {
+      }
+      command_status {
+        use_delta: true
+        max_output_characters: 8192
+        min_output_characters: 1024
+        max_wait_duration_seconds: 300
+        output_stabilization_duration_seconds: 5
+        enable_input_detection: true
+        input_detection_model: MODEL_GOOGLE_GEMINI_2_5_FLASH_LITE
+      }
+      antigravity_browser {
+        enabled: false
+        capture_browser_screenshot {
+          enable_saving: true
+        }
+        browser_subagent {
+          mode: BROWSER_SUBAGENT_MODE_SUBAGENT_ONLY
+          browser_subagent_model: MODEL_PLACEHOLDER_M18
+          use_detailed_converter: true
+          disable_onboarding: false
+          subagent_reminder_mode {
+            verify_screenshots {
+            }
+          }
+          max_context_tokens: 67420
+          context_config {
+            type: CONTEXT_TYPE_WITH_MARKDOWN_TRAJECTORY_SUMMARY
+            max_chars: 10000
+          }
+          dom_extraction_config {
+            include_coordinates: true
+          }
+          low_level_tools_config {
+            enable_low_level_tools_instructions: true
+            enable_mouse_tools: true
+          }
+          enable_scratchpad: true
+        }
+        click_browser_pixel {
+          click_feedback {
+            display_color: "red"
+            red: 255
+            green: 0
+            blue: 0
+            alpha: 255
+            radius: 25
+            enabled: true
+            feedback_type: FEEDBACK_TYPE_MOUSE_POINTER
+          }
+        }
+        tool_set_mode: BROWSER_TOOL_SET_MODE_ALL_INPUT_PIXEL_OUTPUT
+        disable_open_url: false
+        browser_state_diffing_config {
+          capture_agent_action_diffs: true
+          include_dom_tree_in_diffs: false
+        }
+        variable_wait_tool: true
+        dom_extraction_config {
+          include_coordinates: true
+        }
+        browser_list_network_requests_tool_config {
+          enabled: true
+        }
+        browser_get_network_request_tool_config {
+          enabled: true
+        }
+        use_antigravity_as_browser_prompting: false
+        enable_refresh_tool: false
+        disable_read_browser_page: false
+        use_extended_timeout: false
+        log_timeout_errors_instead_of_sentry: false
+        skip_permission_checks: false
+        display_on_crd: true
+        generate_recording_synchronously: false
+        enable_browser_subagent_v2: false
+        enable_ark: false
+      }
+      code_search {
+        force_disable: false
+      }
+      internal_search {
+        max_results: 10
+        max_content_length: 5000
+      }
+      notify_user {
+        artifact_review_mode: ARTIFACT_REVIEW_MODE_ALWAYS
+      }
+      finish {
+      }
+      notebook_edit {
+        enabled: false
+      }
+      invoke_subagent {
+        enabled: false
+        max_nesting_depth: 10
+        allow_task_mode: false
+        always_inherit_model: true
+      }
+      generate_image {
+        output_directory: "/src/assets/images"
+      }
+      permission_config {
+        enterprise_config {
+          enforce_workspace_validation: true
+        }
+        effective_grants {
+        }
+      }
+      auto_allow_all_interactions: false
+      schedule {
+        enabled: true
+      }
+    }
+    ephemeral_messages_config {
+      enabled: false
+      persistence_level: EPHEMERAL_MESSAGE_PERSISTENCE_LEVEL_LATEST_ONLY
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_SCREENSHOT
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_DOM
+      use_allowlist: true
+    }
+    google {
+      planner_mode: CONVERSATIONAL_PLANNER_MODE_DEFAULT
+      eval_mode: false
+      agentic_mode: false
+    }
+    custom_model_info_override {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    retry_config {
+      model_output_retry {
+        max_retries: 4
+        forbid_tool_use: true
+      }
+      api_retry {
+        max_retries: 2
+        initial_sleep_duration_ms: 1000
+        exponential_multiplier: 2.0
+        include_error_feedback: true
+        range: 0.4
+      }
+    }
+    knowledge_config {
+      enabled: false
+      model: MODEL_PLACEHOLDER_M18
+      max_context_tokens: 200000
+      max_invocations: 20
+      min_turns_between_knowledge_generation: 10000
+      max_knowledge_items: 20
+      max_artifacts_per_ki: 20
+      max_title_length: 100
+      max_summary_length: 1000
+    }
+    no_tool_summary: false
+    no_wait_for_previous_tools: false
+    disable_loop_detection: false
+    context_engine_config {
+      enable_tools: false
+      enable_reflection_agent: false
+    }
+  }
+  execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+}
+generator_metadata {
+  step_indices: 13
+  step_indices: 14
+  planner_config {
+    plan_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    max_output_tokens: 32768
+    no_tool_explanation: true
+    tool_config {
+      code {
+        disable_extensions: ".ipynb"
+        apply_edits: true
+        replace_content_tool_config {
+          max_fuzzy_edit_distance_fraction: 0.001
+          allow_partial_replacement_success: true
+          fast_apply_fallback_config {
+            enabled: true
+            prompt_unchanged_threshold: 5
+            content_view_radius_lines: 200
+            content_edit_radius_lines: 5
+            fast_apply_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+          }
+          show_triggered_memories: true
+          disable_allow_multiple: false
+          use_line_range: true
+        }
+        auto_fix_lints_config {
+          enabled: false
+          notifying_prompt: "As IDE feedback, the following lint errors may be related to your recent edits up to this point. Consider whether they deserve immediate attention. If worth addressing, clearly comment on them and/or fix them. Be explicit in acknowledging lints and explaining your fix\'s approach. AVOID unproductive loops; if you detect yourself repeatedly creating/fixing lints in a short period, offer some thoughts but MOVE ON."
+        }
+        allow_edit_gitignore: false
+        use_replace_content_propose_code: false
+        classify_edit: false
+        skip_await_lint_errors: false
+        provide_importance: false
+        use_sed_edit: false
+      }
+      intent {
+        intent_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+        max_context_tokens: 40000
+      }
+      grep {
+        max_grep_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+      }
+      find {
+        max_find_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+        force_disable: true
+      }
+      run_command {
+        max_chars_command_stdout: 8192
+        force_disable: false
+        auto_command_config {
+          auto_execution_policy: CASCADE_COMMANDS_AUTO_EXECUTION_EAGER
+        }
+        enable_ide_terminal_execution: false
+        shell_name: "bash"
+        shell_path: "bash"
+        forbid_search_commands: false
+        force_go_terminal_execution: false
+        enable_pty: false
+        enable_persistent_mode: false
+      }
+      view_file {
+        allow_view_gitignore: false
+        split_outline_tool: true
+        max_total_outline_bytes: 8192
+        show_full_file_bytes: 8192
+        max_bytes_per_outline_item: 512
+        show_triggered_memories: true
+        max_lines_per_view: 800
+        include_line_numbers: true
+        max_bytes_per_view: 51200
+      }
+      suggested_response {
+        force_disable: true
+      }
+      search_web {
+        force_disable: false
+        third_party_config {
+          provider: THIRD_PARTY_WEB_SEARCH_PROVIDER_GEMINI
+        }
+      }
+      mcp {
+        force_disable: false
+        max_output_bytes: 4096
+      }
+      list_dir {
+      }
+      command_status {
+        use_delta: true
+        max_output_characters: 8192
+        min_output_characters: 1024
+        max_wait_duration_seconds: 300
+        output_stabilization_duration_seconds: 5
+        enable_input_detection: true
+        input_detection_model: MODEL_GOOGLE_GEMINI_2_5_FLASH_LITE
+      }
+      antigravity_browser {
+        enabled: false
+        capture_browser_screenshot {
+          enable_saving: true
+        }
+        browser_subagent {
+          mode: BROWSER_SUBAGENT_MODE_SUBAGENT_ONLY
+          browser_subagent_model: MODEL_PLACEHOLDER_M18
+          use_detailed_converter: true
+          disable_onboarding: false
+          subagent_reminder_mode {
+            verify_screenshots {
+            }
+          }
+          max_context_tokens: 67420
+          context_config {
+            type: CONTEXT_TYPE_WITH_MARKDOWN_TRAJECTORY_SUMMARY
+            max_chars: 10000
+          }
+          dom_extraction_config {
+            include_coordinates: true
+          }
+          low_level_tools_config {
+            enable_low_level_tools_instructions: true
+            enable_mouse_tools: true
+          }
+          enable_scratchpad: true
+        }
+        click_browser_pixel {
+          click_feedback {
+            display_color: "red"
+            red: 255
+            green: 0
+            blue: 0
+            alpha: 255
+            radius: 25
+            enabled: true
+            feedback_type: FEEDBACK_TYPE_MOUSE_POINTER
+          }
+        }
+        tool_set_mode: BROWSER_TOOL_SET_MODE_ALL_INPUT_PIXEL_OUTPUT
+        disable_open_url: false
+        browser_state_diffing_config {
+          capture_agent_action_diffs: true
+          include_dom_tree_in_diffs: false
+        }
+        variable_wait_tool: true
+        dom_extraction_config {
+          include_coordinates: true
+        }
+        browser_list_network_requests_tool_config {
+          enabled: true
+        }
+        browser_get_network_request_tool_config {
+          enabled: true
+        }
+        use_antigravity_as_browser_prompting: false
+        enable_refresh_tool: false
+        disable_read_browser_page: false
+        use_extended_timeout: false
+        log_timeout_errors_instead_of_sentry: false
+        skip_permission_checks: false
+        display_on_crd: true
+        generate_recording_synchronously: false
+        enable_browser_subagent_v2: false
+        enable_ark: false
+      }
+      code_search {
+        force_disable: false
+      }
+      internal_search {
+        max_results: 10
+        max_content_length: 5000
+      }
+      notify_user {
+        artifact_review_mode: ARTIFACT_REVIEW_MODE_ALWAYS
+      }
+      finish {
+      }
+      notebook_edit {
+        enabled: false
+      }
+      invoke_subagent {
+        enabled: false
+        max_nesting_depth: 10
+        allow_task_mode: false
+        always_inherit_model: true
+      }
+      generate_image {
+        output_directory: "/src/assets/images"
+      }
+      permission_config {
+        enterprise_config {
+          enforce_workspace_validation: true
+        }
+        effective_grants {
+        }
+      }
+      auto_allow_all_interactions: false
+      schedule {
+        enabled: true
+      }
+    }
+    ephemeral_messages_config {
+      enabled: false
+      persistence_level: EPHEMERAL_MESSAGE_PERSISTENCE_LEVEL_LATEST_ONLY
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_SCREENSHOT
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_DOM
+      use_allowlist: true
+    }
+    google {
+      planner_mode: CONVERSATIONAL_PLANNER_MODE_DEFAULT
+      eval_mode: false
+      agentic_mode: false
+    }
+    custom_model_info_override {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    retry_config {
+      model_output_retry {
+        max_retries: 4
+        forbid_tool_use: true
+      }
+      api_retry {
+        max_retries: 2
+        initial_sleep_duration_ms: 1000
+        exponential_multiplier: 2.0
+        include_error_feedback: true
+        range: 0.4
+      }
+    }
+    knowledge_config {
+      enabled: false
+      model: MODEL_PLACEHOLDER_M18
+      max_context_tokens: 200000
+      max_invocations: 20
+      min_turns_between_knowledge_generation: 10000
+      max_knowledge_items: 20
+      max_artifacts_per_ki: 20
+      max_title_length: 100
+      max_summary_length: 1000
+    }
+    no_tool_summary: false
+    no_wait_for_previous_tools: false
+    disable_loop_detection: false
+    context_engine_config {
+      enable_tools: false
+      enable_reflection_agent: false
+    }
+  }
+  execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+}
+generator_metadata {
+  step_indices: 11
+  step_indices: 12
+  planner_config {
+    plan_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    max_output_tokens: 32768
+    no_tool_explanation: true
+    tool_config {
+      code {
+        disable_extensions: ".ipynb"
+        apply_edits: true
+        replace_content_tool_config {
+          max_fuzzy_edit_distance_fraction: 0.001
+          allow_partial_replacement_success: true
+          fast_apply_fallback_config {
+            enabled: true
+            prompt_unchanged_threshold: 5
+            content_view_radius_lines: 200
+            content_edit_radius_lines: 5
+            fast_apply_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+          }
+          show_triggered_memories: true
+          disable_allow_multiple: false
+          use_line_range: true
+        }
+        auto_fix_lints_config {
+          enabled: false
+          notifying_prompt: "As IDE feedback, the following lint errors may be related to your recent edits up to this point. Consider whether they deserve immediate attention. If worth addressing, clearly comment on them and/or fix them. Be explicit in acknowledging lints and explaining your fix\'s approach. AVOID unproductive loops; if you detect yourself repeatedly creating/fixing lints in a short period, offer some thoughts but MOVE ON."
+        }
+        allow_edit_gitignore: false
+        use_replace_content_propose_code: false
+        classify_edit: false
+        skip_await_lint_errors: false
+        provide_importance: false
+        use_sed_edit: false
+      }
+      intent {
+        intent_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+        max_context_tokens: 40000
+      }
+      grep {
+        max_grep_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+      }
+      find {
+        max_find_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+        force_disable: true
+      }
+      run_command {
+        max_chars_command_stdout: 8192
+        force_disable: false
+        auto_command_config {
+          auto_execution_policy: CASCADE_COMMANDS_AUTO_EXECUTION_EAGER
+        }
+        enable_ide_terminal_execution: false
+        shell_name: "bash"
+        shell_path: "bash"
+        forbid_search_commands: false
+        force_go_terminal_execution: false
+        enable_pty: false
+        enable_persistent_mode: false
+      }
+      view_file {
+        allow_view_gitignore: false
+        split_outline_tool: true
+        max_total_outline_bytes: 8192
+        show_full_file_bytes: 8192
+        max_bytes_per_outline_item: 512
+        show_triggered_memories: true
+        max_lines_per_view: 800
+        include_line_numbers: true
+        max_bytes_per_view: 51200
+      }
+      suggested_response {
+        force_disable: true
+      }
+      search_web {
+        force_disable: false
+        third_party_config {
+          provider: THIRD_PARTY_WEB_SEARCH_PROVIDER_GEMINI
+        }
+      }
+      mcp {
+        force_disable: false
+        max_output_bytes: 4096
+      }
+      list_dir {
+      }
+      command_status {
+        use_delta: true
+        max_output_characters: 8192
+        min_output_characters: 1024
+        max_wait_duration_seconds: 300
+        output_stabilization_duration_seconds: 5
+        enable_input_detection: true
+        input_detection_model: MODEL_GOOGLE_GEMINI_2_5_FLASH_LITE
+      }
+      antigravity_browser {
+        enabled: false
+        capture_browser_screenshot {
+          enable_saving: true
+        }
+        browser_subagent {
+          mode: BROWSER_SUBAGENT_MODE_SUBAGENT_ONLY
+          browser_subagent_model: MODEL_PLACEHOLDER_M18
+          use_detailed_converter: true
+          disable_onboarding: false
+          subagent_reminder_mode {
+            verify_screenshots {
+            }
+          }
+          max_context_tokens: 67420
+          context_config {
+            type: CONTEXT_TYPE_WITH_MARKDOWN_TRAJECTORY_SUMMARY
+            max_chars: 10000
+          }
+          dom_extraction_config {
+            include_coordinates: true
+          }
+          low_level_tools_config {
+            enable_low_level_tools_instructions: true
+            enable_mouse_tools: true
+          }
+          enable_scratchpad: true
+        }
+        click_browser_pixel {
+          click_feedback {
+            display_color: "red"
+            red: 255
+            green: 0
+            blue: 0
+            alpha: 255
+            radius: 25
+            enabled: true
+            feedback_type: FEEDBACK_TYPE_MOUSE_POINTER
+          }
+        }
+        tool_set_mode: BROWSER_TOOL_SET_MODE_ALL_INPUT_PIXEL_OUTPUT
+        disable_open_url: false
+        browser_state_diffing_config {
+          capture_agent_action_diffs: true
+          include_dom_tree_in_diffs: false
+        }
+        variable_wait_tool: true
+        dom_extraction_config {
+          include_coordinates: true
+        }
+        browser_list_network_requests_tool_config {
+          enabled: true
+        }
+        browser_get_network_request_tool_config {
+          enabled: true
+        }
+        use_antigravity_as_browser_prompting: false
+        enable_refresh_tool: false
+        disable_read_browser_page: false
+        use_extended_timeout: false
+        log_timeout_errors_instead_of_sentry: false
+        skip_permission_checks: false
+        display_on_crd: true
+        generate_recording_synchronously: false
+        enable_browser_subagent_v2: false
+        enable_ark: false
+      }
+      code_search {
+        force_disable: false
+      }
+      internal_search {
+        max_results: 10
+        max_content_length: 5000
+      }
+      notify_user {
+        artifact_review_mode: ARTIFACT_REVIEW_MODE_ALWAYS
+      }
+      finish {
+      }
+      notebook_edit {
+        enabled: false
+      }
+      invoke_subagent {
+        enabled: false
+        max_nesting_depth: 10
+        allow_task_mode: false
+        always_inherit_model: true
+      }
+      generate_image {
+        output_directory: "/src/assets/images"
+      }
+      permission_config {
+        enterprise_config {
+          enforce_workspace_validation: true
+        }
+        effective_grants {
+        }
+      }
+      auto_allow_all_interactions: false
+      schedule {
+        enabled: true
+      }
+    }
+    ephemeral_messages_config {
+      enabled: false
+      persistence_level: EPHEMERAL_MESSAGE_PERSISTENCE_LEVEL_LATEST_ONLY
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_SCREENSHOT
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_DOM
+      use_allowlist: true
+    }
+    google {
+      planner_mode: CONVERSATIONAL_PLANNER_MODE_DEFAULT
+      eval_mode: false
+      agentic_mode: false
+    }
+    custom_model_info_override {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    retry_config {
+      model_output_retry {
+        max_retries: 4
+        forbid_tool_use: true
+      }
+      api_retry {
+        max_retries: 2
+        initial_sleep_duration_ms: 1000
+        exponential_multiplier: 2.0
+        include_error_feedback: true
+        range: 0.4
+      }
+    }
+    knowledge_config {
+      enabled: false
+      model: MODEL_PLACEHOLDER_M18
+      max_context_tokens: 200000
+      max_invocations: 20
+      min_turns_between_knowledge_generation: 10000
+      max_knowledge_items: 20
+      max_artifacts_per_ki: 20
+      max_title_length: 100
+      max_summary_length: 1000
+    }
+    no_tool_summary: false
+    no_wait_for_previous_tools: false
+    disable_loop_detection: false
+    context_engine_config {
+      enable_tools: false
+      enable_reflection_agent: false
+    }
+  }
+  execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+}
+generator_metadata {
+  step_indices: 9
+  step_indices: 10
+  planner_config {
+    plan_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    max_output_tokens: 32768
+    no_tool_explanation: true
+    tool_config {
+      code {
+        disable_extensions: ".ipynb"
+        apply_edits: true
+        replace_content_tool_config {
+          max_fuzzy_edit_distance_fraction: 0.001
+          allow_partial_replacement_success: true
+          fast_apply_fallback_config {
+            enabled: true
+            prompt_unchanged_threshold: 5
+            content_view_radius_lines: 200
+            content_edit_radius_lines: 5
+            fast_apply_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+          }
+          show_triggered_memories: true
+          disable_allow_multiple: false
+          use_line_range: true
+        }
+        auto_fix_lints_config {
+          enabled: false
+          notifying_prompt: "As IDE feedback, the following lint errors may be related to your recent edits up to this point. Consider whether they deserve immediate attention. If worth addressing, clearly comment on them and/or fix them. Be explicit in acknowledging lints and explaining your fix\'s approach. AVOID unproductive loops; if you detect yourself repeatedly creating/fixing lints in a short period, offer some thoughts but MOVE ON."
+        }
+        allow_edit_gitignore: false
+        use_replace_content_propose_code: false
+        classify_edit: false
+        skip_await_lint_errors: false
+        provide_importance: false
+        use_sed_edit: false
+      }
+      intent {
+        intent_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+        max_context_tokens: 40000
+      }
+      grep {
+        max_grep_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+      }
+      find {
+        max_find_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+        force_disable: true
+      }
+      run_command {
+        max_chars_command_stdout: 8192
+        force_disable: false
+        auto_command_config {
+          auto_execution_policy: CASCADE_COMMANDS_AUTO_EXECUTION_EAGER
+        }
+        enable_ide_terminal_execution: false
+        shell_name: "bash"
+        shell_path: "bash"
+        forbid_search_commands: false
+        force_go_terminal_execution: false
+        enable_pty: false
+        enable_persistent_mode: false
+      }
+      view_file {
+        allow_view_gitignore: false
+        split_outline_tool: true
+        max_total_outline_bytes: 8192
+        show_full_file_bytes: 8192
+        max_bytes_per_outline_item: 512
+        show_triggered_memories: true
+        max_lines_per_view: 800
+        include_line_numbers: true
+        max_bytes_per_view: 51200
+      }
+      suggested_response {
+        force_disable: true
+      }
+      search_web {
+        force_disable: false
+        third_party_config {
+          provider: THIRD_PARTY_WEB_SEARCH_PROVIDER_GEMINI
+        }
+      }
+      mcp {
+        force_disable: false
+        max_output_bytes: 4096
+      }
+      list_dir {
+      }
+      command_status {
+        use_delta: true
+        max_output_characters: 8192
+        min_output_characters: 1024
+        max_wait_duration_seconds: 300
+        output_stabilization_duration_seconds: 5
+        enable_input_detection: true
+        input_detection_model: MODEL_GOOGLE_GEMINI_2_5_FLASH_LITE
+      }
+      antigravity_browser {
+        enabled: false
+        capture_browser_screenshot {
+          enable_saving: true
+        }
+        browser_subagent {
+          mode: BROWSER_SUBAGENT_MODE_SUBAGENT_ONLY
+          browser_subagent_model: MODEL_PLACEHOLDER_M18
+          use_detailed_converter: true
+          disable_onboarding: false
+          subagent_reminder_mode {
+            verify_screenshots {
+            }
+          }
+          max_context_tokens: 67420
+          context_config {
+            type: CONTEXT_TYPE_WITH_MARKDOWN_TRAJECTORY_SUMMARY
+            max_chars: 10000
+          }
+          dom_extraction_config {
+            include_coordinates: true
+          }
+          low_level_tools_config {
+            enable_low_level_tools_instructions: true
+            enable_mouse_tools: true
+          }
+          enable_scratchpad: true
+        }
+        click_browser_pixel {
+          click_feedback {
+            display_color: "red"
+            red: 255
+            green: 0
+            blue: 0
+            alpha: 255
+            radius: 25
+            enabled: true
+            feedback_type: FEEDBACK_TYPE_MOUSE_POINTER
+          }
+        }
+        tool_set_mode: BROWSER_TOOL_SET_MODE_ALL_INPUT_PIXEL_OUTPUT
+        disable_open_url: false
+        browser_state_diffing_config {
+          capture_agent_action_diffs: true
+          include_dom_tree_in_diffs: false
+        }
+        variable_wait_tool: true
+        dom_extraction_config {
+          include_coordinates: true
+        }
+        browser_list_network_requests_tool_config {
+          enabled: true
+        }
+        browser_get_network_request_tool_config {
+          enabled: true
+        }
+        use_antigravity_as_browser_prompting: false
+        enable_refresh_tool: false
+        disable_read_browser_page: false
+        use_extended_timeout: false
+        log_timeout_errors_instead_of_sentry: false
+        skip_permission_checks: false
+        display_on_crd: true
+        generate_recording_synchronously: false
+        enable_browser_subagent_v2: false
+        enable_ark: false
+      }
+      code_search {
+        force_disable: false
+      }
+      internal_search {
+        max_results: 10
+        max_content_length: 5000
+      }
+      notify_user {
+        artifact_review_mode: ARTIFACT_REVIEW_MODE_ALWAYS
+      }
+      finish {
+      }
+      notebook_edit {
+        enabled: false
+      }
+      invoke_subagent {
+        enabled: false
+        max_nesting_depth: 10
+        allow_task_mode: false
+        always_inherit_model: true
+      }
+      generate_image {
+        output_directory: "/src/assets/images"
+      }
+      permission_config {
+        enterprise_config {
+          enforce_workspace_validation: true
+        }
+        effective_grants {
+        }
+      }
+      auto_allow_all_interactions: false
+      schedule {
+        enabled: true
+      }
+    }
+    ephemeral_messages_config {
+      enabled: false
+      persistence_level: EPHEMERAL_MESSAGE_PERSISTENCE_LEVEL_LATEST_ONLY
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_SCREENSHOT
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_DOM
+      use_allowlist: true
+    }
+    google {
+      planner_mode: CONVERSATIONAL_PLANNER_MODE_DEFAULT
+      eval_mode: false
+      agentic_mode: false
+    }
+    custom_model_info_override {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    retry_config {
+      model_output_retry {
+        max_retries: 4
+        forbid_tool_use: true
+      }
+      api_retry {
+        max_retries: 2
+        initial_sleep_duration_ms: 1000
+        exponential_multiplier: 2.0
+        include_error_feedback: true
+        range: 0.4
+      }
+    }
+    knowledge_config {
+      enabled: false
+      model: MODEL_PLACEHOLDER_M18
+      max_context_tokens: 200000
+      max_invocations: 20
+      min_turns_between_knowledge_generation: 10000
+      max_knowledge_items: 20
+      max_artifacts_per_ki: 20
+      max_title_length: 100
+      max_summary_length: 1000
+    }
+    no_tool_summary: false
+    no_wait_for_previous_tools: false
+    disable_loop_detection: false
+    context_engine_config {
+      enable_tools: false
+      enable_reflection_agent: false
+    }
+  }
+  execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+}
+generator_metadata {
+  step_indices: 7
+  step_indices: 8
+  planner_config {
+    plan_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    max_output_tokens: 32768
+    no_tool_explanation: true
+    tool_config {
+      code {
+        disable_extensions: ".ipynb"
+        apply_edits: true
+        replace_content_tool_config {
+          max_fuzzy_edit_distance_fraction: 0.001
+          allow_partial_replacement_success: true
+          fast_apply_fallback_config {
+            enabled: true
+            prompt_unchanged_threshold: 5
+            content_view_radius_lines: 200
+            content_edit_radius_lines: 5
+            fast_apply_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+          }
+          show_triggered_memories: true
+          disable_allow_multiple: false
+          use_line_range: true
+        }
+        auto_fix_lints_config {
+          enabled: false
+          notifying_prompt: "As IDE feedback, the following lint errors may be related to your recent edits up to this point. Consider whether they deserve immediate attention. If worth addressing, clearly comment on them and/or fix them. Be explicit in acknowledging lints and explaining your fix\'s approach. AVOID unproductive loops; if you detect yourself repeatedly creating/fixing lints in a short period, offer some thoughts but MOVE ON."
+        }
+        allow_edit_gitignore: false
+        use_replace_content_propose_code: false
+        classify_edit: false
+        skip_await_lint_errors: false
+        provide_importance: false
+        use_sed_edit: false
+      }
+      intent {
+        intent_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+        max_context_tokens: 40000
+      }
+      grep {
+        max_grep_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+      }
+      find {
+        max_find_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+        force_disable: true
+      }
+      run_command {
+        max_chars_command_stdout: 8192
+        force_disable: false
+        auto_command_config {
+          auto_execution_policy: CASCADE_COMMANDS_AUTO_EXECUTION_EAGER
+        }
+        enable_ide_terminal_execution: false
+        shell_name: "bash"
+        shell_path: "bash"
+        forbid_search_commands: false
+        force_go_terminal_execution: false
+        enable_pty: false
+        enable_persistent_mode: false
+      }
+      view_file {
+        allow_view_gitignore: false
+        split_outline_tool: true
+        max_total_outline_bytes: 8192
+        show_full_file_bytes: 8192
+        max_bytes_per_outline_item: 512
+        show_triggered_memories: true
+        max_lines_per_view: 800
+        include_line_numbers: true
+        max_bytes_per_view: 51200
+      }
+      suggested_response {
+        force_disable: true
+      }
+      search_web {
+        force_disable: false
+        third_party_config {
+          provider: THIRD_PARTY_WEB_SEARCH_PROVIDER_GEMINI
+        }
+      }
+      mcp {
+        force_disable: false
+        max_output_bytes: 4096
+      }
+      list_dir {
+      }
+      command_status {
+        use_delta: true
+        max_output_characters: 8192
+        min_output_characters: 1024
+        max_wait_duration_seconds: 300
+        output_stabilization_duration_seconds: 5
+        enable_input_detection: true
+        input_detection_model: MODEL_GOOGLE_GEMINI_2_5_FLASH_LITE
+      }
+      antigravity_browser {
+        enabled: false
+        capture_browser_screenshot {
+          enable_saving: true
+        }
+        browser_subagent {
+          mode: BROWSER_SUBAGENT_MODE_SUBAGENT_ONLY
+          browser_subagent_model: MODEL_PLACEHOLDER_M18
+          use_detailed_converter: true
+          disable_onboarding: false
+          subagent_reminder_mode {
+            verify_screenshots {
+            }
+          }
+          max_context_tokens: 67420
+          context_config {
+            type: CONTEXT_TYPE_WITH_MARKDOWN_TRAJECTORY_SUMMARY
+            max_chars: 10000
+          }
+          dom_extraction_config {
+            include_coordinates: true
+          }
+          low_level_tools_config {
+            enable_low_level_tools_instructions: true
+            enable_mouse_tools: true
+          }
+          enable_scratchpad: true
+        }
+        click_browser_pixel {
+          click_feedback {
+            display_color: "red"
+            red: 255
+            green: 0
+            blue: 0
+            alpha: 255
+            radius: 25
+            enabled: true
+            feedback_type: FEEDBACK_TYPE_MOUSE_POINTER
+          }
+        }
+        tool_set_mode: BROWSER_TOOL_SET_MODE_ALL_INPUT_PIXEL_OUTPUT
+        disable_open_url: false
+        browser_state_diffing_config {
+          capture_agent_action_diffs: true
+          include_dom_tree_in_diffs: false
+        }
+        variable_wait_tool: true
+        dom_extraction_config {
+          include_coordinates: true
+        }
+        browser_list_network_requests_tool_config {
+          enabled: true
+        }
+        browser_get_network_request_tool_config {
+          enabled: true
+        }
+        use_antigravity_as_browser_prompting: false
+        enable_refresh_tool: false
+        disable_read_browser_page: false
+        use_extended_timeout: false
+        log_timeout_errors_instead_of_sentry: false
+        skip_permission_checks: false
+        display_on_crd: true
+        generate_recording_synchronously: false
+        enable_browser_subagent_v2: false
+        enable_ark: false
+      }
+      code_search {
+        force_disable: false
+      }
+      internal_search {
+        max_results: 10
+        max_content_length: 5000
+      }
+      notify_user {
+        artifact_review_mode: ARTIFACT_REVIEW_MODE_ALWAYS
+      }
+      finish {
+      }
+      notebook_edit {
+        enabled: false
+      }
+      invoke_subagent {
+        enabled: false
+        max_nesting_depth: 10
+        allow_task_mode: false
+        always_inherit_model: true
+      }
+      generate_image {
+        output_directory: "/src/assets/images"
+      }
+      permission_config {
+        enterprise_config {
+          enforce_workspace_validation: true
+        }
+        effective_grants {
+        }
+      }
+      auto_allow_all_interactions: false
+      schedule {
+        enabled: true
+      }
+    }
+    ephemeral_messages_config {
+      enabled: false
+      persistence_level: EPHEMERAL_MESSAGE_PERSISTENCE_LEVEL_LATEST_ONLY
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_SCREENSHOT
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_DOM
+      use_allowlist: true
+    }
+    google {
+      planner_mode: CONVERSATIONAL_PLANNER_MODE_DEFAULT
+      eval_mode: false
+      agentic_mode: false
+    }
+    custom_model_info_override {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    retry_config {
+      model_output_retry {
+        max_retries: 4
+        forbid_tool_use: true
+      }
+      api_retry {
+        max_retries: 2
+        initial_sleep_duration_ms: 1000
+        exponential_multiplier: 2.0
+        include_error_feedback: true
+        range: 0.4
+      }
+    }
+    knowledge_config {
+      enabled: false
+      model: MODEL_PLACEHOLDER_M18
+      max_context_tokens: 200000
+      max_invocations: 20
+      min_turns_between_knowledge_generation: 10000
+      max_knowledge_items: 20
+      max_artifacts_per_ki: 20
+      max_title_length: 100
+      max_summary_length: 1000
+    }
+    no_tool_summary: false
+    no_wait_for_previous_tools: false
+    disable_loop_detection: false
+    context_engine_config {
+      enable_tools: false
+      enable_reflection_agent: false
+    }
+  }
+  execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+}
+generator_metadata {
+  step_indices: 5
+  step_indices: 6
+  planner_config {
+    plan_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    max_output_tokens: 32768
+    no_tool_explanation: true
+    tool_config {
+      code {
+        disable_extensions: ".ipynb"
+        apply_edits: true
+        replace_content_tool_config {
+          max_fuzzy_edit_distance_fraction: 0.001
+          allow_partial_replacement_success: true
+          fast_apply_fallback_config {
+            enabled: true
+            prompt_unchanged_threshold: 5
+            content_view_radius_lines: 200
+            content_edit_radius_lines: 5
+            fast_apply_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+          }
+          show_triggered_memories: true
+          disable_allow_multiple: false
+          use_line_range: true
+        }
+        auto_fix_lints_config {
+          enabled: false
+          notifying_prompt: "As IDE feedback, the following lint errors may be related to your recent edits up to this point. Consider whether they deserve immediate attention. If worth addressing, clearly comment on them and/or fix them. Be explicit in acknowledging lints and explaining your fix\'s approach. AVOID unproductive loops; if you detect yourself repeatedly creating/fixing lints in a short period, offer some thoughts but MOVE ON."
+        }
+        allow_edit_gitignore: false
+        use_replace_content_propose_code: false
+        classify_edit: false
+        skip_await_lint_errors: false
+        provide_importance: false
+        use_sed_edit: false
+      }
+      intent {
+        intent_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+        max_context_tokens: 40000
+      }
+      grep {
+        max_grep_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+      }
+      find {
+        max_find_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+        force_disable: true
+      }
+      run_command {
+        max_chars_command_stdout: 8192
+        force_disable: false
+        auto_command_config {
+          auto_execution_policy: CASCADE_COMMANDS_AUTO_EXECUTION_EAGER
+        }
+        enable_ide_terminal_execution: false
+        shell_name: "bash"
+        shell_path: "bash"
+        forbid_search_commands: false
+        force_go_terminal_execution: false
+        enable_pty: false
+        enable_persistent_mode: false
+      }
+      view_file {
+        allow_view_gitignore: false
+        split_outline_tool: true
+        max_total_outline_bytes: 8192
+        show_full_file_bytes: 8192
+        max_bytes_per_outline_item: 512
+        show_triggered_memories: true
+        max_lines_per_view: 800
+        include_line_numbers: true
+        max_bytes_per_view: 51200
+      }
+      suggested_response {
+        force_disable: true
+      }
+      search_web {
+        force_disable: false
+        third_party_config {
+          provider: THIRD_PARTY_WEB_SEARCH_PROVIDER_GEMINI
+        }
+      }
+      mcp {
+        force_disable: false
+        max_output_bytes: 4096
+      }
+      list_dir {
+      }
+      command_status {
+        use_delta: true
+        max_output_characters: 8192
+        min_output_characters: 1024
+        max_wait_duration_seconds: 300
+        output_stabilization_duration_seconds: 5
+        enable_input_detection: true
+        input_detection_model: MODEL_GOOGLE_GEMINI_2_5_FLASH_LITE
+      }
+      antigravity_browser {
+        enabled: false
+        capture_browser_screenshot {
+          enable_saving: true
+        }
+        browser_subagent {
+          mode: BROWSER_SUBAGENT_MODE_SUBAGENT_ONLY
+          browser_subagent_model: MODEL_PLACEHOLDER_M18
+          use_detailed_converter: true
+          disable_onboarding: false
+          subagent_reminder_mode {
+            verify_screenshots {
+            }
+          }
+          max_context_tokens: 67420
+          context_config {
+            type: CONTEXT_TYPE_WITH_MARKDOWN_TRAJECTORY_SUMMARY
+            max_chars: 10000
+          }
+          dom_extraction_config {
+            include_coordinates: true
+          }
+          low_level_tools_config {
+            enable_low_level_tools_instructions: true
+            enable_mouse_tools: true
+          }
+          enable_scratchpad: true
+        }
+        click_browser_pixel {
+          click_feedback {
+            display_color: "red"
+            red: 255
+            green: 0
+            blue: 0
+            alpha: 255
+            radius: 25
+            enabled: true
+            feedback_type: FEEDBACK_TYPE_MOUSE_POINTER
+          }
+        }
+        tool_set_mode: BROWSER_TOOL_SET_MODE_ALL_INPUT_PIXEL_OUTPUT
+        disable_open_url: false
+        browser_state_diffing_config {
+          capture_agent_action_diffs: true
+          include_dom_tree_in_diffs: false
+        }
+        variable_wait_tool: true
+        dom_extraction_config {
+          include_coordinates: true
+        }
+        browser_list_network_requests_tool_config {
+          enabled: true
+        }
+        browser_get_network_request_tool_config {
+          enabled: true
+        }
+        use_antigravity_as_browser_prompting: false
+        enable_refresh_tool: false
+        disable_read_browser_page: false
+        use_extended_timeout: false
+        log_timeout_errors_instead_of_sentry: false
+        skip_permission_checks: false
+        display_on_crd: true
+        generate_recording_synchronously: false
+        enable_browser_subagent_v2: false
+        enable_ark: false
+      }
+      code_search {
+        force_disable: false
+      }
+      internal_search {
+        max_results: 10
+        max_content_length: 5000
+      }
+      notify_user {
+        artifact_review_mode: ARTIFACT_REVIEW_MODE_ALWAYS
+      }
+      finish {
+      }
+      notebook_edit {
+        enabled: false
+      }
+      invoke_subagent {
+        enabled: false
+        max_nesting_depth: 10
+        allow_task_mode: false
+        always_inherit_model: true
+      }
+      generate_image {
+        output_directory: "/src/assets/images"
+      }
+      permission_config {
+        enterprise_config {
+          enforce_workspace_validation: true
+        }
+        effective_grants {
+        }
+      }
+      auto_allow_all_interactions: false
+      schedule {
+        enabled: true
+      }
+    }
+    ephemeral_messages_config {
+      enabled: false
+      persistence_level: EPHEMERAL_MESSAGE_PERSISTENCE_LEVEL_LATEST_ONLY
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_SCREENSHOT
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_DOM
+      use_allowlist: true
+    }
+    google {
+      planner_mode: CONVERSATIONAL_PLANNER_MODE_DEFAULT
+      eval_mode: false
+      agentic_mode: false
+    }
+    custom_model_info_override {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    retry_config {
+      model_output_retry {
+        max_retries: 4
+        forbid_tool_use: true
+      }
+      api_retry {
+        max_retries: 2
+        initial_sleep_duration_ms: 1000
+        exponential_multiplier: 2.0
+        include_error_feedback: true
+        range: 0.4
+      }
+    }
+    knowledge_config {
+      enabled: false
+      model: MODEL_PLACEHOLDER_M18
+      max_context_tokens: 200000
+      max_invocations: 20
+      min_turns_between_knowledge_generation: 10000
+      max_knowledge_items: 20
+      max_artifacts_per_ki: 20
+      max_title_length: 100
+      max_summary_length: 1000
+    }
+    no_tool_summary: false
+    no_wait_for_previous_tools: false
+    disable_loop_detection: false
+    context_engine_config {
+      enable_tools: false
+      enable_reflection_agent: false
+    }
+  }
+  execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+}
+generator_metadata {
+  step_indices: 2
+  step_indices: 3
+  planner_config {
+    plan_model: MODEL_GOOGLE_GEMINI_INTERNAL_BYOM
+    max_output_tokens: 32768
+    no_tool_explanation: true
+    tool_config {
+      code {
+        disable_extensions: ".ipynb"
+        apply_edits: true
+        replace_content_tool_config {
+          max_fuzzy_edit_distance_fraction: 0.001
+          allow_partial_replacement_success: true
+          fast_apply_fallback_config {
+            enabled: true
+            prompt_unchanged_threshold: 5
+            content_view_radius_lines: 200
+            content_edit_radius_lines: 5
+            fast_apply_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+          }
+          show_triggered_memories: true
+          disable_allow_multiple: false
+          use_line_range: true
+        }
+        auto_fix_lints_config {
+          enabled: false
+          notifying_prompt: "As IDE feedback, the following lint errors may be related to your recent edits up to this point. Consider whether they deserve immediate attention. If worth addressing, clearly comment on them and/or fix them. Be explicit in acknowledging lints and explaining your fix\'s approach. AVOID unproductive loops; if you detect yourself repeatedly creating/fixing lints in a short period, offer some thoughts but MOVE ON."
+        }
+        allow_edit_gitignore: false
+        use_replace_content_propose_code: false
+        classify_edit: false
+        skip_await_lint_errors: false
+        provide_importance: false
+        use_sed_edit: false
+      }
+      intent {
+        intent_model: MODEL_GOOGLE_GEMINI_2_5_FLASH
+        max_context_tokens: 40000
+      }
+      grep {
+        max_grep_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+      }
+      find {
+        max_find_results: 50
+        use_code_search: false
+        disable_fallback_to_local_execution: false
+        force_disable: true
+      }
+      run_command {
+        max_chars_command_stdout: 8192
+        force_disable: false
+        auto_command_config {
+          auto_execution_policy: CASCADE_COMMANDS_AUTO_EXECUTION_EAGER
+        }
+        enable_ide_terminal_execution: false
+        shell_name: "bash"
+        shell_path: "bash"
+        forbid_search_commands: false
+        force_go_terminal_execution: false
+        enable_pty: false
+        enable_persistent_mode: false
+      }
+      view_file {
+        allow_view_gitignore: false
+        split_outline_tool: true
+        max_total_outline_bytes: 8192
+        show_full_file_bytes: 8192
+        max_bytes_per_outline_item: 512
+        show_triggered_memories: true
+        max_lines_per_view: 800
+        include_line_numbers: true
+        max_bytes_per_view: 51200
+      }
+      suggested_response {
+        force_disable: true
+      }
+      search_web {
+        force_disable: false
+        third_party_config {
+          provider: THIRD_PARTY_WEB_SEARCH_PROVIDER_GEMINI
+        }
+      }
+      mcp {
+        force_disable: false
+        max_output_bytes: 4096
+      }
+      list_dir {
+      }
+      command_status {
+        use_delta: true
+        max_output_characters: 8192
+        min_output_characters: 1024
+        max_wait_duration_seconds: 300
+        output_stabilization_duration_seconds: 5
+        enable_input_detection: true
+        input_detection_model: MODEL_GOOGLE_GEMINI_2_5_FLASH_LITE
+      }
+      antigravity_browser {
+        enabled: false
+        capture_browser_screenshot {
+          enable_saving: true
+        }
+        browser_subagent {
+          mode: BROWSER_SUBAGENT_MODE_SUBAGENT_ONLY
+          browser_subagent_model: MODEL_PLACEHOLDER_M18
+          use_detailed_converter: true
+          disable_onboarding: false
+          subagent_reminder_mode {
+            verify_screenshots {
+            }
+          }
+          max_context_tokens: 67420
+          context_config {
+            type: CONTEXT_TYPE_WITH_MARKDOWN_TRAJECTORY_SUMMARY
+            max_chars: 10000
+          }
+          dom_extraction_config {
+            include_coordinates: true
+          }
+          low_level_tools_config {
+            enable_low_level_tools_instructions: true
+            enable_mouse_tools: true
+          }
+          enable_scratchpad: true
+        }
+        click_browser_pixel {
+          click_feedback {
+            display_color: "red"
+            red: 255
+            green: 0
+            blue: 0
+            alpha: 255
+            radius: 25
+            enabled: true
+            feedback_type: FEEDBACK_TYPE_MOUSE_POINTER
+          }
+        }
+        tool_set_mode: BROWSER_TOOL_SET_MODE_ALL_INPUT_PIXEL_OUTPUT
+        disable_open_url: false
+        browser_state_diffing_config {
+          capture_agent_action_diffs: true
+          include_dom_tree_in_diffs: false
+        }
+        variable_wait_tool: true
+        dom_extraction_config {
+          include_coordinates: true
+        }
+        browser_list_network_requests_tool_config {
+          enabled: true
+        }
+        browser_get_network_request_tool_config {
+          enabled: true
+        }
+        use_antigravity_as_browser_prompting: false
+        enable_refresh_tool: false
+        disable_read_browser_page: false
+        use_extended_timeout: false
+        log_timeout_errors_instead_of_sentry: false
+        skip_permission_checks: false
+        display_on_crd: true
+        generate_recording_synchronously: false
+        enable_browser_subagent_v2: false
+        enable_ark: false
+      }
+      code_search {
+        force_disable: false
+      }
+      internal_search {
+        max_results: 10
+        max_content_length: 5000
+      }
+      notify_user {
+        artifact_review_mode: ARTIFACT_REVIEW_MODE_ALWAYS
+      }
+      finish {
+      }
+      notebook_edit {
+        enabled: false
+      }
+      invoke_subagent {
+        enabled: false
+        max_nesting_depth: 10
+        allow_task_mode: false
+        always_inherit_model: true
+      }
+      generate_image {
+        output_directory: "/src/assets/images"
+      }
+      permission_config {
+        enterprise_config {
+          enforce_workspace_validation: true
+        }
+        effective_grants {
+        }
+      }
+      auto_allow_all_interactions: false
+      schedule {
+        enabled: true
+      }
+    }
+    ephemeral_messages_config {
+      enabled: false
+      persistence_level: EPHEMERAL_MESSAGE_PERSISTENCE_LEVEL_LATEST_ONLY
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_SCREENSHOT
+      browser_ephemeral_options: BROWSER_EPHEMERAL_OPTION_DOM
+      use_allowlist: true
+    }
+    google {
+      planner_mode: CONVERSATIONAL_PLANNER_MODE_DEFAULT
+      eval_mode: false
+      agentic_mode: false
+    }
+    custom_model_info_override {
+      model_name: "gemini-3.1-pro-preview"
+      thinking_level: 3
+    }
+    retry_config {
+      model_output_retry {
+        max_retries: 4
+        forbid_tool_use: true
+      }
+      api_retry {
+        max_retries: 2
+        initial_sleep_duration_ms: 1000
+        exponential_multiplier: 2.0
+        include_error_feedback: true
+        range: 0.4
+      }
+    }
+    knowledge_config {
+      enabled: false
+      model: MODEL_PLACEHOLDER_M18
+      max_context_tokens: 200000
+      max_invocations: 20
+      min_turns_between_knowledge_generation: 10000
+      max_knowledge_items: 20
+      max_artifacts_per_ki: 20
+      max_title_length: 100
+      max_summary_length: 1000
+    }
+    no_tool_summary: false
+    no_wait_for_previous_tools: false
+    disable_loop_detection: false
+    context_engine_config {
+      enable_tools: false
+      enable_reflection_agent: false
+    }
+  }
+  execution_id: "6badb064-519f-442d-91fa-a63f449ce26c"
+}
