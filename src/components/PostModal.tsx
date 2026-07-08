@@ -243,8 +243,6 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
                 <iframe 
                   src={`${previewUrl}${previewUrl.includes('?') ? '&' : '?'}playsinline=1`} 
                   className="w-full h-full border-0 absolute inset-0 sm:relative"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowFullScreen
                   referrerPolicy="no-referrer"
                 />
               </div>
