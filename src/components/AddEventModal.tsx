@@ -24,14 +24,19 @@ export default function AddEventModal({ clientId, onClose }: AddEventModalProps)
       // Reset to start of day for consistency with calendar display
       dateObj.setHours(0, 0, 0, 0);
 
-      await addDoc(collection(db, 'customEvents'), {
+      await addDoc(collection(db, 'posts'), {
         clientId,
-        name: eventName.trim(),
-        date: dateObj.getTime()
+        title: eventName.trim(),
+        description: '',
+        postType: 'event',
+        status: 'approved',
+        scheduledDate: dateObj.getTime(),
+        mediaUrls: [],
+        updatedAt: Date.now()
       });
       onClose();
     } catch (error) {
-      handleFirestoreError(error, OperationType.CREATE, 'customEvents');
+      handleFirestoreError(error, OperationType.CREATE, 'posts');
       alert("Nepodařilo se přidat událost.");
     } finally {
       setIsSubmitting(false);

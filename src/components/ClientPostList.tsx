@@ -26,6 +26,7 @@ export default function ClientPostList({ posts, onPostClick, onShowInCalendar }:
     <div className="space-y-4">
       {sortedPosts.map(post => {
         const isVideo = post.postType === 'video' || post.postType === 'reel';
+        const isEvent = post.postType === 'event';
         
         let statusColor = 'text-slate-400';
         let statusIcon = null;
@@ -59,14 +60,20 @@ export default function ClientPostList({ posts, onPostClick, onShowInCalendar }:
             break;
         }
 
+        if (isEvent) {
+          statusColor = 'text-violet-400';
+          statusIcon = <CalendarIcon className="w-4 h-4" />;
+          statusText = 'Událost';
+        }
+
         return (
           <div 
             key={post.id}
             onClick={() => onPostClick(post)}
             className="flex flex-col sm:flex-row gap-4 p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all cursor-pointer group"
           >
-            <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-white/10 group-hover:bg-indigo-500/20 text-white/70 group-hover:text-indigo-300 transition-colors">
-              {isVideo ? <Video className="w-6 h-6" /> : <ImageIcon className="w-6 h-6" />}
+            <div className={`flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-white/10 group-hover:bg-indigo-500/20 text-white/70 group-hover:text-indigo-300 transition-colors ${isEvent ? 'group-hover:bg-violet-500/20 group-hover:text-violet-300' : ''}`}>
+              {isEvent ? <CalendarIcon className="w-6 h-6" /> : isVideo ? <Video className="w-6 h-6" /> : <ImageIcon className="w-6 h-6" />}
             </div>
             
             <div className="flex-1 min-w-0">

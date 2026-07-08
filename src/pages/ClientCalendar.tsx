@@ -6,6 +6,7 @@ import { Client, Post, CustomEvent } from '../types';
 import PostModal from '../components/PostModal';
 import ClientPostModal from '../components/ClientPostModal';
 import AddPostModal from '../components/AddPostModal';
+import AddEventModal from '../components/AddEventModal';
 import ClientPostList from '../components/ClientPostList';
 import { useAuth } from '../contexts/AuthContext';
 import { 
@@ -33,7 +34,6 @@ export default function ClientCalendar() {
   const { currentUser } = useAuth();
   const [client, setClient] = useState<Client | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
-  const [customEvents, setCustomEvents] = useState<CustomEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   
@@ -43,6 +43,7 @@ export default function ClientCalendar() {
   // Modal state
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [isAddingPost, setIsAddingPost] = useState(false);
+  const [isAddingEvent, setIsAddingEvent] = useState(false);
   const [addingPostDate, setAddingPostDate] = useState<Date | undefined>(undefined);
   const [viewMode, setViewMode] = useState<'week' | 'month' | 'list'>('week');
 
@@ -93,23 +94,14 @@ export default function ClientCalendar() {
     return () => unsubscribe();
   }, [client]);
 
-  // Fetch Custom Events
-  useEffect(() => {
-    if (!client) return;
-
-    const q = query(collection(db, 'customEvents'), where('clientId', '==', client.id));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const eventsData = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as CustomEvent[];
-      setCustomEvents(eventsData);
-    }, (error) => {
-      handleFirestoreError(error, OperationType.LIST, 'customEvents');
-    });
-
-    return () => unsubscribe();
-  }, [client]);
+  const customEvents: CustomEvent[] = posts
+    .filter(p => p.postType === 'event')
+    .map(p => ({
+      id: p.id,
+      clientId: p.clientId,
+      name: p.title,
+      date: p.scheduledDate
+    }));
 
   if (loading) {
     return (
@@ -158,12 +150,12 @@ export default function ClientCalendar() {
   now.setHours(0,0,0,0);
   
   const upcomingPosts = posts
-    .filter(p => new Date(p.scheduledDate) >= now)
+    .filter(post => post.postType !== 'event' && post.scheduledDate >= new Date().setHours(0,0,0,0) && post.status !== 'published')
     .sort((a, b) => a.scheduledDate - b.scheduledDate)
     .slice(0, 5);
     
   const upcomingEvents = customEvents
-    .filter(e => new Date(e.date) >= now)
+    .filter(event => event.date >= new Date().setHours(0,0,0,0))
     .sort((a, b) => a.date - b.date)
     .slice(0, 5);
 
@@ -232,71 +224,100 @@ export default function ClientCalendar() {
           <div className="flex-1 min-w-0 flex flex-col min-h-0">
             {/* Calendar Section */}
             <div className="flex-1 flex flex-col min-h-0 bg-white/[0.08] border border-white/20 rounded-3xl overflow-hidden">
-              {/* Calendar Controls */}
-                <div className="shrink-0 flex flex-col sm:flex-row sm:items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-white/10 bg-white/5 gap-4">
-                  <h2 className="text-lg sm:text-xl font-black text-white tracking-tight capitalize text-center sm:text-left">
-                    {viewMode === 'list' ? 'Všechny příspěvky' : 
-                      viewMode === 'week' ? `${format(startDate, 'd. LLLL', { locale: cs })} - ${format(endDate, 'd. LLLL yyyy', { locale: cs })}` :
-                      format(currentDate, 'LLLL yyyy', { locale: cs })
-                    }
-                  </h2>
-              <div className="flex flex-col sm:flex-row items-center justify-between sm:justify-end gap-4 w-full sm:w-auto">
-                {/* View Toggle */}
-                <div className="flex items-center bg-white/10 rounded-xl p-1 w-full sm:w-auto justify-center">
-                  <button
-                    onClick={() => setViewMode('week')}
-                    className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg text-sm font-bold transition-all ${
-                      viewMode === 'week' ? 'bg-indigo-600 text-white shadow-md' : 'text-white/60 hover:text-white hover:bg-white/5'
-                    }`}
-                  >
-                    <CalendarIcon className="w-4 h-4" />
-                    <span className="hidden sm:inline">Týden</span>
-                  </button>
-                  <button
-                    onClick={() => setViewMode('month')}
-                    className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg text-sm font-bold transition-all ${
-                      viewMode === 'month' ? 'bg-indigo-600 text-white shadow-md' : 'text-white/60 hover:text-white hover:bg-white/5'
-                    }`}
-                  >
-                    <CalendarIcon className="w-4 h-4" />
-                    <span className="hidden sm:inline">Měsíc</span>
-                  </button>
-                  <button
-                    onClick={() => setViewMode('list')}
-                    className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg text-sm font-bold transition-all ${
-                      viewMode === 'list' ? 'bg-indigo-600 text-white shadow-md' : 'text-white/60 hover:text-white hover:bg-white/5'
-                    }`}
-                  >
-                    <ListIcon className="w-4 h-4" />
-                    <span className="hidden sm:inline">Seznam</span>
-                  </button>
-                </div>
+                {/* Calendar Controls */}
+                <div className="shrink-0 flex flex-col gap-4 px-4 sm:px-6 py-4 sm:py-5 border-b border-white/10 bg-white/5">
+                  {/* Top Row: Navigation + Title + Add Buttons */}
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-3">
+                      {/* Nav Buttons (Only in calendar modes) */}
+                      {(viewMode === 'week' || viewMode === 'month') && (
+                        <div className="flex items-center bg-white/10 rounded-lg p-1">
+                          <button onClick={prevPeriod} className="p-1.5 hover:bg-white/10 rounded-md transition-all text-white/70 hover:text-white">
+                            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                          </button>
+                          <button onClick={() => setCurrentDate(new Date())} className="px-2 py-1 text-[10px] sm:text-xs font-bold text-white/70 hover:text-white hover:bg-white/10 rounded-md transition-all">
+                            Dnes
+                          </button>
+                          <button onClick={nextPeriod} className="p-1.5 hover:bg-white/10 rounded-md transition-all text-white/70 hover:text-white">
+                            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                          </button>
+                        </div>
+                      )}
+                      
+                      {/* Desktop Title */}
+                      <h2 className="text-lg sm:text-xl font-black text-white tracking-tight capitalize hidden sm:block">
+                        {viewMode === 'list' ? 'Všechny příspěvky' : 
+                         viewMode === 'week' ? `${format(startDate, 'd. LLLL', { locale: cs })} - ${format(endDate, 'd. LLLL yyyy', { locale: cs })}` :
+                         format(currentDate, 'LLLL yyyy', { locale: cs })
+                        }
+                      </h2>
+                    </div>
 
-                {/* Month/Week Nav - Only in calendar modes */}
-                {(viewMode === 'week' || viewMode === 'month') && (
-                  <div className="flex items-center justify-between w-full sm:w-auto gap-2">
-                  <button 
-                    onClick={prevPeriod}
-                    className="p-2.5 hover:bg-white/10 rounded-xl transition-all text-white/70 hover:text-white"
-                  >
-                    <ChevronLeft className="w-5 h-5" />
-                  </button>
-                  <button 
-                    onClick={() => setCurrentDate(new Date())}
-                    className="px-5 py-2 text-xs font-black uppercase tracking-widest text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all"
-                  >
-                    Dnes
-                  </button>
-                  <button 
-                    onClick={nextPeriod}
-                    className="p-2.5 hover:bg-white/10 rounded-xl transition-all text-white/70 hover:text-white"
-                  >
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
+                    {/* Admin Add Buttons */}
+                    {currentUser && (
+                      <div className="flex items-center gap-2 shrink-0">
+                        <button 
+                          onClick={() => setIsAddingEvent(true)}
+                          className="px-3 sm:px-4 py-2 sm:py-2.5 bg-violet-600 hover:bg-violet-700 text-white font-bold rounded-xl shadow-lg shadow-violet-500/30 transition-all flex items-center justify-center gap-1.5 active:scale-95"
+                          title="Přidat událost"
+                        >
+                          <CalendarIcon className="w-4 h-4 sm:w-4 sm:h-4" />
+                          <span className="hidden lg:inline text-sm">Událost</span>
+                        </button>
+                        <button 
+                          onClick={() => setIsAddingPost(true)}
+                          className="px-3 sm:px-4 py-2 sm:py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-500/30 transition-all flex items-center justify-center gap-1.5 active:scale-95"
+                          title="Přidat příspěvek"
+                        >
+                          <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
+                          <span className="hidden lg:inline text-sm">Příspěvek</span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Bottom Row: Mobile Title + View Toggles */}
+                  <div className="flex items-center justify-between gap-4 w-full">
+                    {/* Mobile Title */}
+                    <h2 className="text-base font-black text-white tracking-tight capitalize sm:hidden truncate flex-1 min-w-0">
+                      {viewMode === 'list' ? 'Všechny příspěvky' : 
+                       viewMode === 'week' ? `${format(startDate, 'd. L.', { locale: cs })} - ${format(endDate, 'd. L. yyyy', { locale: cs })}` :
+                       format(currentDate, 'LLLL yyyy', { locale: cs })
+                      }
+                    </h2>
+
+                    {/* View Toggles */}
+                    <div className="flex items-center bg-white/10 rounded-xl p-1 shrink-0 ml-auto w-full sm:w-auto justify-end">
+                      <button
+                        onClick={() => setViewMode('week')}
+                        className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all ${
+                          viewMode === 'week' ? 'bg-indigo-600 text-white shadow-md' : 'text-white/60 hover:text-white hover:bg-white/5'
+                        }`}
+                      >
+                        <CalendarIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">Týden</span>
+                      </button>
+                      <button
+                        onClick={() => setViewMode('month')}
+                        className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all ${
+                          viewMode === 'month' ? 'bg-indigo-600 text-white shadow-md' : 'text-white/60 hover:text-white hover:bg-white/5'
+                        }`}
+                      >
+                        <CalendarIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">Měsíc</span>
+                      </button>
+                      <button
+                        onClick={() => setViewMode('list')}
+                        className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all ${
+                          viewMode === 'list' ? 'bg-indigo-600 text-white shadow-md' : 'text-white/60 hover:text-white hover:bg-white/5'
+                        }`}
+                      >
+                        <ListIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">Seznam</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              )}
-            </div>
-          </div>
 
           {viewMode === 'month' ? (
             <>
@@ -311,7 +332,7 @@ export default function ClientCalendar() {
                   ))}
                 </div>
 
-                <div className="flex-1 grid grid-cols-7 auto-rows-fr gap-px bg-white/10 min-h-[600px]">
+                <div className="flex-1 grid grid-cols-7 gap-px bg-white/10 min-h-[600px]">
                   {calendarDays.map((day, idx) => {
                     const dayPosts = getPostsForDay(day);
                     const isCurrentMonth = isSameMonth(day, monthStart);
@@ -331,7 +352,7 @@ export default function ClientCalendar() {
                             setIsAddingPost(true);
                           }
                         }}
-                        className={`flex flex-col min-h-0 p-1 sm:p-2 transition-all duration-500 bg-white/5 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 group/cell border-b sm:border-b-0 border-white/5 overflow-hidden ${currentUser ? 'cursor-pointer hover:bg-white/20' : ''} ${
+                        className={`flex flex-col min-h-0 p-1 sm:p-2 transition-all duration-500 bg-white/5 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 group/cell border-b sm:border-b-0 border-white/5 ${currentUser ? 'cursor-pointer hover:bg-white/20' : ''} ${
                           !isCurrentMonth ? 'opacity-20 grayscale' : ''
                         } ${holidayName && isCurrentMonth ? 'bg-rose-500/5 hover:bg-rose-500/10' : (customEventsForDay.length > 0 && isCurrentMonth ? 'bg-violet-500/5 hover:bg-violet-500/10' : '')}`}
                       >
@@ -352,21 +373,17 @@ export default function ClientCalendar() {
                               {holidayName}
                             </span>
                           )}
-                          {customEventsForDay.map(ev => (
-                            <span 
-                              key={ev.id}
-                              className="text-[7px] sm:text-[9px] font-bold text-violet-400/80 uppercase tracking-widest text-right line-clamp-2 w-full leading-tight group-hover/cell:text-violet-300 break-words"
-                              title={ev.name}
-                            >
-                              {ev.name}
-                            </span>
-                          ))}
                         </div>
                       </div>
 
-                      <div className="flex-1 min-h-0 space-y-1 sm:space-y-1.5 overflow-y-auto pr-0.5 custom-scrollbar min-w-0">
+                      <div className="space-y-1 sm:space-y-1.5 pt-1 min-w-0 pb-1">
                         {dayPosts.map(post => {
                           const isVideo = post.postType === 'video' || post.postType === 'reel';
+                          const isEvent = post.postType === 'event';
+                          
+                          let bgClass = 'bg-emerald-500/20 border-emerald-400/30 text-emerald-100 hover:bg-emerald-500/40';
+                          if (isVideo) bgClass = 'bg-blue-500/20 border-blue-400/30 text-blue-100 hover:bg-blue-500/40';
+                          if (isEvent) bgClass = 'bg-violet-500/20 border-violet-400/30 text-violet-100 hover:bg-violet-500/40';
                           
                           return (
                             <div 
@@ -375,14 +392,10 @@ export default function ClientCalendar() {
                                 e.stopPropagation();
                                 setSelectedPost(post);
                               }}
-                              className={`text-[10px] p-1 sm:p-2.5 rounded-md sm:rounded-xl border cursor-pointer transition-all duration-300 hover:scale-[1.05] active:scale-95 group/post flex flex-col gap-1.5 shadow-lg min-w-0 ${
-                                isVideo 
-                                  ? 'bg-blue-500/20 border-blue-400/30 text-blue-100 hover:bg-blue-500/40' 
-                                  : 'bg-emerald-500/20 border-emerald-400/30 text-emerald-100 hover:bg-emerald-500/40'
-                              }`}
+                              className={`text-[10px] p-1 sm:p-2.5 rounded-md sm:rounded-xl border cursor-pointer transition-all duration-300 hover:scale-[1.05] active:scale-95 group/post flex flex-col gap-1.5 shadow-lg min-w-0 ${bgClass}`}
                             >
                               <div className="flex items-center justify-center sm:justify-start gap-2 font-black min-w-0">
-                                {isVideo ? <Video className="w-3.5 h-3.5 shrink-0" /> : <ImageIcon className="w-3.5 h-3.5 shrink-0" />}
+                                {isEvent ? <CalendarIcon className="w-3.5 h-3.5 shrink-0" /> : isVideo ? <Video className="w-3.5 h-3.5 shrink-0" /> : <ImageIcon className="w-3.5 h-3.5 shrink-0" />}
                                 <span className="hidden sm:block truncate flex-1 uppercase tracking-tight">{post.title}</span>
                                 <div className="hidden sm:flex items-center shrink-0">
                                   {post.status === 'approved' && <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400" />}
@@ -452,6 +465,12 @@ export default function ClientCalendar() {
                             <div className="flex flex-col gap-1">
                               {hourPosts.map(post => {
                                 const isVideo = post.postType === 'video' || post.postType === 'reel';
+                                const isEvent = post.postType === 'event';
+                                
+                                let bgClass = 'bg-emerald-500/20 border-emerald-400/30 text-emerald-100 hover:bg-emerald-500/40';
+                                if (isVideo) bgClass = 'bg-blue-500/20 border-blue-400/30 text-blue-100 hover:bg-blue-500/40';
+                                if (isEvent) bgClass = 'bg-violet-500/20 border-violet-400/30 text-violet-100 hover:bg-violet-500/40';
+
                                 return (
                                   <div
                                     key={post.id}
@@ -459,14 +478,10 @@ export default function ClientCalendar() {
                                       e.stopPropagation();
                                       setSelectedPost(post);
                                     }}
-                                    className={`text-[8px] sm:text-[10px] p-1 sm:p-1.5 rounded-md border cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-1.5 shadow-md overflow-hidden ${
-                                      isVideo 
-                                        ? 'bg-blue-500/20 border-blue-400/30 text-blue-100 hover:bg-blue-500/40' 
-                                        : 'bg-emerald-500/20 border-emerald-400/30 text-emerald-100 hover:bg-emerald-500/40'
-                                    }`}
+                                    className={`text-[8px] sm:text-[10px] p-1 sm:p-1.5 rounded-md border cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-1.5 shadow-md overflow-hidden ${bgClass}`}
                                   >
                                     <div className="flex items-center gap-1 shrink-0">
-                                      {isVideo ? <Video className="w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0" /> : <ImageIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0" />}
+                                      {isEvent ? <CalendarIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0" /> : isVideo ? <Video className="w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0" /> : <ImageIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0" />}
                                       <span className="font-bold sm:hidden">{format(new Date(post.scheduledDate), "HH:mm")}</span>
                                     </div>
                                     <span className="truncate font-medium">{post.title}</span>
@@ -571,6 +586,14 @@ export default function ClientCalendar() {
             onClose={() => setSelectedPost(null)} 
           />
         )
+      )}
+
+      {/* Add Event Modal */}
+      {isAddingEvent && (
+        <AddEventModal 
+          clientId={client.id} 
+          onClose={() => setIsAddingEvent(false)} 
+        />
       )}
 
       {/* Add Post Modal */}

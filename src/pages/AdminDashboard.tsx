@@ -85,11 +85,7 @@ export default function AdminDashboard() {
       const postsSnapshot = await getDocs(query(collection(db, 'posts'), where('clientId', '==', clientToDelete.id)));
       const deletePostsPromises = postsSnapshot.docs.map(postDoc => deleteDoc(postDoc.ref));
       
-      // Cascade delete events
-      const eventsSnapshot = await getDocs(query(collection(db, 'customEvents'), where('clientId', '==', clientToDelete.id)));
-      const deleteEventsPromises = eventsSnapshot.docs.map(eventDoc => deleteDoc(eventDoc.ref));
-      
-      await Promise.all([...deletePostsPromises, ...deleteEventsPromises]);
+      await Promise.all(deletePostsPromises);
 
       // Finally delete the client
       await deleteDoc(doc(db, 'clients', clientToDelete.id));

@@ -14,7 +14,7 @@ export interface Post {
   clientId: string;
   title: string;
   description: string;
-  postType: 'video' | 'image' | 'carousel' | 'reel' | 'post';
+  postType: 'video' | 'image' | 'carousel' | 'reel' | 'post' | 'event';
   status: 'draft' | 'client_review' | 'approved' | 'scheduled' | 'needs_revision' | 'published';
   scheduledDate: number;
   mediaUrls: string[];
