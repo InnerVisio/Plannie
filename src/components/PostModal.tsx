@@ -223,13 +223,27 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
           
           {/* Media Preview Section */}
           <section className="space-y-4">
-            <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">Náhled média</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">Náhled média</h3>
+              {previewUrl && (
+                <a 
+                  href={post.mediaUrls[0]} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-xs font-bold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5"
+                >
+                  <ArrowRight className="w-3.5 h-3.5" />
+                  Otevřít na Disku
+                </a>
+              )}
+            </div>
+            
             {previewUrl ? (
               <div className={`relative w-full ${post.postType === 'video' ? 'h-[500px]' : 'h-[350px]'} sm:h-auto sm:aspect-video rounded-xl bg-slate-100 overflow-hidden border border-slate-200 shadow-inner`}>
                 <iframe 
-                  src={previewUrl} 
+                  src={`${previewUrl}${previewUrl.includes('?') ? '&' : '?'}playsinline=1`} 
                   className="w-full h-full border-0 absolute inset-0 sm:relative"
-                  allow="autoplay; fullscreen"
+                  allow="autoplay; fullscreen; picture-in-picture"
                   allowFullScreen
                   referrerPolicy="no-referrer"
                 />
