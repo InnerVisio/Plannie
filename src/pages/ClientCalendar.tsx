@@ -185,7 +185,7 @@ export default function ClientCalendar() {
 
   return (
     <div className={`w-full min-h-full shrink-0 flex flex-col transition-colors duration-700 ${bgClass}`}>
-      <div className="max-w-[1400px] w-full mx-auto flex flex-col space-y-4 sm:space-y-6 px-4 py-4 sm:py-6 min-h-full">
+      <div className="max-w-[1400px] w-full mx-auto flex flex-col space-y-4 sm:space-y-6 px-4 pt-[calc(1rem+env(safe-area-inset-top))] pb-[calc(1rem+env(safe-area-inset-bottom))] sm:pt-[calc(1.5rem+env(safe-area-inset-top))] sm:pb-[calc(1.5rem+env(safe-area-inset-bottom))] min-h-full">
         {/* Header Section */}
         <div className="shrink-0 flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-2xl bg-white/[0.08] border border-white/20 text-white">
           <div className="flex items-center gap-4">

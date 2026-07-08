@@ -121,7 +121,7 @@ export default function MasterDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] bg-fixed from-slate-900 via-indigo-950/40 to-slate-900 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-900 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] bg-fixed from-slate-900 via-indigo-950/40 to-slate-900 pt-8 pb-[calc(2rem+env(safe-area-inset-bottom))] px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
         <header className="flex items-center justify-between">
           <div>
