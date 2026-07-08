@@ -149,15 +149,14 @@ export default function ClientCalendar() {
   const now = new Date();
   now.setHours(0,0,0,0);
   
-  const upcomingPosts = posts
-    .filter(post => post.postType !== 'event' && post.scheduledDate >= new Date().setHours(0,0,0,0) && post.status !== 'published')
+  const combinedUpcoming = posts
+    .filter(post => {
+      const isFuture = post.scheduledDate >= new Date().setHours(0,0,0,0);
+      const isNotPublished = post.postType === 'event' || post.status !== 'published';
+      return isFuture && isNotPublished;
+    })
     .sort((a, b) => a.scheduledDate - b.scheduledDate)
-    .slice(0, 5);
-    
-  const upcomingEvents = customEvents
-    .filter(event => event.date >= new Date().setHours(0,0,0,0))
-    .sort((a, b) => a.date - b.date)
-    .slice(0, 5);
+    .slice(0, 7);
 
   const getPostsForDay = (day: Date) => {
     return posts.filter(post => isSameDay(new Date(post.scheduledDate), day));
@@ -185,8 +184,8 @@ export default function ClientCalendar() {
   const bgClass = getBackgroundStyles();
 
   return (
-    <div className={`flex-1 flex flex-col transition-colors duration-700 ${bgClass} min-h-max lg:min-h-full`}>
-      <div className="max-w-[1400px] w-full mx-auto flex flex-col flex-1 space-y-4 sm:space-y-6 px-4 py-4 sm:py-6 min-h-full">
+    <div className={`w-full min-h-full shrink-0 flex flex-col transition-colors duration-700 ${bgClass}`}>
+      <div className="max-w-[1400px] w-full mx-auto flex flex-col space-y-4 sm:space-y-6 px-4 py-4 sm:py-6 min-h-full">
         {/* Header Section */}
         <div className="shrink-0 flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-2xl bg-white/[0.08] border border-white/20 text-white">
           <div className="flex items-center gap-4">
@@ -220,10 +219,10 @@ export default function ClientCalendar() {
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col lg:flex-row gap-6 lg:min-h-0">
-          <div className="flex-1 min-w-0 flex flex-col lg:min-h-0">
+        <div className="w-full flex flex-col lg:flex-row gap-6">
+          <div className="flex-1 min-w-0 flex flex-col">
             {/* Calendar Section */}
-            <div className="flex-1 flex flex-col bg-white/[0.08] border border-white/20 rounded-3xl lg:overflow-hidden">
+            <div className="w-full flex flex-col bg-white/[0.08] border border-white/20 rounded-3xl overflow-hidden">
                 {/* Calendar Controls */}
                 <div className="shrink-0 flex flex-col gap-4 px-4 sm:px-6 py-4 sm:py-5 border-b border-white/10 bg-white/5">
                   {/* Top Row: Navigation + Title + Add Buttons */}
@@ -321,8 +320,8 @@ export default function ClientCalendar() {
 
           {viewMode === 'month' ? (
             <>
-            <div className="flex-1 min-h-0 overflow-x-auto overflow-y-visible lg:overflow-y-auto custom-scrollbar">
-              <div className="min-w-[320px] h-full flex flex-col">
+            <div className="overflow-x-auto overflow-y-visible custom-scrollbar">
+              <div className="min-w-[320px] flex flex-col">
                 {/* Calendar Grid Header */}
                 <div className="grid grid-cols-7 gap-px border-b border-white/10 bg-white/10">
                   {weekDays.map(day => (
@@ -416,8 +415,8 @@ export default function ClientCalendar() {
           </>
           ) : viewMode === 'week' ? (
             <>
-            <div className="flex-1 min-h-0 overflow-x-auto overflow-y-visible lg:overflow-y-auto custom-scrollbar">
-              <div className="min-w-[600px] sm:min-w-[800px] lg:min-w-full grid grid-cols-[45px_repeat(7,1fr)] sm:grid-cols-[60px_repeat(7,1fr)] gap-px bg-white/10 relative">
+            <div className="overflow-x-auto overflow-y-visible custom-scrollbar">
+              <div className="min-w-[600px] sm:min-w-[800px] lg:min-w-full grid grid-cols-[45px_repeat(7,1fr)] sm:grid-cols-[60px_repeat(7,1fr)] gap-px bg-white/10 relative border-b border-white/10">
                 
                 {/* Top-left empty corner, sticky */}
                 <div className="bg-slate-900/80 sticky top-0 left-0 z-30 border-b border-r border-white/10 backdrop-blur-md"></div>
@@ -499,7 +498,7 @@ export default function ClientCalendar() {
             </div>
             </>
           ) : (
-            <div className="flex-1 min-h-0 p-6 bg-white/5 overflow-y-visible lg:overflow-y-auto custom-scrollbar">
+            <div className="p-6 bg-white/5 overflow-y-visible custom-scrollbar">
               <ClientPostList 
                 posts={posts} 
                 onPostClick={setSelectedPost} 
@@ -514,57 +513,52 @@ export default function ClientCalendar() {
           </div>
 
           {/* Sidebar */}
-          <div className="w-full lg:w-[320px] flex flex-col gap-6 flex-shrink-0 lg:overflow-y-auto custom-scrollbar lg:pb-4 lg:pr-2 overscroll-none">
-            {/* Upcoming Posts */}
+          <div className="w-full lg:w-[320px] flex flex-col gap-6 flex-shrink-0 lg:sticky lg:top-8 lg:max-h-[calc(100vh-4rem)] overflow-y-visible lg:overflow-y-auto custom-scrollbar lg:pb-4 lg:pr-2 overscroll-none self-start">
+            {/* Combined Upcoming Items */}
             <div className="bg-white/[0.08] border border-white/20 rounded-3xl p-6">
               <h3 className="text-white font-black tracking-tight mb-4 flex items-center gap-2">
-                <ImageIcon className="w-5 h-5 text-indigo-400" /> Nadcházející příspěvky
+                <CalendarIcon className="w-5 h-5 text-indigo-400" /> Nadcházející události a příspěvky
               </h3>
-              {upcomingPosts.length === 0 ? (
-                <p className="text-white/40 text-sm font-medium">Žádné naplánované příspěvky.</p>
+              {combinedUpcoming.length === 0 ? (
+                <p className="text-white/40 text-sm font-medium">Nic není v plánu.</p>
               ) : (
                 <div className="space-y-3">
-                  {upcomingPosts.map(post => (
-                    <div 
-                      key={post.id} 
-                      onClick={() => setSelectedPost(post)}
-                      className="p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl cursor-pointer transition-all active:scale-95 group flex flex-col gap-1"
-                    >
-                      <div className="flex justify-between items-start">
-                        <span className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors line-clamp-2 leading-tight pr-2">{post.title}</span>
-                        {post.postType === 'video' || post.postType === 'reel' ? <Video className="w-3.5 h-3.5 text-blue-400 shrink-0" /> : <ImageIcon className="w-3.5 h-3.5 text-emerald-400 shrink-0" />}
-                      </div>
-                      <div className="flex items-center gap-1 text-xs text-white/50 font-medium mt-1">
-                        <CalendarIcon className="w-3 h-3" />
-                        {format(new Date(post.scheduledDate), "d. MMMM 'v' H:mm", { locale: cs })}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Upcoming Events */}
-            <div className="bg-white/[0.08] border border-white/20 rounded-3xl p-6">
-              <h3 className="text-white font-black tracking-tight mb-4 flex items-center gap-2">
-                <CalendarIcon className="w-5 h-5 text-violet-400" /> Nadcházející události
-              </h3>
-              {upcomingEvents.length === 0 ? (
-                <p className="text-white/40 text-sm font-medium">Žádné události.</p>
-              ) : (
-                <div className="space-y-3">
-                  {upcomingEvents.map(event => (
-                    <div 
-                      key={event.id} 
-                      className="p-3 bg-violet-500/10 border border-violet-500/20 rounded-xl flex flex-col gap-1"
-                    >
-                      <div className="text-sm font-bold text-white line-clamp-2 leading-tight">{event.name}</div>
-                      <div className="flex items-center gap-1 text-xs text-violet-300/70 font-medium mt-1">
-                        <Clock className="w-3 h-3" />
-                        {format(new Date(event.date), "d. MMMM yyyy", { locale: cs })}
-                      </div>
-                    </div>
-                  ))}
+                  {combinedUpcoming.map(item => {
+                    if (item.postType !== 'event') {
+                      return (
+                        <div 
+                          key={item.id} 
+                          onClick={() => setSelectedPost(item)}
+                          className="p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl cursor-pointer transition-all active:scale-95 group flex flex-col gap-1"
+                        >
+                          <div className="flex justify-between items-start">
+                            <span className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors line-clamp-2 leading-tight pr-2">{item.title}</span>
+                            {item.postType === 'video' || item.postType === 'reel' ? <Video className="w-3.5 h-3.5 text-blue-400 shrink-0" /> : <ImageIcon className="w-3.5 h-3.5 text-emerald-400 shrink-0" />}
+                          </div>
+                          <div className="flex items-center gap-1 text-xs text-white/50 font-medium mt-1">
+                            <CalendarIcon className="w-3 h-3" />
+                            {format(new Date(item.scheduledDate), "d. MMMM 'v' H:mm", { locale: cs })}
+                          </div>
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div 
+                          key={item.id} 
+                          className="p-3 bg-violet-500/10 border border-violet-500/20 rounded-xl flex flex-col gap-1"
+                        >
+                          <div className="flex justify-between items-start">
+                            <span className="text-sm font-bold text-white line-clamp-2 leading-tight">{item.title}</span>
+                            <CalendarIcon className="w-3.5 h-3.5 text-violet-400 shrink-0" />
+                          </div>
+                          <div className="flex items-center gap-1 text-xs text-violet-300/70 font-medium mt-1">
+                            <Clock className="w-3 h-3" />
+                            {format(new Date(item.scheduledDate), "d. MMMM yyyy", { locale: cs })}
+                          </div>
+                        </div>
+                      );
+                    }
+                  })}
                 </div>
               )}
             </div>
