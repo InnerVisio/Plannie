@@ -54,7 +54,7 @@ export default function AddPostModal({ clientId, onClose, initialDate }: AddPost
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
           <div className="flex items-center gap-2">
             <div className="p-2 bg-indigo-100 rounded-lg">
               <Calendar className="w-5 h-5 text-indigo-600" />
@@ -70,7 +70,7 @@ export default function AddPostModal({ clientId, onClose, initialDate }: AddPost
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 sm:space-y-5">
           {/* Title */}
           <div>
             <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-1.5">

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { doc, updateDoc, collection, addDoc, query, where, orderBy, onSnapshot } from 'firebase/firestore';
+import { doc, updateDoc, deleteDoc, collection, addDoc, query, where, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Post, Client, Comment } from '../types';
 import { useAuth } from '../contexts/AuthContext';
-import { X, Save, Send, Loader2, MessageSquare, Edit3, Check, XCircle, ArrowRight, Clock } from 'lucide-react';
+import { X, Save, Send, Loader2, MessageSquare, Edit3, Check, XCircle, ArrowRight, Clock, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { cs } from 'date-fns/locale';
 import { handleFirestoreError, OperationType } from '../lib/firestore-errors';
@@ -37,6 +37,7 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   
   const commentsEndRef = useRef<HTMLDivElement>(null);
 
@@ -155,28 +156,55 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
     }
   };
 
+  const handleDelete = async () => {
+    if (!window.confirm('Opravdu chcete smazat tento příspěvek? Tato akce je nevratná.')) return;
+    
+    setIsDeleting(true);
+    try {
+      await deleteDoc(doc(db, 'posts', post.id));
+      onClose(); // Close the modal, which will also unmount it
+    } catch (error) {
+      handleFirestoreError(error, OperationType.DELETE, 'posts');
+      alert('Nepodařilo se smazat příspěvek.');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/50 backdrop-blur-sm">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
           <div>
             <h2 className="text-xl font-bold text-slate-900">{post.title}</h2>
             <p className="text-sm text-slate-500 mt-0.5">
               Naplánováno na {format(new Date(post.scheduledDate), "d. MMMM yyyy 'v' H:mm", { locale: cs })}
             </p>
           </div>
-          <button 
-            onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-200 rounded-xl transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            {currentUser && (
+              <button 
+                onClick={handleDelete}
+                disabled={isDeleting}
+                className="p-2 text-rose-400 hover:text-rose-600 hover:bg-rose-100 rounded-xl transition-colors disabled:opacity-50"
+                title="Smazat příspěvek"
+              >
+                {isDeleting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Trash2 className="w-5 h-5" />}
+              </button>
+            )}
+            <button 
+              onClick={onClose}
+              className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-200 rounded-xl transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Scrollable Body */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 sm:space-y-8 custom-scrollbar">
           
           {/* Media Preview Section */}
           <section className="space-y-4">
@@ -206,14 +234,14 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Edit3 className="w-5 h-5 text-indigo-600" />
-                <h3 className="text-lg font-semibold text-slate-900">Post Description</h3>
+                <h3 className="text-lg font-semibold text-slate-900">Popisek příspěvku</h3>
               </div>
             </div>
 
             {/* Pending Change Alert */}
             {post.pendingDescription && (
               <div className="bg-amber-50 border border-amber-200 rounded-2xl overflow-hidden animate-in slide-in-from-top-2 duration-300">
-                <div className="px-4 py-2 bg-amber-100/50 border-b border-amber-200 flex items-center justify-between">
+                <div className="px-4 py-2.5 bg-amber-100/50 border-b border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div className="flex items-center gap-2 text-amber-800 text-xs font-black uppercase tracking-widest">
                     <Clock className="w-3.5 h-3.5" />
                     Klient navrhuje změnu popisku
@@ -302,11 +330,11 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
                       key={comment.id} 
                       className={`flex flex-col max-w-[85%] ${isAdmin ? 'ml-auto items-end' : 'mr-auto items-start'}`}
                     >
-                      <span className="text-xs font-medium text-slate-500 mb-1 px-1">
+                      <span className="text-[10px] sm:text-xs font-medium text-slate-500 mb-1 px-1">
                         {comment.authorName === 'Agency' ? 'Agentura' : comment.authorName} • {format(new Date(comment.createdAt), 'd. M. H:mm', { locale: cs })}
                       </span>
                       <div 
-                        className={`px-4 py-2.5 rounded-2xl text-sm ${
+                        className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs sm:text-sm ${
                           isAdmin 
                             ? 'bg-indigo-600 text-white rounded-tr-sm' 
                             : 'bg-white border border-slate-200 text-slate-800 rounded-tl-sm shadow-sm'

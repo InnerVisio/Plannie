@@ -71,8 +71,8 @@ export default function ClientPostList({ posts, onPostClick, onShowInCalendar }:
             
             <div className="flex-1 min-w-0">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-1">
-                <h3 className="text-lg font-bold text-white truncate">{post.title}</h3>
-                <div className={`flex items-center gap-1.5 text-sm font-semibold ${statusColor} shrink-0`}>
+                <h3 className="text-base sm:text-lg font-bold text-white truncate">{post.title}</h3>
+                <div className={`flex items-center gap-1.5 text-xs sm:text-sm font-semibold ${statusColor} shrink-0`}>
                   {statusIcon}
                   <span>{statusText}</span>
                 </div>
@@ -90,13 +90,13 @@ export default function ClientPostList({ posts, onPostClick, onShowInCalendar }:
               )}
               
               {onShowInCalendar && (
-                <div className="mt-4 flex justify-end">
+                <div className="mt-4 flex sm:justify-end">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       onShowInCalendar(post);
                     }}
-                    className="px-3 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 border border-indigo-500/30 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5"
+                    className="w-full sm:w-auto px-3 py-2 sm:py-1.5 bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 border border-indigo-500/30 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5"
                   >
                     <CalendarIcon className="w-3.5 h-3.5" />
                     Ukázat v kalendáři

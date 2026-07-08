@@ -14,6 +14,7 @@ import {
   Check 
 } from 'lucide-react';
 import { format } from 'date-fns';
+import { cs } from 'date-fns/locale';
 import { handleFirestoreError, OperationType } from '../lib/firestore-errors';
 import PostModal from '../components/PostModal';
 
@@ -67,18 +68,21 @@ export default function MasterDashboard() {
 
   // 3. Filtering Logic
   useEffect(() => {
+    // Filter out orphaned posts (where client was deleted)
+    const validPosts = posts.filter(p => clientMap[p.clientId]);
+
     // actionRequired: status === 'needs_revision' or status === 'draft'
-    const needsRevision = posts.filter(p => p.status === 'needs_revision' || p.status === 'draft');
+    const needsRevision = validPosts.filter(p => p.status === 'needs_revision' || p.status === 'draft');
     setActionRequired(needsRevision);
 
     // upcomingPublish: status === 'approved' or status === 'scheduled' (exclude 'published')
-    const upcoming = posts
+    const upcoming = validPosts
       .filter(p => p.status === 'approved' || p.status === 'scheduled')
       .sort((a, b) => a.scheduledDate - b.scheduledDate);
     setUpcomingPublish(upcoming);
 
     // waitingOnClient: status === 'client_review'
-    const waiting = posts.filter(p => p.status === 'client_review');
+    const waiting = validPosts.filter(p => p.status === 'client_review');
     setWaitingOnClient(waiting);
 
     // Keep active selected post in sync if modified
@@ -88,7 +92,7 @@ export default function MasterDashboard() {
       return updated || current;
     });
 
-  }, [posts]);
+  }, [posts, clientMap]);
 
   const handleMarkPublished = async (e: React.MouseEvent, postId: string) => {
     e.stopPropagation();
@@ -167,7 +171,7 @@ export default function MasterDashboard() {
                         <span className="font-medium text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-full border border-rose-500/20">Vyžaduje úpravu</span>
                       </div>
                       <div className="flex items-center justify-between mt-1 text-[10px] text-indigo-300/60 font-black">
-                        <span>{format(new Date(post.scheduledDate), 'MMM d, h:mm a')}</span>
+                        <span>{format(new Date(post.scheduledDate), "d. MMMM 'v' H:mm", { locale: cs })}</span>
                         {client && (
                           <a 
                             href={`/client/${client.shareableLinkId}`} 
@@ -176,7 +180,7 @@ export default function MasterDashboard() {
                             onClick={(e) => e.stopPropagation()}
                             className="flex items-center gap-1 hover:text-white transition-colors"
                           >
-                            <ExternalLink className="w-3 h-3" /> Calendar
+                            <ExternalLink className="w-3 h-3" /> Kalendář
                           </a>
                         )}
                       </div>
@@ -227,7 +231,7 @@ export default function MasterDashboard() {
                         <span className="font-medium text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">Ke schválení</span>
                       </div>
                       <div className="flex items-center justify-between mt-1 text-[10px] text-indigo-300/60 font-black">
-                        <span>{format(new Date(post.scheduledDate), 'MMM d, h:mm a')}</span>
+                        <span>{format(new Date(post.scheduledDate), "d. MMMM 'v' H:mm", { locale: cs })}</span>
                         {client && (
                           <a 
                             href={`/client/${client.shareableLinkId}`} 
@@ -236,7 +240,7 @@ export default function MasterDashboard() {
                             onClick={(e) => e.stopPropagation()}
                             className="flex items-center gap-1 hover:text-white transition-colors"
                           >
-                            <ExternalLink className="w-3 h-3" /> Calendar
+                            <ExternalLink className="w-3 h-3" /> Kalendář
                           </a>
                         )}
                       </div>
@@ -292,7 +296,7 @@ export default function MasterDashboard() {
                         </button>
                       </div>
                       <div className="flex items-center justify-between mt-1 text-[10px] text-indigo-300/60 font-black">
-                        <span>{format(new Date(post.scheduledDate), 'MMM d, h:mm a')}</span>
+                        <span>{format(new Date(post.scheduledDate), "d. MMMM 'v' H:mm", { locale: cs })}</span>
                         {client && (
                           <a 
                             href={`/client/${client.shareableLinkId}`} 
@@ -301,7 +305,7 @@ export default function MasterDashboard() {
                             onClick={(e) => e.stopPropagation()}
                             className="flex items-center gap-1 hover:text-white transition-colors"
                           >
-                            <ExternalLink className="w-3 h-3" /> Calendar
+                            <ExternalLink className="w-3 h-3" /> Kalendář
                           </a>
                         )}
                       </div>

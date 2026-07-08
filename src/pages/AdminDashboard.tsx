@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, addDoc, onSnapshot, query, orderBy, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, addDoc, onSnapshot, query, orderBy, doc, updateDoc, deleteDoc, getDocs, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Client } from '../types';
 import { Link } from 'react-router-dom';
@@ -81,6 +81,17 @@ export default function AdminDashboard() {
     if (!clientToDelete) return;
     setIsDeleting(true);
     try {
+      // Cascade delete posts
+      const postsSnapshot = await getDocs(query(collection(db, 'posts'), where('clientId', '==', clientToDelete.id)));
+      const deletePostsPromises = postsSnapshot.docs.map(postDoc => deleteDoc(postDoc.ref));
+      
+      // Cascade delete events
+      const eventsSnapshot = await getDocs(query(collection(db, 'customEvents'), where('clientId', '==', clientToDelete.id)));
+      const deleteEventsPromises = eventsSnapshot.docs.map(eventDoc => deleteDoc(eventDoc.ref));
+      
+      await Promise.all([...deletePostsPromises, ...deleteEventsPromises]);
+
+      // Finally delete the client
       await deleteDoc(doc(db, 'clients', clientToDelete.id));
       setClientToDelete(null);
     } catch (error) {
@@ -109,7 +120,7 @@ export default function AdminDashboard() {
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
           {/* Add Client Form */}
-          <div className="bg-white/10 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/20 h-fit xl:sticky xl:top-8">
+          <div className="bg-white/10 backdrop-blur-xl p-6 sm:p-8 rounded-3xl shadow-2xl border border-white/20 h-fit xl:sticky xl:top-8">
             <div className="flex items-center gap-3 mb-8">
               <div className="p-3 bg-indigo-600 rounded-2xl shadow-lg shadow-indigo-500/25">
                 <Users className="w-6 h-6 text-white" />
@@ -186,7 +197,7 @@ export default function AdminDashboard() {
           {/* Clients List */}
           <div className="xl:col-span-2">
             <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
-              <div className="px-8 py-6 border-b border-white/10 bg-white/5">
+              <div className="px-6 sm:px-8 py-5 sm:py-6 border-b border-white/10 bg-white/5">
                 <h2 className="text-xl font-black text-white tracking-tight">Aktivní klienti</h2>
               </div>
               
@@ -197,26 +208,26 @@ export default function AdminDashboard() {
               ) : (
                 <div className="divide-y divide-white/10">
                   {clients.map(client => (
-                    <div key={client.id} className="p-8 hover:bg-white/5 transition-all group flex flex-col sm:flex-row sm:items-center justify-between gap-8">
-                      <div className="flex-1 flex items-center gap-6">
+                    <div key={client.id} className="p-6 hover:bg-white/5 transition-all group flex flex-col xl:flex-row xl:items-center justify-between gap-6 border-b border-white/5 last:border-0">
+                      <div className="flex-1 flex items-start sm:items-center gap-5 min-w-0">
                         {client.logoUrl ? (
                           <img 
                             src={client.logoUrl} 
                             alt="" 
-                            className="w-14 h-14 rounded-2xl object-contain bg-white/10 p-2 border border-white/10 shadow-inner"
+                            className="w-12 h-12 rounded-2xl object-contain bg-white/10 p-2 border border-white/10 shadow-inner shrink-0"
                             referrerPolicy="no-referrer"
                           />
                         ) : (
-                          <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/20">
-                            <Users className="w-6 h-6" />
+                          <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/20 shrink-0">
+                            <Users className="w-5 h-5" />
                           </div>
                         )}
-                        <div>
-                          <div className="flex items-center gap-4 mb-2">
-                            <h3 className="text-2xl font-black text-white tracking-tight">{client.name}</h3>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-1">
+                            <h3 className="text-xl font-black text-white tracking-tight truncate">{client.name}</h3>
                             <button 
                               onClick={() => toggleClientStatus(client.id, client.isActive)}
-                              className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${
+                              className={`inline-flex items-center w-fit gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all shrink-0 ${
                                 client.isActive ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-white/5 text-white/40 border-white/10'
                               }`}
                             >
@@ -224,51 +235,52 @@ export default function AdminDashboard() {
                               {client.isActive ? 'Aktivní' : 'Neaktivní'}
                             </button>
                           </div>
-                          <div className="flex items-center gap-6 text-xs font-bold text-indigo-300/60">
+                          <div className="flex items-center gap-4 text-[11px] font-bold text-indigo-300/60 mt-2">
                             {client.googleDriveLink && (
-                              <a href={client.googleDriveLink} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-white transition-colors">
-                                <ExternalLink className="w-4 h-4" /> Disk
+                              <a href={client.googleDriveLink} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 hover:text-white transition-colors truncate">
+                                <ExternalLink className="w-3.5 h-3.5 shrink-0" /> <span className="truncate">Disk</span>
                               </a>
                             )}
-                            <span className="flex items-center gap-2"><Calendar className="w-4 h-4" /> {new Date(client.createdAt).toLocaleDateString('cs-CZ')}</span>
+                            <span className="flex items-center gap-1.5 shrink-0"><Calendar className="w-3.5 h-3.5" /> {new Date(client.createdAt).toLocaleDateString('cs-CZ')}</span>
                           </div>
                         </div>
                       </div>
                       
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap mt-4 xl:mt-0 justify-start sm:justify-end w-full sm:w-auto">
                         <button 
                           onClick={() => setActiveClientForEvent(client)}
-                          className="px-4 py-2.5 bg-indigo-900/40 text-indigo-300 hover:bg-indigo-600 hover:text-white rounded-xl border border-indigo-500/30 flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all active:scale-95"
+                          className="px-3 py-2 bg-indigo-900/40 text-indigo-300 hover:bg-indigo-600 hover:text-white rounded-lg border border-indigo-500/30 flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest transition-all active:scale-95"
                           title="Přidat událost"
                         >
-                          <Calendar className="w-4 h-4" /> Událost
+                          <Calendar className="w-3.5 h-3.5" /> Událost
                         </button>
                         <button 
                           onClick={() => setActiveClientForPost(client)}
-                          className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-lg shadow-indigo-500/20 flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all active:scale-95"
+                          className="px-3 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg shadow-lg shadow-indigo-500/20 flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest transition-all active:scale-95"
                         >
-                          <Plus className="w-4 h-4" /> Příspěvek
+                          <Plus className="w-3.5 h-3.5" /> Příspěvek
                         </button>
+                        <div className="w-px h-6 bg-white/10 mx-1 hidden sm:block"></div>
                         <button 
                           onClick={() => copyLink(client.shareableLinkId)} 
-                          className="p-3 text-white/70 hover:text-white hover:bg-white/10 rounded-xl border border-white/10 transition-all active:scale-95"
+                          className="p-2 text-white/50 hover:text-white hover:bg-white/10 rounded-lg border border-white/10 transition-all active:scale-95 shrink-0"
                           title="Kopírovat odkaz"
                         >
-                          <Copy className="w-5 h-5" />
+                          <Copy className="w-4 h-4" />
                         </button>
                         <Link 
                           to={`/client/${client.shareableLinkId}`} 
-                          className="p-3 text-white/70 hover:text-white hover:bg-white/10 rounded-xl border border-white/10 transition-all active:scale-95"
+                          className="p-2 text-white/50 hover:text-white hover:bg-white/10 rounded-lg border border-white/10 transition-all active:scale-95 shrink-0"
                           title="Zobrazit kalendář"
                         >
-                          <Calendar className="w-5 h-5" />
+                          <Calendar className="w-4 h-4" />
                         </Link>
                         <button 
                           onClick={() => setClientToDelete(client)} 
-                          className="p-3 text-white/20 hover:text-rose-500 hover:bg-rose-500/10 rounded-xl transition-all active:scale-95"
+                          className="p-2 text-white/20 hover:text-rose-500 hover:bg-rose-500/10 rounded-lg transition-all active:scale-95 shrink-0"
                           title="Smazat klienta"
                         >
-                          <Trash2 className="w-5 h-5" />
+                          <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
                     </div>

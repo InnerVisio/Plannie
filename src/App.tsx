@@ -130,10 +130,10 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <div className="min-h-screen bg-slate-900 font-sans selection:bg-indigo-500/30 overflow-x-hidden">
+        <div className="h-screen flex flex-col bg-slate-900 font-sans selection:bg-indigo-500/30 overflow-hidden overscroll-none">
           <Navigation />
           
-          <main>
+          <main className="flex-1 min-h-0 flex flex-col overflow-y-auto lg:overflow-hidden overscroll-none">
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route 

@@ -43,7 +43,7 @@ export default function AddEventModal({ clientId, onClose }: AddEventModalProps)
       <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-200 border border-slate-100">
         
         {/* Header */}
-        <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-indigo-100 text-indigo-600 rounded-xl">
               <CalendarIcon className="w-5 h-5" />
@@ -59,7 +59,7 @@ export default function AddEventModal({ clientId, onClose }: AddEventModalProps)
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 sm:space-y-5">
           <div className="space-y-1.5">
             <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Název události</label>
             <input
