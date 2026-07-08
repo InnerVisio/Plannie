@@ -338,30 +338,32 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
                   <p className="text-sm">Zatím žádné komentáře. Začněte konverzaci!</p>
                 </div>
               ) : (
-                comments.map(comment => {
-                  const isAdmin = comment.authorType === 'admin';
-                  return (
-                    <div 
-                      key={comment.id} 
-                      className={`flex flex-col max-w-[85%] ${isAdmin ? 'ml-auto items-end' : 'mr-auto items-start'}`}
-                    >
-                      <span className="text-[10px] sm:text-xs font-medium text-slate-500 mb-1 px-1">
-                        {comment.authorName === 'Agency' ? 'Agentura' : comment.authorName} • {format(new Date(comment.createdAt), 'd. M. H:mm', { locale: cs })}
-                      </span>
+                <>
+                  {comments.map(comment => {
+                    const isAdmin = comment.authorType === 'admin';
+                    return (
                       <div 
-                        className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs sm:text-sm ${
-                          isAdmin 
-                            ? 'bg-indigo-600 text-white rounded-tr-sm' 
-                            : 'bg-white border border-slate-200 text-slate-800 rounded-tl-sm shadow-sm'
-                        }`}
+                        key={comment.id} 
+                        className={`flex flex-col max-w-[85%] ${isAdmin ? 'ml-auto items-end' : 'mr-auto items-start'}`}
                       >
-                        {comment.text}
+                        <span className="text-[10px] sm:text-xs font-medium text-slate-500 mb-1 px-1">
+                          {comment.authorName === 'Agency' ? 'Agentura' : comment.authorName} • {format(new Date(comment.createdAt), 'd. M. H:mm', { locale: cs })}
+                        </span>
+                        <div 
+                          className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs sm:text-sm ${
+                            isAdmin 
+                              ? 'bg-indigo-600 text-white rounded-tr-sm' 
+                              : 'bg-white border border-slate-200 text-slate-800 rounded-tl-sm shadow-sm'
+                          }`}
+                        >
+                          {comment.text}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })
+                    );
+                  })}
+                  <div ref={commentsEndRef} />
+                </>
               )}
-              <div ref={commentsEndRef} />
             </div>
 
             {/* Comment Input */}
