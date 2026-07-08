@@ -3,10 +3,11 @@ import { doc, updateDoc, deleteDoc, collection, addDoc, query, where, orderBy, o
 import { db } from '../firebase';
 import { Post, Client, Comment } from '../types';
 import { useAuth } from '../contexts/AuthContext';
-import { X, Save, Send, Loader2, MessageSquare, Edit3, Check, XCircle, ArrowRight, Clock, Trash2 } from 'lucide-react';
+import { X, Save, Send, Loader2, MessageSquare, Edit3, Check, XCircle, ArrowRight, Clock, Trash2, Pencil } from 'lucide-react';
 import { format } from 'date-fns';
 import { cs } from 'date-fns/locale';
 import { handleFirestoreError, OperationType } from '../lib/firestore-errors';
+import EditPostModal from './EditPostModal';
 
 interface PostModalProps {
   post: Post;
@@ -38,6 +39,7 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
   const [newComment, setNewComment] = useState('');
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   
   const commentsEndRef = useRef<HTMLDivElement>(null);
 
@@ -167,9 +169,13 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
       handleFirestoreError(error, OperationType.DELETE, 'posts');
       alert('Nepodařilo se smazat příspěvek.');
     } finally {
-      setIsDeleting(false);
+    setIsDeleting(false);
     }
   };
+
+  if (isEditing) {
+    return <EditPostModal post={post} onClose={() => setIsEditing(false)} />;
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/50 backdrop-blur-sm">
@@ -185,14 +191,23 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
           </div>
           <div className="flex items-center gap-2">
             {currentUser && (
-              <button 
-                onClick={handleDelete}
-                disabled={isDeleting}
-                className="p-2 text-rose-400 hover:text-rose-600 hover:bg-rose-100 rounded-xl transition-colors disabled:opacity-50"
-                title="Smazat příspěvek"
-              >
-                {isDeleting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Trash2 className="w-5 h-5" />}
-              </button>
+              <>
+                <button 
+                  onClick={() => setIsEditing(true)}
+                  className="p-2 text-indigo-400 hover:text-indigo-600 hover:bg-indigo-100 rounded-xl transition-colors"
+                  title="Upravit příspěvek"
+                >
+                  <Pencil className="w-5 h-5" />
+                </button>
+                <button 
+                  onClick={handleDelete}
+                  disabled={isDeleting}
+                  className="p-2 text-rose-400 hover:text-rose-600 hover:bg-rose-100 rounded-xl transition-colors disabled:opacity-50"
+                  title="Smazat příspěvek"
+                >
+                  {isDeleting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Trash2 className="w-5 h-5" />}
+                </button>
+              </>
             )}
             <button 
               onClick={onClose}

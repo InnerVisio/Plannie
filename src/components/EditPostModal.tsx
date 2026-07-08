@@ -1,27 +1,26 @@
 import React, { useState } from 'react';
-import { collection, addDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { X, Loader2, Save, Calendar, Type, FileText, Link as LinkIcon, Film } from 'lucide-react';
 import { handleFirestoreError, OperationType } from '../lib/firestore-errors';
+import { Post } from '../types';
 
-interface AddPostModalProps {
-  clientId: string;
+interface EditPostModalProps {
+  post: Post;
   onClose: () => void;
-  initialDate?: Date;
 }
 
-export default function AddPostModal({ clientId, onClose, initialDate }: AddPostModalProps) {
-  const [title, setTitle] = useState('');
+export default function EditPostModal({ post, onClose }: EditPostModalProps) {
+  const [title, setTitle] = useState(post.title);
   
   // Format initial date for datetime-local input (YYYY-MM-DDTHH:mm)
-  const defaultDateStr = initialDate 
-    ? new Date(initialDate.getTime() - initialDate.getTimezoneOffset() * 60000).toISOString().slice(0, 16)
-    : '';
+  const initialDate = new Date(post.scheduledDate);
+  const defaultDateStr = new Date(initialDate.getTime() - initialDate.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
     
   const [scheduledDate, setScheduledDate] = useState(defaultDateStr);
-  const [postType, setPostType] = useState<'video' | 'post' | 'event'>('post');
-  const [description, setDescription] = useState('');
-  const [driveLink, setDriveLink] = useState('');
+  const [postType, setPostType] = useState(post.postType);
+  const [description, setDescription] = useState(post.description || '');
+  const [driveLink, setDriveLink] = useState(post.mediaUrls?.[0] || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,21 +29,19 @@ export default function AddPostModal({ clientId, onClose, initialDate }: AddPost
 
     setIsSubmitting(true);
     try {
-      await addDoc(collection(db, 'posts'), {
+      await updateDoc(doc(db, 'posts', post.id), {
         title,
         description,
         postType,
         mediaUrls: driveLink ? [driveLink] : [],
-        status: 'client_review',
         scheduledDate: new Date(scheduledDate).getTime(),
-        updatedAt: Date.now(),
-        clientId
+        updatedAt: Date.now()
       });
       
       onClose();
     } catch (error) {
-      handleFirestoreError(error, OperationType.CREATE, 'posts');
-      alert("Nepodařilo se uložit příspěvek. Zkontrolujte prosím svá oprávnění.");
+      handleFirestoreError(error, OperationType.UPDATE, `posts/${post.id}`);
+      alert("Nepodařilo se upravit příspěvek. Zkontrolujte prosím svá oprávnění.");
     } finally {
       setIsSubmitting(false);
     }
@@ -59,7 +56,7 @@ export default function AddPostModal({ clientId, onClose, initialDate }: AddPost
             <div className="p-2 bg-indigo-100 rounded-lg">
               <Calendar className="w-5 h-5 text-indigo-600" />
             </div>
-            <h2 className="text-xl font-bold text-slate-900">Naplánovat nový příspěvek</h2>
+            <h2 className="text-xl font-bold text-slate-900">Upravit příspěvek</h2>
           </div>
           <button 
             onClick={onClose}
