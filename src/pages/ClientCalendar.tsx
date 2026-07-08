@@ -185,8 +185,8 @@ export default function ClientCalendar() {
   const bgClass = getBackgroundStyles();
 
   return (
-    <div className={`flex-1 min-h-0 flex flex-col transition-colors duration-700 ${bgClass}`}>
-      <div className="max-w-[1400px] w-full mx-auto flex flex-col flex-1 min-h-0 space-y-4 sm:space-y-6 px-4 py-4 sm:py-6">
+    <div className={`flex-1 flex flex-col transition-colors duration-700 ${bgClass} min-h-max lg:min-h-full`}>
+      <div className="max-w-[1400px] w-full mx-auto flex flex-col flex-1 space-y-4 sm:space-y-6 px-4 py-4 sm:py-6 min-h-full">
         {/* Header Section */}
         <div className="shrink-0 flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-2xl bg-white/[0.08] border border-white/20 text-white">
           <div className="flex items-center gap-4">
@@ -220,10 +220,10 @@ export default function ClientCalendar() {
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-6">
-          <div className="flex-1 min-w-0 flex flex-col min-h-0">
+        <div className="flex-1 flex flex-col lg:flex-row gap-6 lg:min-h-0">
+          <div className="flex-1 min-w-0 flex flex-col lg:min-h-0">
             {/* Calendar Section */}
-            <div className="flex-1 flex flex-col min-h-0 bg-white/[0.08] border border-white/20 rounded-3xl overflow-hidden">
+            <div className="flex-1 flex flex-col bg-white/[0.08] border border-white/20 rounded-3xl lg:overflow-hidden">
                 {/* Calendar Controls */}
                 <div className="shrink-0 flex flex-col gap-4 px-4 sm:px-6 py-4 sm:py-5 border-b border-white/10 bg-white/5">
                   {/* Top Row: Navigation + Title + Add Buttons */}
@@ -321,7 +321,7 @@ export default function ClientCalendar() {
 
           {viewMode === 'month' ? (
             <>
-            <div className="flex-1 min-h-0 overflow-auto custom-scrollbar overscroll-none">
+            <div className="flex-1 min-h-0 overflow-x-auto overflow-y-visible lg:overflow-y-auto custom-scrollbar">
               <div className="min-w-[320px] h-full flex flex-col">
                 {/* Calendar Grid Header */}
                 <div className="grid grid-cols-7 gap-px border-b border-white/10 bg-white/10">
@@ -416,7 +416,7 @@ export default function ClientCalendar() {
           </>
           ) : viewMode === 'week' ? (
             <>
-            <div className="flex-1 min-h-0 overflow-auto custom-scrollbar overscroll-none">
+            <div className="flex-1 min-h-0 overflow-x-auto overflow-y-visible lg:overflow-y-auto custom-scrollbar">
               <div className="min-w-[600px] sm:min-w-[800px] lg:min-w-full grid grid-cols-[45px_repeat(7,1fr)] sm:grid-cols-[60px_repeat(7,1fr)] gap-px bg-white/10 relative">
                 
                 {/* Top-left empty corner, sticky */}
@@ -499,7 +499,7 @@ export default function ClientCalendar() {
             </div>
             </>
           ) : (
-            <div className="flex-1 min-h-0 p-6 bg-white/5 overflow-y-auto custom-scrollbar overscroll-none">
+            <div className="flex-1 min-h-0 p-6 bg-white/5 overflow-y-visible lg:overflow-y-auto custom-scrollbar">
               <ClientPostList 
                 posts={posts} 
                 onPostClick={setSelectedPost} 
