@@ -225,10 +225,10 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
           <section className="space-y-4">
             <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">Náhled média</h3>
             {previewUrl ? (
-              <div className="relative w-full aspect-video rounded-xl bg-slate-100 overflow-hidden border border-slate-200 shadow-inner">
+              <div className="relative w-full aspect-video min-h-[280px] sm:min-h-0 rounded-xl bg-slate-100 overflow-hidden border border-slate-200 shadow-inner">
                 <iframe 
                   src={previewUrl} 
-                  className="w-full h-full border-0"
+                  className="w-full h-full border-0 absolute inset-0"
                   allow="autoplay; fullscreen"
                   allowFullScreen
                   referrerPolicy="no-referrer"
