@@ -42,6 +42,14 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
   const [isEditing, setIsEditing] = useState(false);
   
   const commentsEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [description]);
 
   const previewUrl = post.mediaUrls && post.mediaUrls.length > 0 ? getDrivePreviewUrl(post.mediaUrls[0]) : '';
 
@@ -239,11 +247,13 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
             </div>
             
             {previewUrl ? (
-              <div className={`relative w-full ${post.postType === 'video' ? 'h-[500px]' : 'h-[350px]'} sm:h-auto sm:aspect-video rounded-xl bg-slate-100 overflow-hidden border border-slate-200 shadow-inner`}>
+              <div className={`relative w-full ${post.postType === 'video' || post.postType === 'reel' ? 'h-[500px]' : 'h-[350px]'} sm:h-auto sm:aspect-video rounded-xl bg-slate-100 overflow-hidden border border-slate-200 shadow-inner`}>
                 <iframe 
                   src={`${previewUrl}${previewUrl.includes('?') ? '&' : '?'}playsinline=1`} 
                   className="border-0 absolute top-0 left-0 w-[200%] h-[200%] scale-50 origin-top-left sm:relative sm:w-full sm:h-full sm:scale-100 sm:origin-center"
                   referrerPolicy="no-referrer"
+                  allowFullScreen
+                  allow="fullscreen"
                 />
               </div>
             ) : (
@@ -315,9 +325,10 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
 
             <div className="relative">
               <textarea
+                ref={textareaRef}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full min-h-[120px] p-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all resize-y"
+                className="w-full min-h-[120px] p-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all resize-none overflow-hidden"
                 placeholder="Zde napište popisek k příspěvku..."
               />
               <div className="flex justify-end mt-3">

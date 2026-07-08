@@ -37,6 +37,14 @@ export default function ClientPostModal({ post, client, onClose }: ClientPostMod
   const [isSavingDescription, setIsSavingDescription] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const commentsEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  
+  useEffect(() => {
+    if (textareaRef.current && isEditingDescription) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [editedDescription, isEditingDescription]);
   
   const scrollToBottom = () => {
     commentsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -177,13 +185,13 @@ export default function ClientPostModal({ post, client, onClose }: ClientPostMod
           <div className="space-y-2">
             <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">Náhled média</h3>
             {previewUrl ? (
-              <div className="relative w-full aspect-video rounded-xl bg-slate-100 overflow-hidden border border-slate-200 shadow-inner">
+              <div className={`relative w-full ${post.postType === 'video' || post.postType === 'reel' ? 'h-[500px]' : 'h-[350px]'} sm:h-auto sm:aspect-video rounded-xl bg-slate-100 overflow-hidden border border-slate-200 shadow-inner`}>
                 <iframe 
-                  src={previewUrl} 
-                  className="w-full h-full border-0"
-                  allow="autoplay; fullscreen"
-                  allowFullScreen
+                  src={`${previewUrl}${previewUrl.includes('?') ? '&' : '?'}playsinline=1`} 
+                  className="border-0 absolute top-0 left-0 w-[200%] h-[200%] scale-50 origin-top-left sm:relative sm:w-full sm:h-full sm:scale-100 sm:origin-center"
                   referrerPolicy="no-referrer"
+                  allowFullScreen
+                  allow="fullscreen"
                 />
               </div>
             ) : (
@@ -212,9 +220,10 @@ export default function ClientPostModal({ post, client, onClose }: ClientPostMod
             {isEditingDescription ? (
               <div className="space-y-3">
                 <textarea
+                  ref={textareaRef}
                   value={editedDescription}
                   onChange={(e) => setEditedDescription(e.target.value)}
-                  className="w-full min-h-[120px] p-4 bg-slate-50 border border-indigo-200 rounded-xl text-slate-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all resize-none"
+                  className="w-full min-h-[120px] p-4 bg-slate-50 border border-indigo-200 rounded-xl text-slate-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all resize-none overflow-hidden"
                   placeholder="Zadejte nový popisek..."
                 />
                 <div className="flex justify-end gap-2">
