@@ -242,7 +242,7 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
               <div className={`relative w-full ${post.postType === 'video' ? 'h-[500px]' : 'h-[350px]'} sm:h-auto sm:aspect-video rounded-xl bg-slate-100 overflow-hidden border border-slate-200 shadow-inner`}>
                 <iframe 
                   src={`${previewUrl}${previewUrl.includes('?') ? '&' : '?'}playsinline=1`} 
-                  className="w-full h-full border-0 absolute inset-0 sm:relative"
+                  className="border-0 absolute top-0 left-0 w-[200%] h-[200%] scale-50 origin-top-left sm:relative sm:w-full sm:h-full sm:scale-100 sm:origin-center"
                   referrerPolicy="no-referrer"
                 />
               </div>
