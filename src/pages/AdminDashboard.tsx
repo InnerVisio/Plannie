@@ -3,10 +3,11 @@ import { collection, addDoc, onSnapshot, query, orderBy, doc, updateDoc, deleteD
 import { db } from '../firebase';
 import { Client } from '../types';
 import { Link } from 'react-router-dom';
-import { ExternalLink, Copy, Plus, Users, CheckCircle2, XCircle, Trash2, Loader2, Calendar, AlertTriangle } from 'lucide-react';
+import { ExternalLink, Copy, Plus, Users, CheckCircle2, XCircle, Trash2, Loader2, Calendar, AlertTriangle, FileText } from 'lucide-react';
 import { handleFirestoreError, OperationType } from '../lib/firestore-errors';
 import AddPostModal from '../components/AddPostModal';
 import AddEventModal from '../components/AddEventModal';
+import ManageAnalyticsModal from '../components/ManageAnalyticsModal';
 
 export default function AdminDashboard() {
   const [clients, setClients] = useState<Client[]>([]);
@@ -22,6 +23,7 @@ export default function AdminDashboard() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [activeClientForPost, setActiveClientForPost] = useState<Client | null>(null);
   const [activeClientForEvent, setActiveClientForEvent] = useState<Client | null>(null);
+  const [managingAnalyticsFor, setManagingAnalyticsFor] = useState<Client | null>(null);
 
   // Real-time listener for clients
   useEffect(() => {
@@ -266,6 +268,13 @@ export default function AdminDashboard() {
                           >
                             <Copy className="w-4 h-4" />
                           </button>
+                          <button 
+                            onClick={() => setManagingAnalyticsFor(client)} 
+                            className="flex items-center justify-center p-3 sm:p-2.5 text-white/50 hover:text-white hover:bg-indigo-500/20 hover:text-indigo-300 rounded-xl border border-white/10 transition-all active:scale-95 bg-white/5 sm:bg-transparent"
+                            title="Analytika (PDF Reporty)"
+                          >
+                            <FileText className="w-4 h-4" />
+                          </button>
                           <Link 
                             to={`/client/${client.shareableLinkId}`} 
                             className="flex items-center justify-center p-3 sm:p-2.5 text-white/50 hover:text-white hover:bg-white/10 rounded-xl border border-white/10 transition-all active:scale-95 bg-white/5 sm:bg-transparent"
@@ -324,10 +333,15 @@ export default function AdminDashboard() {
           </div>
         </div>
       )}
+
+      {/* Analytics Modal */}
+      {managingAnalyticsFor && (
+        <ManageAnalyticsModal 
+          client={managingAnalyticsFor}
+          onClose={() => setManagingAnalyticsFor(null)}
+        />
+      )}
       </div>
     </div>
   );
 }
-
-
-

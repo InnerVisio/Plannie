@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { X, Loader2, Save, Calendar, Type, FileText, Link as LinkIcon, Film } from 'lucide-react';
+import { X, Loader2, Save, Calendar, Type, FileText, Link as LinkIcon, Film, Plus, Trash2 } from 'lucide-react';
 import { handleFirestoreError, OperationType } from '../lib/firestore-errors';
 import { Post } from '../types';
 
@@ -20,7 +20,7 @@ export default function EditPostModal({ post, onClose }: EditPostModalProps) {
   const [scheduledDate, setScheduledDate] = useState(defaultDateStr);
   const [postType, setPostType] = useState(post.postType);
   const [description, setDescription] = useState(post.description || '');
-  const [driveLink, setDriveLink] = useState(post.mediaUrls?.[0] || '');
+  const [mediaUrls, setMediaUrls] = useState<string[]>(post.mediaUrls?.length ? post.mediaUrls : ['']);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,7 +33,7 @@ export default function EditPostModal({ post, onClose }: EditPostModalProps) {
         title,
         description,
         postType,
-        mediaUrls: driveLink ? [driveLink] : [],
+        mediaUrls: mediaUrls.filter(url => url.trim() !== ''),
         scheduledDate: new Date(scheduledDate).getTime(),
         updatedAt: Date.now()
       });
@@ -132,19 +132,52 @@ export default function EditPostModal({ post, onClose }: EditPostModalProps) {
             />
           </div>
 
-          {/* Google Drive Link */}
-          <div>
-            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-1.5">
-              <LinkIcon className="w-4 h-4 text-slate-400" />
-              Odkaz na média na Google Disku
-            </label>
-            <input
-              type="text"
-              value={driveLink}
-              onChange={(e) => setDriveLink(e.target.value)}
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
-              placeholder="https://drive.google.com/..."
-            />
+          {/* Google Drive Links */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+                <LinkIcon className="w-4 h-4 text-slate-400" />
+                Odkazy na média
+              </label>
+            </div>
+            
+            {mediaUrls.map((url, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={url}
+                  onChange={(e) => {
+                    const newUrls = [...mediaUrls];
+                    newUrls[index] = e.target.value;
+                    setMediaUrls(newUrls);
+                  }}
+                  className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+                  placeholder="https://drive.google.com/..."
+                />
+                {mediaUrls.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const newUrls = mediaUrls.filter((_, i) => i !== index);
+                      setMediaUrls(newUrls);
+                    }}
+                    className="p-2.5 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-colors"
+                    title="Odstranit odkaz"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
+            ))}
+            
+            <button
+              type="button"
+              onClick={() => setMediaUrls([...mediaUrls, ''])}
+              className="flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-700 px-2 py-1.5 rounded-lg hover:bg-indigo-50 transition-colors"
+            >
+              <Plus className="w-4 h-4" />
+              Přidat další odkaz
+            </button>
           </div>
 
           {/* Footer Actions */}

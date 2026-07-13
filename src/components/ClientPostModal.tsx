@@ -2,11 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { doc, updateDoc, collection, addDoc, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Post, Client, Comment } from '../types';
-import { X, CheckCircle2, AlertCircle, Clock, Calendar as CalendarIcon, Send, MessageSquare, Pencil, Save, RotateCcw } from 'lucide-react';
+import { X, CheckCircle2, AlertCircle, Clock, Calendar as CalendarIcon, Send, MessageSquare, Pencil, Save, RotateCcw, ChevronLeft, ChevronRight } from 'lucide-react';
 import { format } from 'date-fns';
 import { cs } from 'date-fns/locale';
 import { handleFirestoreError, OperationType } from '../lib/firestore-errors';
 import { useAuth } from '../contexts/AuthContext';
+import { sendNotificationEmail } from '../lib/email';
+import { getGoogleCalendarUrl } from '../lib/calendar';
+import { getEmbedUrl } from '../lib/media';
 
 interface ClientPostModalProps {
   post: Post;
@@ -14,19 +17,7 @@ interface ClientPostModalProps {
   onClose: () => void;
 }
 
-/**
- * Robust function to extract Google Drive File ID and return a preview URL.
- */
-const getDrivePreviewUrl = (url: string) => {
-  if (!url) return '';
-  // Regex to match various Google Drive/Docs URL formats and extract the ID
-  const driveRegex = /(?:https?:\/\/)?(?:drive|docs)\.google\.com\/(?:(?:file|presentation|document|spreadsheets)\/d\/|open\?id=)([-\w]{25,})/;
-  const match = url.match(driveRegex);
-  if (match && match[1]) {
-    return `https://drive.google.com/file/d/${match[1]}/preview`;
-  }
-  return url;
-};
+
 
 export default function ClientPostModal({ post, client, onClose }: ClientPostModalProps) {
   const { currentUser } = useAuth();
@@ -36,6 +27,19 @@ export default function ClientPostModal({ post, client, onClose }: ClientPostMod
   const [editedDescription, setEditedDescription] = useState(post.pendingDescription || post.description || '');
   const [isSavingDescription, setIsSavingDescription] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
+  const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+  
+  // Zamezit rolování stránky na pozadí
+  useEffect(() => {
+    // Prevent background scrolling
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = 'hidden';
+    
+    return () => {
+      document.body.style.overflow = originalStyle;
+    };
+  }, []);
+
   const commentsEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   
@@ -73,10 +77,22 @@ export default function ClientPostModal({ post, client, onClose }: ClientPostMod
 
   const handleUpdateStatus = async (newStatus: 'approved' | 'needs_revision') => {
     try {
+      const isClientAction = !currentUser;
       await updateDoc(doc(db, 'posts', post.id), {
         status: newStatus,
-        updatedAt: Date.now()
+        updatedAt: Date.now(),
+        ...(newStatus === 'needs_revision' && isClientAction ? { requiresAction: true } : {})
       });
+
+      if (newStatus === 'needs_revision' && isClientAction) {
+        sendNotificationEmail(
+          'daniel@innervisio.cz', // You can change this to a dynamic setting later
+          client?.name || 'Klient',
+          post.title,
+          'revision'
+        );
+      }
+
       onClose();
     } catch (error) {
       handleFirestoreError(error, OperationType.UPDATE, `posts/${post.id}`);
@@ -100,6 +116,22 @@ export default function ClientPostModal({ post, client, onClose }: ClientPostMod
         authorType,
         createdAt: Date.now()
       });
+
+      // Update post to mark as requiring action if client commented
+      if (authorType === 'client') {
+        await updateDoc(doc(db, 'posts', post.id), {
+          requiresAction: true,
+          updatedAt: Date.now()
+        });
+
+        sendNotificationEmail(
+          'daniel@innervisio.cz', // You can change this to a dynamic setting later
+          client?.name || 'Klient',
+          post.title,
+          'comment'
+        );
+      }
+
       setCommentText('');
     } catch (error) {
       handleFirestoreError(error, OperationType.CREATE, 'comments');
@@ -151,11 +183,15 @@ export default function ClientPostModal({ post, client, onClose }: ClientPostMod
       label: 'Plánováno',
       color: 'bg-indigo-100 text-indigo-700 border-indigo-200',
       icon: <CalendarIcon className="w-3.5 h-3.5" />
+    },
+    published: {
+      label: 'Publikováno',
+      color: 'bg-emerald-600 text-white border-emerald-700',
+      icon: <CheckCircle2 className="w-3.5 h-3.5 text-white" />
     }
   };
 
   const currentStatus = statusConfig[post.status] || statusConfig.client_review;
-  const previewUrl = post.mediaUrls && post.mediaUrls.length > 0 ? getDrivePreviewUrl(post.mediaUrls[0]) : '';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
@@ -165,10 +201,21 @@ export default function ClientPostModal({ post, client, onClose }: ClientPostMod
         <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
           <div>
             <h2 className="text-xl font-bold text-slate-900">{post.title}</h2>
-            <p className="text-sm text-slate-500 mt-0.5 flex items-center gap-1.5">
-              <CalendarIcon className="w-3.5 h-3.5" />
-              {format(new Date(post.scheduledDate), "d. MMMM yyyy 'v' H:mm", { locale: cs })}
-            </p>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-1.5">
+              <p className="text-sm text-slate-500 flex items-center gap-1.5">
+                <CalendarIcon className="w-3.5 h-3.5" />
+                {format(new Date(post.scheduledDate), "d. MMMM yyyy 'v' H:mm", { locale: cs })}
+              </p>
+              <a
+                href={getGoogleCalendarUrl(post, client?.name || 'Klient')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-slate-100 hover:bg-slate-200 hover:text-slate-700 px-2.5 py-1 rounded-md transition-colors"
+              >
+                <CalendarIcon className="w-3 h-3" />
+                Přidat do G. Kalendáře
+              </a>
+            </div>
           </div>
           <button 
             onClick={onClose}
@@ -184,15 +231,44 @@ export default function ClientPostModal({ post, client, onClose }: ClientPostMod
           {/* Media Preview */}
           <div className="space-y-2">
             <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">Náhled média</h3>
-            {previewUrl ? (
-              <div className={`relative w-full ${post.postType === 'video' || post.postType === 'reel' ? 'h-[500px]' : 'h-[350px]'} sm:h-auto sm:aspect-video rounded-xl bg-slate-100 overflow-hidden border border-slate-200 shadow-inner`}>
-                <iframe 
-                  src={`${previewUrl}${previewUrl.includes('?') ? '&' : '?'}playsinline=1`} 
-                  className="border-0 absolute top-0 left-0 w-[200%] h-[200%] scale-50 origin-top-left sm:relative sm:w-full sm:h-full sm:scale-100 sm:origin-center"
-                  referrerPolicy="no-referrer"
-                  allowFullScreen
-                  allow="fullscreen"
-                />
+            {post.mediaUrls && post.mediaUrls.length > 0 ? (
+              <div className="relative group">
+                <div className={`relative w-full ${post.postType === 'video' || post.postType === 'reel' ? 'h-[500px]' : 'h-[350px]'} sm:h-auto sm:aspect-video rounded-xl bg-slate-100 overflow-hidden border border-slate-200 shadow-inner`}>
+                  <iframe 
+                    key={currentMediaIndex}
+                    src={`${getEmbedUrl(post.mediaUrls[currentMediaIndex])}${getEmbedUrl(post.mediaUrls[currentMediaIndex]).includes('?') ? '&' : '?'}playsinline=1`} 
+                    className="border-0 absolute top-0 left-0 w-[200%] h-[200%] scale-50 origin-top-left sm:relative sm:w-full sm:h-full sm:scale-100 sm:origin-center"
+                    referrerPolicy="no-referrer"
+                    allowFullScreen
+                    allow="fullscreen"
+                  />
+                </div>
+                
+                {post.mediaUrls.length > 1 && (
+                  <>
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); setCurrentMediaIndex(prev => prev > 0 ? prev - 1 : post.mediaUrls!.length - 1); }}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-white/80 text-slate-700 shadow-md backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white hover:scale-110"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); setCurrentMediaIndex(prev => prev < post.mediaUrls!.length - 1 ? prev + 1 : 0); }}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-white/80 text-slate-700 shadow-md backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white hover:scale-110"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                    
+                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-black/40 px-2.5 py-1.5 rounded-full backdrop-blur-sm">
+                      {post.mediaUrls.map((_, idx) => (
+                        <div 
+                          key={idx} 
+                          className={`w-1.5 h-1.5 rounded-full transition-all ${idx === currentMediaIndex ? 'bg-white scale-110' : 'bg-white/40'}`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             ) : (
               <div className="w-full aspect-video rounded-xl bg-slate-50 border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400">

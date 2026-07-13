@@ -11,7 +11,8 @@ import {
   Video, 
   Image as ImageIcon, 
   ExternalLink, 
-  Check 
+  Check,
+  FileWarning
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { cs } from 'date-fns/locale';
@@ -134,21 +135,22 @@ export default function MasterDashboard() {
           {/* Action Required Column */}
           <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 space-y-6">
             <div className="flex items-center gap-2.5 pb-2 border-b border-white/10">
-              <AlertCircle className="w-5 h-5 text-rose-400" />
+              <FileWarning className="w-5 h-5 text-rose-400" />
               <h2 className="text-lg font-black text-white uppercase tracking-wider">Vyžaduje akci ({actionRequired.length})</h2>
             </div>
             <div className="space-y-4 max-h-[70vh] overflow-y-auto px-2 py-2 -mx-2 -my-2 pr-1 custom-scrollbar">
               {actionRequired.length === 0 ? (
-                <p className="text-slate-500 text-sm py-4 text-center italic">Vše je hotovo!</p>
+                <p className="text-slate-500 text-sm py-4 text-center italic">Vše vyřešeno, skvělá práce!</p>
               ) : (
                 actionRequired.map(post => {
                   const client = getClientForPost(post);
                   const isVideo = post.postType === 'video' || post.postType === 'reel';
+                  const needsAttention = post.requiresAction || post.status === 'needs_revision';
                   return (
                     <div 
                       key={post.id} 
                       onClick={() => setSelectedPost(post)}
-                      className="p-5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-2xl cursor-pointer transition-all duration-300 group flex flex-col gap-3 shadow-md hover:scale-[1.02]"
+                      className={`p-5 bg-white/5 hover:bg-white/10 border ${needsAttention ? 'border-rose-500/50 shadow-rose-500/10 hover:border-rose-400' : 'border-white/10 hover:border-white/20'} rounded-2xl cursor-pointer transition-all duration-300 group flex flex-col gap-3 shadow-md hover:scale-[1.02]`}
                     >
                       <div className="flex items-center gap-3">
                         {client?.logoUrl ? (
@@ -162,6 +164,11 @@ export default function MasterDashboard() {
                           <p className="text-white font-black text-sm group-hover:text-indigo-300 transition-colors truncate max-w-[180px]">{post.title}</p>
                           <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{client?.name || 'Neznámý klient'}</p>
                         </div>
+                        {post.requiresAction && (
+                          <div className="ml-auto" title="Klient přidal komentář">
+                            <AlertCircle className="w-4 h-4 text-rose-400 animate-pulse" />
+                          </div>
+                        )}
                       </div>
                       <div className="flex items-center justify-between text-[11px] text-slate-400 border-t border-white/5 pt-2">
                         <span className="flex items-center gap-1.5 font-bold">

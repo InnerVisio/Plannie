@@ -7,6 +7,7 @@ import PostModal from '../components/PostModal';
 import ClientPostModal from '../components/ClientPostModal';
 import AddPostModal from '../components/AddPostModal';
 import AddEventModal from '../components/AddEventModal';
+import ClientAnalyticsModal from '../components/ClientAnalyticsModal';
 import ClientPostList from '../components/ClientPostList';
 import { useAuth } from '../contexts/AuthContext';
 import { 
@@ -24,7 +25,7 @@ import {
   eachDayOfInterval 
 } from 'date-fns';
 import { cs } from 'date-fns/locale';
-import { ChevronLeft, ChevronRight, ExternalLink, Video, Image as ImageIcon, Loader2, Plus, CheckCircle2, AlertCircle, Clock, Calendar as CalendarIcon, List as ListIcon } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ExternalLink, Video, Image as ImageIcon, Loader2, Plus, CheckCircle2, AlertCircle, Clock, Calendar as CalendarIcon, List as ListIcon, FileText } from 'lucide-react';
 
 import { handleFirestoreError, OperationType } from '../lib/firestore-errors';
 import { getHolidayForDate } from '../lib/holidays';
@@ -44,6 +45,7 @@ export default function ClientCalendar() {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [isAddingPost, setIsAddingPost] = useState(false);
   const [isAddingEvent, setIsAddingEvent] = useState(false);
+  const [isAnalyticsOpen, setIsAnalyticsOpen] = useState(false);
   const [addingPostDate, setAddingPostDate] = useState<Date | undefined>(undefined);
   const [viewMode, setViewMode] = useState<'week' | 'month' | 'list'>('week');
 
@@ -78,13 +80,12 @@ export default function ClientCalendar() {
           id: doc.id,
           ...doc.data()
         })) as Post[];
-      const activePosts = postsData.filter(post => post.status !== 'published');
-      setPosts(activePosts);
+      setPosts(postsData);
       
       // Update selectedPost if it's currently open and got modified
       setSelectedPost(current => {
         if (!current) return null;
-        const updatedPost = activePosts.find(p => p.id === current.id);
+        const updatedPost = postsData.find(p => p.id === current.id);
         return updatedPost || null;
       });
     }, (error) => {
@@ -152,8 +153,7 @@ export default function ClientCalendar() {
   const combinedUpcoming = posts
     .filter(post => {
       const isFuture = post.scheduledDate >= new Date().setHours(0,0,0,0);
-      const isNotPublished = post.postType === 'event' || post.status !== 'published';
-      return isFuture && isNotPublished;
+      return isFuture;
     })
     .sort((a, b) => a.scheduledDate - b.scheduledDate)
     .slice(0, 7);
@@ -203,7 +203,14 @@ export default function ClientCalendar() {
             </div>
           </div>
           
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => setIsAnalyticsOpen(true)}
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white text-sm font-bold rounded-xl transition-all active:scale-95"
+            >
+              <FileText className="w-4 h-4" />
+              Analytika
+            </button>
             {client.googleDriveLink && (
               <a 
                 href={client.googleDriveLink} 
@@ -212,7 +219,7 @@ export default function ClientCalendar() {
                 className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl transition-all shadow-lg shadow-blue-500/30 active:scale-95"
               >
                 <ExternalLink className="w-4 h-4" />
-                Otevřít složku na disku
+                Složka
               </a>
             )}
           </div>
@@ -601,8 +608,15 @@ export default function ClientCalendar() {
           initialDate={addingPostDate}
         />
       )}
+
+      {/* Analytics Modal */}
+      {isAnalyticsOpen && (
+        <ClientAnalyticsModal 
+          client={client}
+          onClose={() => setIsAnalyticsOpen(false)}
+        />
+      )}
       </div>
     </div>
   );
 }
-

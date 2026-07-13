@@ -3,11 +3,13 @@ import { doc, updateDoc, deleteDoc, collection, addDoc, query, where, orderBy, o
 import { db } from '../firebase';
 import { Post, Client, Comment } from '../types';
 import { useAuth } from '../contexts/AuthContext';
-import { X, Save, Send, Loader2, MessageSquare, Edit3, Check, XCircle, ArrowRight, Clock, Trash2, Pencil } from 'lucide-react';
+import { X, Save, Send, Loader2, MessageSquare, Edit3, Check, XCircle, ArrowRight, Clock, Trash2, Pencil, AlertCircle, CheckCircle2, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 import { format } from 'date-fns';
 import { cs } from 'date-fns/locale';
 import { handleFirestoreError, OperationType } from '../lib/firestore-errors';
 import EditPostModal from './EditPostModal';
+import { getGoogleCalendarUrl } from '../lib/calendar';
+import { getEmbedUrl } from '../lib/media';
 
 interface PostModalProps {
   post: Post;
@@ -15,25 +17,13 @@ interface PostModalProps {
   onClose: () => void;
 }
 
-/**
- * Robust function to extract Google Drive File ID and return a preview URL.
- */
-const getDrivePreviewUrl = (url: string) => {
-  if (!url) return '';
-  // Regex to match various Google Drive/Docs URL formats and extract the ID
-  const driveRegex = /(?:https?:\/\/)?(?:drive|docs)\.google\.com\/(?:(?:file|presentation|document|spreadsheets)\/d\/|open\?id=)([-\w]{25,})/;
-  const match = url.match(driveRegex);
-  if (match && match[1]) {
-    return `https://drive.google.com/file/d/${match[1]}/preview`;
-  }
-  return url;
-};
 
 export default function PostModal({ post, client, onClose }: PostModalProps) {
   const { currentUser } = useAuth();
   const [description, setDescription] = useState(post.description || '');
   const [isSavingDesc, setIsSavingDesc] = useState(false);
   const [isProcessingPending, setIsProcessingPending] = useState(false);
+  const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
   
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
@@ -42,6 +32,17 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
   const [isEditing, setIsEditing] = useState(false);
   
   const commentsEndRef = useRef<HTMLDivElement>(null);
+
+  // Zamezit rolování stránky na pozadí
+  useEffect(() => {
+    // Prevent background scrolling
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = 'hidden';
+    
+    return () => {
+      document.body.style.overflow = originalStyle;
+    };
+  }, []);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -51,7 +52,7 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
     }
   }, [description]);
 
-  const previewUrl = post.mediaUrls && post.mediaUrls.length > 0 ? getDrivePreviewUrl(post.mediaUrls[0]) : '';
+
 
   // Fetch comments in real-time
   useEffect(() => {
@@ -117,6 +118,18 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
       alert("Nepodařilo se odmítnout popisek.");
     } finally {
       setIsProcessingPending(false);
+    }
+  };
+
+  const handleResolveAction = async () => {
+    try {
+      await updateDoc(doc(db, 'posts', post.id), {
+        requiresAction: false,
+        updatedAt: Date.now()
+      });
+    } catch (error) {
+      handleFirestoreError(error, OperationType.UPDATE, `posts/${post.id}`);
+      alert("Nepodařilo se odškrtnout akci.");
     }
   };
 
@@ -193,9 +206,20 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
         <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
           <div>
             <h2 className="text-xl font-bold text-slate-900">{post.title}</h2>
-            <p className="text-sm text-slate-500 mt-0.5">
-              Naplánováno na {format(new Date(post.scheduledDate), "d. MMMM yyyy 'v' H:mm", { locale: cs })}
-            </p>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-1.5">
+              <p className="text-sm text-slate-500">
+                Naplánováno na {format(new Date(post.scheduledDate), "d. MMMM yyyy 'v' H:mm", { locale: cs })}
+              </p>
+              <a
+                href={getGoogleCalendarUrl(post, client?.name || 'Klient')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-slate-100 hover:bg-slate-200 hover:text-slate-700 px-2.5 py-1 rounded-md transition-colors"
+              >
+                <Calendar className="w-3 h-3" />
+                Přidat do G. Kalendáře
+              </a>
+            </div>
           </div>
           <div className="flex items-center gap-2">
             {currentUser && (
@@ -229,32 +253,82 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
         {/* Scrollable Body */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 sm:space-y-8 custom-scrollbar">
           
+          {post.requiresAction && (
+            <div className="bg-rose-50 border border-rose-200 rounded-2xl p-4 flex items-center justify-between shadow-sm animate-in fade-in slide-in-from-top-2">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center text-rose-600">
+                  <AlertCircle className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-rose-800">Vyžaduje vaši akci</h3>
+                  <p className="text-sm text-rose-600 font-medium mt-0.5">Klient přidal komentář nebo vrátil k revizi.</p>
+                </div>
+              </div>
+              <button 
+                onClick={handleResolveAction}
+                className="flex items-center gap-2 px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-sm font-bold rounded-xl transition-all shadow-md shadow-rose-600/20 active:scale-95"
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                Vyřešeno
+              </button>
+            </div>
+          )}
+
           {/* Media Preview Section */}
           <section className="space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">Náhled média</h3>
-              {previewUrl && (
+              {post.mediaUrls && post.mediaUrls.length > 0 && (
                 <a 
-                  href={post.mediaUrls[0]} 
+                  href={post.mediaUrls[currentMediaIndex]} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-xs font-bold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5"
                 >
                   <ArrowRight className="w-3.5 h-3.5" />
-                  Otevřít na Disku
+                  Otevřít zdroj
                 </a>
               )}
             </div>
             
-            {previewUrl ? (
-              <div className={`relative w-full ${post.postType === 'video' || post.postType === 'reel' ? 'h-[500px]' : 'h-[350px]'} sm:h-auto sm:aspect-video rounded-xl bg-slate-100 overflow-hidden border border-slate-200 shadow-inner`}>
-                <iframe 
-                  src={`${previewUrl}${previewUrl.includes('?') ? '&' : '?'}playsinline=1`} 
-                  className="border-0 absolute top-0 left-0 w-[200%] h-[200%] scale-50 origin-top-left sm:relative sm:w-full sm:h-full sm:scale-100 sm:origin-center"
-                  referrerPolicy="no-referrer"
-                  allowFullScreen
-                  allow="fullscreen"
-                />
+            {post.mediaUrls && post.mediaUrls.length > 0 ? (
+              <div className="relative group">
+                <div className={`relative w-full ${post.postType === 'video' || post.postType === 'reel' ? 'h-[500px]' : 'h-[350px]'} sm:h-auto sm:aspect-video rounded-xl bg-slate-100 overflow-hidden border border-slate-200 shadow-inner`}>
+                  <iframe 
+                    key={currentMediaIndex}
+                    src={`${getEmbedUrl(post.mediaUrls[currentMediaIndex])}${getEmbedUrl(post.mediaUrls[currentMediaIndex]).includes('?') ? '&' : '?'}playsinline=1`} 
+                    className="border-0 absolute top-0 left-0 w-[200%] h-[200%] scale-50 origin-top-left sm:relative sm:w-full sm:h-full sm:scale-100 sm:origin-center"
+                    referrerPolicy="no-referrer"
+                    allowFullScreen
+                    allow="fullscreen"
+                  />
+                </div>
+                
+                {post.mediaUrls.length > 1 && (
+                  <>
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); setCurrentMediaIndex(prev => prev > 0 ? prev - 1 : post.mediaUrls!.length - 1); }}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-white/80 text-slate-700 shadow-md backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white hover:scale-110"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); setCurrentMediaIndex(prev => prev < post.mediaUrls!.length - 1 ? prev + 1 : 0); }}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-white/80 text-slate-700 shadow-md backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white hover:scale-110"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                    
+                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-black/40 px-2.5 py-1.5 rounded-full backdrop-blur-sm">
+                      {post.mediaUrls.map((_, idx) => (
+                        <div 
+                          key={idx} 
+                          className={`w-1.5 h-1.5 rounded-full transition-all ${idx === currentMediaIndex ? 'bg-white scale-110' : 'bg-white/40'}`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             ) : (
               <div className="w-full aspect-video rounded-xl bg-slate-50 border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400">

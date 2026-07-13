@@ -19,6 +19,7 @@ export interface Post {
   scheduledDate: number;
   mediaUrls: string[];
   updatedAt: number;
+  requiresAction?: boolean;
   pendingDescription?: string;
   comments?: {
     text: string;
@@ -41,4 +42,12 @@ export interface CustomEvent {
   clientId: string;
   name: string;
   date: number;
+}
+
+export interface AnalyticsReport {
+  id: string;
+  clientId: string;
+  title: string;
+  pdfUrl: string;
+  createdAt: number;
 }

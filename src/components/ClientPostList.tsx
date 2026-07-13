@@ -58,6 +58,11 @@ export default function ClientPostList({ posts, onPostClick, onShowInCalendar }:
             statusIcon = <CalendarIcon className="w-4 h-4" />;
             statusText = 'Plánováno';
             break;
+          case 'published':
+            statusColor = 'text-emerald-400';
+            statusIcon = <CheckCircle2 className="w-4 h-4" />;
+            statusText = 'Publikováno';
+            break;
         }
 
         if (isEvent) {
