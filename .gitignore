@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Local implementation plans — working notes, not project docs
+*_PLAN.md

@@ -2,10 +2,9 @@
   "name": "Plannie",
   "short_name": "Plannie",
   "description": "Agenturní plánovací kalendář pro klienty",
-  "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#0f172a",
+  "background_color": "#F4F5F7",
+  "theme_color": "#F4F5F7",
   "icons": [
     {
       "src": "/icon-192.png",

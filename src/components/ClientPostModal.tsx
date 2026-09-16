@@ -2,14 +2,23 @@ import React, { useState, useRef, useEffect } from 'react';
 import { doc, updateDoc, collection, addDoc, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Post, Client, Comment } from '../types';
-import { X, CheckCircle2, AlertCircle, Clock, Calendar as CalendarIcon, Send, MessageSquare, Pencil, Save, RotateCcw, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  AlertCircle, Clock, Calendar as CalendarIcon, Send, MessageSquare, Pencil, RotateCcw,
+  ChevronLeft, ChevronRight, CheckCircle2,
+} from 'lucide-react';
 import { format } from 'date-fns';
 import { cs } from 'date-fns/locale';
 import { handleFirestoreError, OperationType } from '../lib/firestore-errors';
 import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
 import { sendNotificationEmail } from '../lib/email';
 import { getGoogleCalendarUrl } from '../lib/calendar';
 import { getEmbedUrl } from '../lib/media';
+import { getPostMeta } from '../lib/status';
+import { NOTIFICATION_EMAIL } from '../lib/config';
+import { logActivity } from '../lib/activity';
+import { Modal, Button, IconButton, Textarea, Badge } from './ui';
+import CopyTextButton from './CopyTextButton';
 
 interface ClientPostModalProps {
   post: Post;
@@ -17,10 +26,9 @@ interface ClientPostModalProps {
   onClose: () => void;
 }
 
-
-
 export default function ClientPostModal({ post, client, onClose }: ClientPostModalProps) {
   const { currentUser } = useAuth();
+  const { toast } = useToast();
   const [commentText, setCommentText] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
@@ -28,50 +36,19 @@ export default function ClientPostModal({ post, client, onClose }: ClientPostMod
   const [isSavingDescription, setIsSavingDescription] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
-  
-  // Zamezit rolování stránky na pozadí
-  useEffect(() => {
-    // Prevent background scrolling
-    const originalStyle = window.getComputedStyle(document.body).overflow;
-    document.body.style.overflow = 'hidden';
-    
-    return () => {
-      document.body.style.overflow = originalStyle;
-    };
-  }, []);
 
   const commentsEndRef = useRef<HTMLDivElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  
-  useEffect(() => {
-    if (textareaRef.current && isEditingDescription) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
-  }, [editedDescription, isEditingDescription]);
-  
-  const scrollToBottom = () => {
-    commentsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   useEffect(() => {
     const q = query(collection(db, 'comments'), where('postId', '==', post.id));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const commentsData = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as Comment[];
-      
+      const commentsData = snapshot.docs.map((d) => ({ id: d.id, ...d.data() })) as Comment[];
       commentsData.sort((a, b) => a.createdAt - b.createdAt);
       setComments(commentsData);
-      
-      setTimeout(() => {
-        commentsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+      setTimeout(() => commentsEndRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
     }, (error) => {
       handleFirestoreError(error, OperationType.LIST, 'comments');
     });
-
     return () => unsubscribe();
   }, [post.id]);
 
@@ -81,22 +58,30 @@ export default function ClientPostModal({ post, client, onClose }: ClientPostMod
       await updateDoc(doc(db, 'posts', post.id), {
         status: newStatus,
         updatedAt: Date.now(),
-        ...(newStatus === 'needs_revision' && isClientAction ? { requiresAction: true } : {})
+        ...(newStatus === 'needs_revision' && isClientAction ? { requiresAction: true } : {}),
       });
 
+      if (isClientAction) {
+        // Approval writes activity too (it's news), but does not set requiresAction — it isn't a
+        // problem to solve. Only client-originated actions notify the owner; never self-notify.
+        await logActivity({
+          clientId: client.id,
+          clientName: client.name,
+          postId: post.id,
+          postTitle: post.title,
+          type: newStatus,
+          actor: 'client',
+        });
+      }
+
       if (newStatus === 'needs_revision' && isClientAction) {
-        sendNotificationEmail(
-          'daniel@innervisio.cz', // You can change this to a dynamic setting later
-          client?.name || 'Klient',
-          post.title,
-          'revision'
-        );
+        sendNotificationEmail(NOTIFICATION_EMAIL, client?.name || 'Klient', post.title, 'revision');
       }
 
       onClose();
     } catch (error) {
       handleFirestoreError(error, OperationType.UPDATE, `posts/${post.id}`);
-      alert("Nepodařilo se aktualizovat stav příspěvku.");
+      toast({ title: 'Nepodařilo se aktualizovat stav příspěvku.', variant: 'error' });
     }
   };
 
@@ -107,35 +92,36 @@ export default function ClientPostModal({ post, client, onClose }: ClientPostMod
     setIsSending(true);
     try {
       const authorType = currentUser ? 'admin' : 'client';
-      const authorName = currentUser ? 'Agency' : (client?.name || 'Client');
+      const authorName = currentUser ? 'Agency' : client?.name || 'Client';
 
       await addDoc(collection(db, 'comments'), {
         postId: post.id,
+        clientId: client.id,
         text: commentText.trim(),
         authorName,
         authorType,
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        resolvedAt: null,
       });
 
-      // Update post to mark as requiring action if client commented
       if (authorType === 'client') {
-        await updateDoc(doc(db, 'posts', post.id), {
-          requiresAction: true,
-          updatedAt: Date.now()
+        await updateDoc(doc(db, 'posts', post.id), { requiresAction: true, updatedAt: Date.now() });
+        await logActivity({
+          clientId: client.id,
+          clientName: client.name,
+          postId: post.id,
+          postTitle: post.title,
+          type: 'comment',
+          actor: 'client',
+          preview: commentText.trim().slice(0, 120),
         });
-
-        sendNotificationEmail(
-          'daniel@innervisio.cz', // You can change this to a dynamic setting later
-          client?.name || 'Klient',
-          post.title,
-          'comment'
-        );
+        sendNotificationEmail(NOTIFICATION_EMAIL, client?.name || 'Klient', post.title, 'comment');
       }
 
       setCommentText('');
     } catch (error) {
       handleFirestoreError(error, OperationType.CREATE, 'comments');
-      alert("Nepodařilo se odeslat komentář.");
+      toast({ title: 'Nepodařilo se odeslat komentář.', variant: 'error' });
     } finally {
       setIsSending(false);
     }
@@ -145,291 +131,230 @@ export default function ClientPostModal({ post, client, onClose }: ClientPostMod
     if (isSavingDescription) return;
     setIsSavingDescription(true);
     try {
-      await updateDoc(doc(db, 'posts', post.id), {
-        pendingDescription: editedDescription.trim(),
-        updatedAt: Date.now()
-      });
+      await updateDoc(doc(db, 'posts', post.id), { pendingDescription: editedDescription.trim(), updatedAt: Date.now() });
+      if (!currentUser) {
+        await logActivity({
+          clientId: client.id,
+          clientName: client.name,
+          postId: post.id,
+          postTitle: post.title,
+          type: 'description_proposed',
+          actor: 'client',
+        });
+      }
       setIsEditingDescription(false);
+      toast({ title: 'Návrh odeslán ke schválení', variant: 'success' });
     } catch (error) {
       handleFirestoreError(error, OperationType.UPDATE, `posts/${post.id}`);
-      alert("Nepodařilo se uložit změnu popisku.");
+      toast({ title: 'Nepodařilo se uložit změnu popisku.', variant: 'error' });
     } finally {
       setIsSavingDescription(false);
     }
   };
 
-  const statusConfig = {
-    client_review: {
-      label: 'Ke schválení',
-      color: 'bg-amber-100 text-amber-700 border-amber-200',
-      icon: <Clock className="w-3.5 h-3.5" />
-    },
-    approved: {
-      label: 'Schváleno',
-      color: 'bg-emerald-100 text-emerald-700 border-emerald-200',
-      icon: <CheckCircle2 className="w-3.5 h-3.5" />
-    },
-    needs_revision: {
-      label: 'Vyžaduje úpravu',
-      color: 'bg-rose-100 text-rose-700 border-rose-200',
-      icon: <AlertCircle className="w-3.5 h-3.5" />
-    },
-    draft: {
-      label: 'Koncept',
-      color: 'bg-slate-100 text-slate-700 border-slate-200',
-      icon: <Clock className="w-3.5 h-3.5" />
-    },
-    scheduled: {
-      label: 'Plánováno',
-      color: 'bg-indigo-100 text-indigo-700 border-indigo-200',
-      icon: <CalendarIcon className="w-3.5 h-3.5" />
-    },
-    published: {
-      label: 'Publikováno',
-      color: 'bg-emerald-600 text-white border-emerald-700',
-      icon: <CheckCircle2 className="w-3.5 h-3.5 text-white" />
-    }
-  };
-
-  const currentStatus = statusConfig[post.status] || statusConfig.client_review;
+  const meta = getPostMeta(post);
+  const mediaUrls = post.mediaUrls ?? [];
+  const isVideo = post.postType === 'video' || post.postType === 'reel';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
-        
-        {/* Header */}
-        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-          <div>
-            <h2 className="text-xl font-bold text-slate-900">{post.title}</h2>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-1.5">
-              <p className="text-sm text-slate-500 flex items-center gap-1.5">
-                <CalendarIcon className="w-3.5 h-3.5" />
-                {format(new Date(post.scheduledDate), "d. MMMM yyyy 'v' H:mm", { locale: cs })}
-              </p>
-              <a
-                href={getGoogleCalendarUrl(post, client?.name || 'Klient')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-slate-100 hover:bg-slate-200 hover:text-slate-700 px-2.5 py-1 rounded-md transition-colors"
-              >
-                <CalendarIcon className="w-3 h-3" />
-                Přidat do G. Kalendáře
-              </a>
-            </div>
-          </div>
-          <button 
-            onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
+    <Modal
+      open
+      onClose={onClose}
+      title={post.title}
+      size="md"
+      subtitle={
+        <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
+          <span className="flex items-center gap-1.5">
+            <CalendarIcon className="w-3.5 h-3.5" />
+            {format(new Date(post.scheduledDate), "d. MMMM yyyy 'v' H:mm", { locale: cs })}
+          </span>
+          <a
+            href={getGoogleCalendarUrl(post, client?.name || 'Klient')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-secondary bg-subtle hover:bg-hover px-2.5 py-1 rounded-md transition-colors w-fit"
           >
-            <X className="w-5 h-5" />
-          </button>
+            <CalendarIcon className="w-3 h-3" /> Přidat do G. Kalendáře
+          </a>
         </div>
-
-        {/* Body */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 sm:space-y-6 custom-scrollbar">
-          
-          {/* Media Preview */}
-          <div className="space-y-2">
-            <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">Náhled média</h3>
-            {post.mediaUrls && post.mediaUrls.length > 0 ? (
-              <div className="relative group">
-                <div className={`relative w-full ${post.postType === 'video' || post.postType === 'reel' ? 'h-[500px]' : 'h-[350px]'} sm:h-auto sm:aspect-video rounded-xl bg-slate-100 overflow-hidden border border-slate-200 shadow-inner`}>
-                  <iframe 
-                    key={currentMediaIndex}
-                    src={`${getEmbedUrl(post.mediaUrls[currentMediaIndex])}${getEmbedUrl(post.mediaUrls[currentMediaIndex]).includes('?') ? '&' : '?'}playsinline=1`} 
-                    className="border-0 absolute top-0 left-0 w-[200%] h-[200%] scale-50 origin-top-left sm:relative sm:w-full sm:h-full sm:scale-100 sm:origin-center"
-                    referrerPolicy="no-referrer"
-                    allowFullScreen
-                    allow="fullscreen"
-                  />
-                </div>
-                
-                {post.mediaUrls.length > 1 && (
-                  <>
-                    <button 
-                      onClick={(e) => { e.stopPropagation(); setCurrentMediaIndex(prev => prev > 0 ? prev - 1 : post.mediaUrls!.length - 1); }}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-white/80 text-slate-700 shadow-md backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white hover:scale-110"
-                    >
-                      <ChevronLeft className="w-5 h-5" />
-                    </button>
-                    <button 
-                      onClick={(e) => { e.stopPropagation(); setCurrentMediaIndex(prev => prev < post.mediaUrls!.length - 1 ? prev + 1 : 0); }}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-white/80 text-slate-700 shadow-md backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white hover:scale-110"
-                    >
-                      <ChevronRight className="w-5 h-5" />
-                    </button>
-                    
-                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-black/40 px-2.5 py-1.5 rounded-full backdrop-blur-sm">
-                      {post.mediaUrls.map((_, idx) => (
-                        <div 
-                          key={idx} 
-                          className={`w-1.5 h-1.5 rounded-full transition-all ${idx === currentMediaIndex ? 'bg-white scale-110' : 'bg-white/40'}`}
-                        />
-                      ))}
-                    </div>
-                  </>
-                )}
+      }
+      footer={
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Button variant="secondary" fullWidth icon={AlertCircle} onClick={() => handleUpdateStatus('needs_revision')}>
+            Vyžadovat úpravu
+          </Button>
+          <Button variant="primary" fullWidth icon={CheckCircle2} onClick={() => handleUpdateStatus('approved')}>
+            Schválit příspěvek
+          </Button>
+        </div>
+      }
+    >
+      <div className="space-y-5">
+        {/* Media */}
+        <div className="space-y-2">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-muted">Náhled média</h3>
+          {mediaUrls.length > 0 ? (
+            <div className="relative group">
+              <div className={`relative w-full ${isVideo ? 'h-[420px]' : 'h-[320px]'} sm:h-auto sm:aspect-video rounded-[var(--radius-field)] bg-subtle overflow-hidden border border-subtle-border`}>
+                <iframe
+                  key={currentMediaIndex}
+                  src={`${getEmbedUrl(mediaUrls[currentMediaIndex])}${getEmbedUrl(mediaUrls[currentMediaIndex]).includes('?') ? '&' : '?'}playsinline=1`}
+                  className="border-0 absolute top-0 left-0 w-[200%] h-[200%] scale-50 origin-top-left sm:relative sm:w-full sm:h-full sm:scale-100 sm:origin-center"
+                  referrerPolicy="no-referrer"
+                  allowFullScreen
+                  allow="fullscreen"
+                />
               </div>
-            ) : (
-              <div className="w-full aspect-video rounded-xl bg-slate-50 border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400">
-                <Clock className="w-10 h-10 mb-2 opacity-20" />
-                <p className="text-sm">Nebyl poskytnut odkaz na média</p>
-              </div>
-            )}
-          </div>
 
-          {/* Description */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">Popisek</h3>
-              {!isEditingDescription && (
-                <button 
-                  onClick={() => setIsEditingDescription(true)}
-                  className="p-1.5 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors flex items-center gap-1.5 text-xs font-bold"
-                >
-                  <Pencil className="w-3.5 h-3.5" />
-                  Upravit
-                </button>
+              {mediaUrls.length > 1 && (
+                <>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setCurrentMediaIndex((p) => (p > 0 ? p - 1 : mediaUrls.length - 1)); }}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-surface/90 text-secondary shadow-[var(--shadow-pop)] opacity-0 group-hover:opacity-100 transition-opacity hover:text-primary"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setCurrentMediaIndex((p) => (p < mediaUrls.length - 1 ? p + 1 : 0)); }}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-surface/90 text-secondary shadow-[var(--shadow-pop)] opacity-0 group-hover:opacity-100 transition-opacity hover:text-primary"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-black/40 px-2.5 py-1.5 rounded-full backdrop-blur-sm">
+                    {mediaUrls.map((_, idx) => (
+                      <div key={idx} className={`w-1.5 h-1.5 rounded-full transition-all ${idx === currentMediaIndex ? 'bg-white scale-110' : 'bg-white/40'}`} />
+                    ))}
+                  </div>
+                </>
               )}
             </div>
-            
-            {isEditingDescription ? (
-              <div className="space-y-3">
-                <textarea
-                  ref={textareaRef}
-                  value={editedDescription}
-                  onChange={(e) => setEditedDescription(e.target.value)}
-                  className="w-full min-h-[120px] p-4 bg-slate-50 border border-indigo-200 rounded-xl text-slate-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all resize-none overflow-hidden"
-                  placeholder="Zadejte nový popisek..."
-                />
-                <div className="flex justify-end gap-2">
-                  <button 
-                    onClick={() => {
-                      setIsEditingDescription(false);
-                      setEditedDescription(post.pendingDescription || post.description || '');
-                    }}
-                    className="px-4 py-2 text-xs font-bold text-slate-500 hover:bg-slate-100 rounded-lg transition-colors flex items-center gap-1.5"
-                  >
-                    <RotateCcw className="w-3.5 h-3.5" />
-                    Zrušit
-                  </button>
-                  <button 
-                    onClick={handleSaveDescription}
-                    disabled={isSavingDescription}
-                    className="px-4 py-2 text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 rounded-lg transition-all flex items-center gap-1.5 shadow-lg shadow-indigo-500/20"
-                  >
-                    {isSavingDescription ? <Clock className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
-                    Odeslat ke schválení
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="relative group">
-                <div className={`p-4 rounded-xl border leading-relaxed whitespace-pre-wrap ${
-                  post.pendingDescription 
-                    ? 'bg-amber-50 border-amber-200 text-amber-900' 
-                    : 'bg-slate-50 border-slate-100 text-slate-800'
-                }`}>
-                  {post.pendingDescription ? (
-                    <>
-                      <div className="flex items-center gap-2 mb-2 text-[10px] font-black uppercase tracking-widest text-amber-600">
-                        <Clock className="w-3 h-3" />
-                        Čeká na schválení administrátorem
-                      </div>
-                      {post.pendingDescription}
-                    </>
-                  ) : (
-                    post.description || <span className="text-slate-400 italic">Nebyl zadán žádný popisek.</span>
-                  )}
-                </div>
+          ) : (
+            <div className="w-full aspect-video rounded-[var(--radius-field)] bg-subtle border-2 border-dashed border-subtle-border flex flex-col items-center justify-center text-muted">
+              <Clock className="w-10 h-10 mb-2 opacity-40" />
+              <p className="text-sm">Nebyl poskytnut odkaz na média</p>
+            </div>
+          )}
+        </div>
+
+        {/* Description */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-muted">Popisek</h3>
+            {!isEditingDescription && (
+              <div className="flex items-center gap-3 shrink-0">
+                <CopyTextButton text={post.pendingDescription || post.description || ''} />
+                <button
+                  onClick={() => setIsEditingDescription(true)}
+                  className="text-xs font-bold text-secondary hover:text-primary flex items-center gap-1.5"
+                >
+                  <Pencil className="w-3.5 h-3.5" /> Upravit
+                </button>
               </div>
             )}
           </div>
 
-          {/* Status Badge */}
-          <div className="flex items-center gap-3">
-            <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">Aktuální stav:</h3>
-            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border ${currentStatus.color}`}>
-              {currentStatus.icon}
-              {currentStatus.label}
-            </span>
-          </div>
-
-          {/* Comments Section */}
-          <div className="pt-6 border-t border-slate-100 space-y-4">
-            <div className="flex items-center gap-2">
-              <MessageSquare className="w-4 h-4 text-slate-400" />
-              <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">Komentáře</h3>
-            </div>
-
-            {/* Comment Feed */}
-            <div className="bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
-              <div className="max-h-40 overflow-y-auto p-4 space-y-3 custom-scrollbar">
-                {comments.length > 0 ? (
-                  comments.map((comment) => (
-                    <div key={comment.id} className={`flex flex-col ${comment.authorType === 'admin' ? 'items-end' : 'items-start'}`}>
-                      <div className={`max-w-[85%] px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs sm:text-sm ${
-                        comment.authorType === 'admin' 
-                          ? 'bg-indigo-600 text-white rounded-tr-none' 
-                          : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none shadow-sm'
-                      }`}>
-                        <p className="font-bold text-[10px] uppercase tracking-wider opacity-70 mb-1">
-                          {comment.authorName === 'Agency' ? 'Agentura' : comment.authorName}
-                        </p>
-                        <p>{comment.text}</p>
-                      </div>
-                      <span className="text-[10px] text-slate-400 mt-1 px-1">
-                        {format(new Date(comment.createdAt), 'H:mm', { locale: cs })}
-                      </span>
-                    </div>
-                  ))
-                ) : (
-                  <div className="text-center py-4 text-slate-400 text-sm italic">
-                    Zatím žádné komentáře. Začněte konverzaci!
-                  </div>
-                )}
-                <div ref={commentsEndRef} />
-              </div>
-
-              {/* Input Area */}
-              <form onSubmit={handleSendComment} className="p-3 bg-white border-t border-slate-100 flex gap-2">
-                <input
-                  type="text"
-                  value={commentText}
-                  onChange={(e) => setCommentText(e.target.value)}
-                  placeholder="Napište zprávu..."
-                  className="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                />
-                <button
-                  type="submit"
-                  disabled={!commentText.trim() || isSending}
-                  className="p-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          {isEditingDescription ? (
+            <div className="space-y-3">
+              <Textarea
+                autoGrow
+                value={editedDescription}
+                onChange={(e) => setEditedDescription(e.target.value)}
+                placeholder="Zadejte nový popisek..."
+              />
+              <div className="flex justify-end gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  icon={RotateCcw}
+                  onClick={() => {
+                    setIsEditingDescription(false);
+                    setEditedDescription(post.pendingDescription || post.description || '');
+                  }}
                 >
-                  <Send className="w-4 h-4" />
-                </button>
-              </form>
+                  Zrušit
+                </Button>
+                <Button variant="primary" size="sm" loading={isSavingDescription} onClick={handleSaveDescription}>
+                  Odeslat ke schválení
+                </Button>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div
+              className="p-4 rounded-[var(--radius-field)] border leading-relaxed whitespace-pre-wrap text-sm"
+              style={
+                post.pendingDescription
+                  ? { background: 'var(--status-review-bg)', borderColor: 'var(--status-review-bg)', color: 'var(--status-review-fg)' }
+                  : { background: 'var(--bg-subtle)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }
+              }
+            >
+              {post.pendingDescription ? (
+                <>
+                  <div className="flex items-center gap-2 mb-2 text-[10px] font-black uppercase tracking-widest">
+                    <Clock className="w-3 h-3" /> Čeká na schválení administrátorem
+                  </div>
+                  {post.pendingDescription}
+                </>
+              ) : (
+                post.description || <span className="text-muted italic">Nebyl zadán žádný popisek.</span>
+              )}
+            </div>
+          )}
         </div>
 
-        {/* Footer Actions */}
-        <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row gap-3">
-          <button
-            onClick={() => handleUpdateStatus('needs_revision')}
-            className="flex-1 px-6 py-3 bg-white border border-rose-200 text-rose-600 hover:bg-rose-50 font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm"
-          >
-            <AlertCircle className="w-5 h-5" />
-            Vyžadovat úpravu
-          </button>
-          <button
-            onClick={() => handleUpdateStatus('approved')}
-            className="flex-1 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-200"
-          >
-            <CheckCircle2 className="w-5 h-5" />
-            Schválit příspěvek
-          </button>
+        {/* Status */}
+        <div className="flex items-center gap-3">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-muted">Aktuální stav:</h3>
+          <Badge label={meta.label} fg={meta.fg} bg={meta.bg} Icon={meta.Icon} />
+        </div>
+
+        {/* Comments */}
+        <div className="pt-4 border-t border-subtle-border space-y-3">
+          <div className="flex items-center gap-2">
+            <MessageSquare className="w-4 h-4 text-secondary" />
+            <h3 className="text-xs font-bold uppercase tracking-wider text-muted">Komentáře</h3>
+          </div>
+
+          <div className="bg-subtle rounded-[var(--radius-field)] border border-subtle-border overflow-hidden">
+            <div className="max-h-48 overflow-y-auto custom-scrollbar p-4 space-y-3">
+              {comments.length > 0 ? (
+                comments.map((comment) => (
+                  <div key={comment.id} className={`flex flex-col ${comment.authorType === 'admin' ? 'items-end' : 'items-start'}`}>
+                    <div className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-sm ${
+                      comment.authorType === 'admin'
+                        ? 'bg-accent text-accent-fg rounded-tr-none'
+                        : 'bg-surface text-primary border border-subtle-border rounded-tl-none'
+                    }`}>
+                      <p className="font-bold text-[10px] uppercase tracking-wider opacity-70 mb-1">
+                        {comment.authorName === 'Agency' ? 'Agentura' : comment.authorName}
+                      </p>
+                      <p>{comment.text}</p>
+                    </div>
+                    <span className="text-[10px] text-muted mt-1 px-1">
+                      {format(new Date(comment.createdAt), 'H:mm', { locale: cs })}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-4 text-muted text-sm italic">
+                  Zatím žádné komentáře. Začněte konverzaci!
+                </div>
+              )}
+              <div ref={commentsEndRef} />
+            </div>
+
+            <form onSubmit={handleSendComment} className="p-3 bg-surface border-t border-subtle-border flex gap-2">
+              <input
+                type="text"
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+                placeholder="Napište zprávu..."
+                className="flex-1 h-10 px-3 bg-subtle border border-subtle-border rounded-[var(--radius-field)] text-base sm:text-sm text-primary placeholder:text-muted focus:bg-surface focus:border-strong-border focus:ring-2 focus:ring-[var(--accent)]/15 outline-none transition"
+              />
+              <IconButton icon={Send} label="Odeslat komentář" size="sm" type="submit" disabled={!commentText.trim() || isSending} />
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }

@@ -31,10 +31,12 @@ export interface Post {
 export interface Comment {
   id: string;
   postId: string;
+  clientId: string;        // may be missing on older documents — fall back through postId
   text: string;
   authorName: string;
   authorType: 'admin' | 'client';
   createdAt: number;
+  resolvedAt?: number | null;   // null/absent = unresolved
 }
 
 export interface CustomEvent {
@@ -50,4 +52,17 @@ export interface AnalyticsReport {
   title: string;
   pdfUrl: string;
   createdAt: number;
+}
+
+export interface Activity {
+  id: string;
+  clientId: string;
+  clientName: string;      // denormalized so the feed renders without a join
+  postId: string;
+  postTitle: string;       // denormalized — survives post deletion
+  type: 'comment' | 'approved' | 'needs_revision' | 'description_proposed' | 'sent_to_client';
+  actor: 'client' | 'agency';
+  preview?: string;        // first ~120 chars of a comment, for 'comment' type
+  createdAt: number;
+  readAt?: number | null;  // null/absent = unread
 }
