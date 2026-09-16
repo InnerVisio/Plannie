@@ -163,20 +163,22 @@ export default function ClientPostModal({ post, client, onClose }: ClientPostMod
       title={post.title}
       size="md"
       subtitle={
-        <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
-          <span className="flex items-center gap-1.5">
-            <CalendarIcon className="w-3.5 h-3.5" />
-            {format(new Date(post.scheduledDate), "d. MMMM yyyy 'v' H:mm", { locale: cs })}
-          </span>
-          <a
-            href={getGoogleCalendarUrl(post, client?.name || 'Klient')}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-secondary bg-subtle hover:bg-hover px-2.5 py-1 rounded-md transition-colors w-fit"
-          >
-            <CalendarIcon className="w-3 h-3" /> Přidat do G. Kalendáře
-          </a>
-        </div>
+        <span className="flex items-center gap-1.5">
+          <CalendarIcon className="w-3.5 h-3.5" />
+          {format(new Date(post.scheduledDate), "d. MMMM yyyy 'v' H:mm", { locale: cs })}
+        </span>
+      }
+      headerActions={
+        <a
+          href={getGoogleCalendarUrl(post, client?.name || 'Klient')}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Přidat do Google Kalendáře"
+          aria-label="Přidat do Google Kalendáře"
+          className="w-10 h-10 rounded-full inline-flex items-center justify-center text-secondary hover:bg-hover hover:text-primary transition-colors shrink-0"
+        >
+          <CalendarIcon className="w-[18px] h-[18px]" />
+        </a>
       }
       footer={
         <div className="flex flex-col sm:flex-row gap-3">

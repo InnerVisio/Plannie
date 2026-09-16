@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Users, CalendarRange, MoreHorizontal, BarChart3, Settings, LogOut } from 'lucide-react';
+import {
+  LayoutDashboard, Users, CalendarRange, MoreHorizontal, BarChart3, Settings, LogOut,
+  MessageSquare, LayoutList, Bell,
+} from 'lucide-react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useAgencyData } from '../../hooks/useAgencyData';
+import { useComments } from '../../hooks/useComments';
 import { cn } from '../../lib/cn';
 import Modal from '../ui/Modal';
 import { ThemeToggleTabs } from './ThemeToggle';
@@ -17,7 +21,16 @@ const TABS = [
 export default function MobileTabBar() {
   const [moreOpen, setMoreOpen] = useState(false);
   const { counts } = useAgencyData();
+  const { totalUnresolved } = useComments();
   const navigate = useNavigate();
+
+  const moreLinks = [
+    { to: '/komentare', label: 'Komentáře', icon: MessageSquare, badge: totalUnresolved },
+    { to: '/obsah', label: 'Obsah', icon: LayoutList },
+    { to: '/aktivita', label: 'Aktivita', icon: Bell },
+    { to: '/analytika', label: 'Analytika', icon: BarChart3 },
+    { to: '/nastaveni', label: 'Nastavení', icon: Settings },
+  ];
 
   return (
     <>
@@ -66,24 +79,26 @@ export default function MobileTabBar() {
 
       <Modal open={moreOpen} onClose={() => setMoreOpen(false)} title="Více" size="sm">
         <div className="space-y-4">
-          <button
-            onClick={() => { setMoreOpen(false); navigate('/analytika'); }}
-            className="w-full flex items-center gap-3 h-12 px-3 rounded-[var(--radius-field)] hover:bg-hover transition-colors text-left"
-          >
-            <span className="w-9 h-9 rounded-full bg-subtle flex items-center justify-center shrink-0 text-secondary">
-              <BarChart3 className="w-4 h-4" />
-            </span>
-            <span className="font-semibold text-primary text-sm">Analytika</span>
-          </button>
-          <button
-            onClick={() => { setMoreOpen(false); navigate('/nastaveni'); }}
-            className="w-full flex items-center gap-3 h-12 px-3 rounded-[var(--radius-field)] hover:bg-hover transition-colors text-left"
-          >
-            <span className="w-9 h-9 rounded-full bg-subtle flex items-center justify-center shrink-0 text-secondary">
-              <Settings className="w-4 h-4" />
-            </span>
-            <span className="font-semibold text-primary text-sm">Nastavení</span>
-          </button>
+          {moreLinks.map((link) => (
+            <button
+              key={link.to}
+              onClick={() => { setMoreOpen(false); navigate(link.to); }}
+              className="w-full flex items-center gap-3 h-12 px-3 rounded-[var(--radius-field)] hover:bg-hover transition-colors text-left"
+            >
+              <span className="w-9 h-9 rounded-full bg-subtle flex items-center justify-center shrink-0 text-secondary">
+                <link.icon className="w-4 h-4" />
+              </span>
+              <span className="font-semibold text-primary text-sm flex-1">{link.label}</span>
+              {link.badge ? (
+                <span
+                  className="min-w-5 h-5 px-1.5 rounded-full text-[11px] font-bold grid place-items-center shrink-0"
+                  style={{ background: 'var(--status-revision-bg)', color: 'var(--status-revision-fg)' }}
+                >
+                  {link.badge > 9 ? '9+' : link.badge}
+                </span>
+              ) : null}
+            </button>
+          ))}
           <button
             onClick={() => signOut(auth)}
             className="w-full flex items-center gap-3 h-12 px-3 rounded-[var(--radius-field)] hover:bg-hover transition-colors text-left"

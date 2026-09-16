@@ -20,7 +20,12 @@ export default function Tabs({ value, onChange, items, size = 'md', className }:
   return (
     <div
       role="tablist"
-      className={cn('inline-flex bg-subtle rounded-full p-1 gap-0.5', className)}
+      className={cn(
+        // max-w-full + overflow-x-auto keeps long tab sets (e.g. "Čeká na klienta (28)")
+        // inside the viewport on narrow screens instead of bleeding past the edge.
+        'inline-flex max-w-full overflow-x-auto no-scrollbar bg-subtle rounded-full p-1 gap-0.5',
+        className
+      )}
     >
       {items.map((item) => {
         const active = item.value === value;
@@ -32,7 +37,7 @@ export default function Tabs({ value, onChange, items, size = 'md', className }:
             aria-selected={active}
             onClick={() => onChange(item.value)}
             className={cn(
-              'flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 rounded-full font-semibold transition-colors',
+              'shrink-0 inline-flex items-center justify-center gap-1.5 rounded-full font-semibold transition-colors whitespace-nowrap',
               size === 'sm' ? 'h-8 px-3 text-xs' : 'h-9 px-4 text-sm',
               active ? 'bg-surface text-primary shadow-[var(--shadow-card)]' : 'text-secondary hover:text-primary'
             )}

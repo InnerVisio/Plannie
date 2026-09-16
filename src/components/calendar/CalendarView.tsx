@@ -2,12 +2,12 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   format, addMonths, subMonths, addWeeks, subWeeks, addDays, subDays, startOfToday,
-  startOfMonth, endOfMonth, startOfWeek, endOfWeek, isSameMonth, isSameDay, eachDayOfInterval,
+  startOfMonth, endOfMonth, startOfWeek, endOfWeek, startOfDay, endOfDay,
+  isSameMonth, isSameDay, eachDayOfInterval,
 } from 'date-fns';
 import { cs } from 'date-fns/locale';
 import {
-  ChevronLeft, ChevronRight, ExternalLink, Plus, FileText,
-  Calendar as CalendarIcon, List as ListIcon, CalendarDays,
+  ChevronLeft, ChevronRight, ExternalLink, Plus, FileText, CalendarDays,
 } from 'lucide-react';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
@@ -20,7 +20,7 @@ import { getPostMeta, isOverdue } from '../../lib/status';
 import { getBrandColor } from '../../lib/brand';
 import { filterForClient } from '../../lib/visibility';
 import {
-  DAY_START_HOUR, DAY_END_HOUR, HOUR_HEIGHT, HOUR_HEIGHT_SM,
+  DAY_START_HOUR, DAY_END_HOUR, HOUR_HEIGHT, HOUR_HEIGHT_SM, GUTTER_WIDTH,
   totalGridHeight, topPx, layoutDayPosts,
 } from '../../lib/calendar-layout';
 import { Card, Button, IconButton, Tabs, Avatar, EmptyState } from '../ui';
@@ -34,6 +34,8 @@ import AddEventModal from '../AddEventModal';
 import ClientAnalyticsModal from '../ClientAnalyticsModal';
 
 const WEEKDAYS = ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'];
+
+export type ViewMode = 'day' | 'day3' | 'week' | 'month' | 'list';
 
 interface CalendarViewProps {
   client: Client;
@@ -59,7 +61,11 @@ export default function CalendarView({ client, posts: allPosts, isAdmin, unresol
     return () => clearInterval(id);
   }, []);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [viewMode, setViewMode] = useState<'week' | 'month' | 'list'>('week');
+  // Default to the day view on phones (Google-Calendar-style), week everywhere else. Read once
+  // on mount — a device rotation afterwards must not silently change the user's chosen mode.
+  const [viewMode, setViewMode] = useState<ViewMode>(() =>
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 639px)').matches ? 'day' : 'week'
+  );
   const [mobileDay, setMobileDay] = useState(new Date());
 
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
@@ -89,17 +95,57 @@ export default function CalendarView({ client, posts: allPosts, isAdmin, unresol
   const monthEnd = endOfMonth(monthStart);
   let rangeStart: Date;
   let rangeEnd: Date;
-  if (viewMode === 'week') {
-    rangeStart = startOfWeek(currentDate, { weekStartsOn: 1 });
-    rangeEnd = endOfWeek(currentDate, { weekStartsOn: 1 });
-  } else {
-    rangeStart = startOfWeek(monthStart, { weekStartsOn: 1 });
-    rangeEnd = endOfWeek(monthEnd, { weekStartsOn: 1 });
+  switch (viewMode) {
+    case 'day':
+      rangeStart = startOfDay(currentDate);
+      rangeEnd = endOfDay(currentDate);
+      break;
+    case 'day3':
+      // Starts at currentDate itself, not a week boundary — "the next three days from here",
+      // matching Google Calendar's 3-day view.
+      rangeStart = startOfDay(currentDate);
+      rangeEnd = endOfDay(addDays(currentDate, 2));
+      break;
+    case 'week':
+      rangeStart = startOfWeek(currentDate, { weekStartsOn: 1 });
+      rangeEnd = endOfWeek(currentDate, { weekStartsOn: 1 });
+      break;
+    default:
+      rangeStart = startOfWeek(monthStart, { weekStartsOn: 1 });
+      rangeEnd = endOfWeek(monthEnd, { weekStartsOn: 1 });
   }
   const calendarDays = eachDayOfInterval({ start: rangeStart, end: rangeEnd });
 
-  const nextPeriod = () => setCurrentDate(viewMode === 'week' ? addWeeks(currentDate, 1) : addMonths(currentDate, 1));
-  const prevPeriod = () => setCurrentDate(viewMode === 'week' ? subWeeks(currentDate, 1) : subMonths(currentDate, 1));
+  const nextPeriod = () => {
+    if (viewMode === 'day') setCurrentDate(addDays(currentDate, 1));
+    else if (viewMode === 'day3') setCurrentDate(addDays(currentDate, 3));
+    else if (viewMode === 'week') setCurrentDate(addWeeks(currentDate, 1));
+    else setCurrentDate(addMonths(currentDate, 1));
+  };
+  const prevPeriod = () => {
+    if (viewMode === 'day') setCurrentDate(subDays(currentDate, 1));
+    else if (viewMode === 'day3') setCurrentDate(subDays(currentDate, 3));
+    else if (viewMode === 'week') setCurrentDate(subWeeks(currentDate, 1));
+    else setCurrentDate(subMonths(currentDate, 1));
+  };
+
+  const headerTitle = useMemo(() => {
+    switch (viewMode) {
+      case 'list':
+        return 'Všechny příspěvky';
+      case 'day':
+        return format(currentDate, 'EEEE d. MMMM', { locale: cs });
+      case 'day3':
+        return isSameMonth(rangeStart, rangeEnd)
+          ? `${format(rangeStart, 'd.')}–${format(rangeEnd, 'd. MMMM', { locale: cs })}`
+          : `${format(rangeStart, 'd. MMMM', { locale: cs })}–${format(rangeEnd, 'd. MMMM', { locale: cs })}`;
+      case 'week':
+        return `${format(rangeStart, 'd. L.', { locale: cs })}–${format(rangeEnd, 'd. L. yyyy', { locale: cs })}`;
+      default:
+        return format(currentDate, 'LLLL yyyy', { locale: cs });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [viewMode, currentDate, rangeStart, rangeEnd]);
 
   const getPostsForDay = (day: Date) => posts.filter((post) => isSameDay(new Date(post.scheduledDate), day));
 
@@ -170,7 +216,7 @@ export default function CalendarView({ client, posts: allPosts, isAdmin, unresol
             <div className="flex flex-col gap-3 px-4 sm:px-6 py-4 border-b border-subtle-border">
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-3 min-w-0">
-                  {(viewMode === 'week' || viewMode === 'month') && (
+                  {viewMode !== 'list' && (
                     <div className="flex items-center bg-subtle rounded-full p-1 shrink-0">
                       <IconButton icon={ChevronLeft} label="Předchozí" size="sm" variant="ghost" onClick={prevPeriod} />
                       <button
@@ -183,11 +229,7 @@ export default function CalendarView({ client, posts: allPosts, isAdmin, unresol
                     </div>
                   )}
                   <h2 className="text-base sm:text-lg font-bold text-primary tracking-tight capitalize truncate">
-                    {viewMode === 'list'
-                      ? 'Všechny příspěvky'
-                      : viewMode === 'week'
-                      ? `${format(rangeStart, 'd. L.', { locale: cs })}–${format(rangeEnd, 'd. L. yyyy', { locale: cs })}`
-                      : format(currentDate, 'LLLL yyyy', { locale: cs })}
+                    {headerTitle}
                   </h2>
                 </div>
                 {isAdmin && (
@@ -204,11 +246,13 @@ export default function CalendarView({ client, posts: allPosts, isAdmin, unresol
 
               <Tabs
                 value={viewMode}
-                onChange={(v) => setViewMode(v as 'week' | 'month' | 'list')}
+                onChange={(v) => setViewMode(v as ViewMode)}
                 items={[
-                  { value: 'week', label: 'Týden', icon: CalendarIcon },
-                  { value: 'month', label: 'Měsíc', icon: CalendarIcon },
-                  { value: 'list', label: 'Seznam', icon: ListIcon },
+                  { value: 'day', label: 'Den' },
+                  { value: 'day3', label: '3 dny' },
+                  { value: 'week', label: 'Týden' },
+                  { value: 'month', label: 'Měsíc' },
+                  { value: 'list', label: 'Seznam' },
                 ]}
                 className="w-full sm:w-auto sm:self-end"
               />
@@ -230,9 +274,10 @@ export default function CalendarView({ client, posts: allPosts, isAdmin, unresol
               />
             )}
 
-            {viewMode === 'week' && (
+            {(viewMode === 'day' || viewMode === 'day3' || viewMode === 'week') && (
               <WeekView
                 days={calendarDays}
+                dayCount={calendarDays.length}
                 posts={posts}
                 isAdmin={isAdmin}
                 unresolvedByPost={unresolvedByPost}
@@ -786,6 +831,7 @@ const WeekBlock = React.memo(function WeekBlock({
 
 function WeekView({
   days,
+  dayCount,
   posts,
   isAdmin,
   unresolvedByPost,
@@ -796,6 +842,9 @@ function WeekView({
   onDropPost,
 }: {
   days: Date[];
+  /** Same as days.length — passed explicitly so the grid's column count is an obvious prop,
+   * not something callers have to infer from an array. */
+  dayCount: number;
   posts: Post[];
   isAdmin: boolean;
   unresolvedByPost?: Record<string, number>;
@@ -878,22 +927,31 @@ function WeekView({
   const dayPostsForMobile = getPostsForDay(mobileDay);
   const mobileEvents = getEventsForDay(mobileDay);
 
+  // Tailwind can't generate an arbitrary grid-cols-N class from a runtime value, so the column
+  // count is always driven by an inline style.
+  const gridTemplateColumns = `${GUTTER_WIDTH}px repeat(${dayCount}, minmax(0, 1fr))`;
+  // With 1–3 columns there's plenty of room for the full weekday name; 7 columns stays compact.
+  const dayHeaderLabel = (day: Date) =>
+    dayCount <= 3
+      ? capitalize(format(day, 'EEEE d. M.', { locale: cs }))
+      : WEEKDAYS[(day.getDay() + 6) % 7];
+
   return (
     <>
-      {/* Desktop 7-column time grid */}
+      {/* Desktop time grid */}
       <div className="hidden sm:block">
         {/* Sticky day header + all-day chip row, stacked in one sticky block so there's no
             manual offset math between them — a transparent sticky header would let blocks
             scroll through it, so this whole block gets a solid background. */}
         <div className="sticky top-0 z-20 bg-surface">
-          <div className="grid grid-cols-[56px_repeat(7,minmax(0,1fr))] border-b border-subtle-border">
+          <div className="grid border-b border-subtle-border" style={{ gridTemplateColumns }}>
             <div className="border-r border-subtle-border" />
             {days.map((day) => (
               <div
                 key={day.toString()}
                 className="py-2.5 flex flex-col items-center justify-center text-[11px] font-bold uppercase tracking-wider text-muted"
               >
-                <span>{WEEKDAYS[(day.getDay() + 6) % 7]}</span>
+                <span>{dayHeaderLabel(day)}</span>
                 <span
                   className={`text-sm mt-0.5 w-7 h-7 flex items-center justify-center rounded-full ${
                     isSameDay(day, new Date()) ? 'bg-accent text-accent-fg' : 'text-primary'
@@ -905,7 +963,7 @@ function WeekView({
             ))}
           </div>
 
-          <div className="grid grid-cols-[56px_repeat(7,minmax(0,1fr))]">
+          <div className="grid" style={{ gridTemplateColumns }}>
             <div className="border-r border-subtle-border" />
             {days.map((day) => (
               <div key={day.toString()} className="border-b border-subtle-border">
@@ -916,7 +974,7 @@ function WeekView({
         </div>
 
         <div ref={scrollRef} className="overflow-y-auto custom-scrollbar max-h-[70vh] relative">
-          <div className="grid grid-cols-[56px_repeat(7,minmax(0,1fr))]">
+          <div className="grid" style={{ gridTemplateColumns }}>
             <div className="relative" style={{ height: totalGridHeight(HOUR_HEIGHT) }}>
               {hours.map((hour) => (
                 <div
@@ -947,7 +1005,7 @@ function WeekView({
             ))}
           </div>
           {weekHasToday && (
-            <div className="absolute inset-0 pointer-events-none grid grid-cols-[56px_repeat(7,minmax(0,1fr))]">
+            <div className="absolute inset-0 pointer-events-none grid" style={{ gridTemplateColumns }}>
               <div />
               {days.map((day) => (
                 <div key={day.toString()} className="relative">
@@ -959,7 +1017,23 @@ function WeekView({
         </div>
       </div>
 
-      {/* Mobile: single-day time grid */}
+      {/* Mobile: real time grid for Den/3 dny (1–3 columns fit fine); single-day agenda fallback for Týden (7 columns don't). */}
+      {dayCount <= 3 ? (
+        <MobileTimeGrid
+          days={days}
+          dayCount={dayCount}
+          gridTemplateColumns={gridTemplateColumns}
+          dayHeaderLabel={dayHeaderLabel}
+          getPostsForDay={getPostsForDay}
+          getEventsForDay={getEventsForDay}
+          isAdmin={isAdmin}
+          now={now}
+          unresolvedByPost={unresolvedByPost}
+          onOpenAddPost={onOpenAddPost}
+          onPostClick={onPostClick}
+          onDropPost={onDropPost}
+        />
+      ) : (
       <div className="sm:hidden">
         <div className="grid grid-cols-7 gap-1 p-3 border-b border-subtle-border">
           {days.map((day) => {
@@ -1045,6 +1119,137 @@ function WeekView({
           )}
         </div>
       </div>
+      )}
     </>
+  );
+}
+
+/** capitalize the first letter — date-fns doesn't uppercase the leading weekday/month for us,
+ * and Czech format strings (e.g. "EEEE d. M.") start lowercase. */
+const capitalize = (s: string) => (s.length > 0 ? s[0].toUpperCase() + s.slice(1) : s);
+
+/** Real 1–3 column time grid for the mobile Den/3 dny modes — the single-day agenda fallback
+ * (rendered instead for Týden, where 7 columns don't fit at 375px) is a different, older path
+ * kept unchanged below. This mirrors the desktop grid's structure but at HOUR_HEIGHT_SM. */
+function MobileTimeGrid({
+  days,
+  dayCount,
+  gridTemplateColumns,
+  dayHeaderLabel,
+  getPostsForDay,
+  getEventsForDay,
+  isAdmin,
+  now,
+  unresolvedByPost,
+  onOpenAddPost,
+  onPostClick,
+  onDropPost,
+}: {
+  days: Date[];
+  dayCount: number;
+  gridTemplateColumns: string;
+  dayHeaderLabel: (day: Date) => string;
+  getPostsForDay: (day: Date) => Post[];
+  getEventsForDay: (day: Date) => Post[];
+  isAdmin: boolean;
+  now: number;
+  unresolvedByPost?: Record<string, number>;
+  onOpenAddPost: (date: Date) => void;
+  onPostClick: (post: Post) => void;
+  onDropPost: (postId: string, newDate: Date) => void;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const hours = Array.from({ length: DAY_END_HOUR - DAY_START_HOUR }, (_, i) => i + DAY_START_HOUR);
+  const rangeHasToday = days.some((d) => isSameDay(d, new Date(now)));
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const nowDate = new Date(now);
+    const targetHour =
+      rangeHasToday && nowDate.getHours() >= DAY_START_HOUR ? Math.max(nowDate.getHours() - 1, DAY_START_HOUR) : 8;
+    el.scrollTop = (targetHour - DAY_START_HOUR) * HOUR_HEIGHT_SM;
+    // Only on mount — one-time scroll position, not reactive.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div className="sm:hidden">
+      <div className="sticky top-0 z-20 bg-surface">
+        <div className="grid border-b border-subtle-border" style={{ gridTemplateColumns }}>
+          <div className="border-r border-subtle-border" />
+          {days.map((day) => (
+            <div
+              key={day.toString()}
+              className="py-2 flex flex-col items-center justify-center text-[10px] font-bold uppercase tracking-wider text-muted"
+            >
+              <span className="truncate px-0.5">{dayHeaderLabel(day)}</span>
+              {dayCount > 1 && (
+                <span
+                  className={`text-sm mt-0.5 w-6 h-6 flex items-center justify-center rounded-full ${
+                    isSameDay(day, new Date()) ? 'bg-accent text-accent-fg' : 'text-primary'
+                  }`}
+                >
+                  {format(day, 'd')}
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="grid" style={{ gridTemplateColumns }}>
+          <div className="border-r border-subtle-border" />
+          {days.map((day) => (
+            <div key={day.toString()} className="border-b border-subtle-border">
+              <AllDayChipRow events={getEventsForDay(day)} onEventClick={onPostClick} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div ref={scrollRef} className="overflow-y-auto custom-scrollbar max-h-[65vh] relative">
+        <div className="grid" style={{ gridTemplateColumns }}>
+          <div className="relative" style={{ height: totalGridHeight(HOUR_HEIGHT_SM) }}>
+            {hours.map((hour) => (
+              <div
+                key={hour}
+                className="absolute right-1.5 text-[10px] font-bold text-muted -translate-y-1/2"
+                style={{ top: (hour - DAY_START_HOUR) * HOUR_HEIGHT_SM }}
+              >
+                {hour}:00
+              </div>
+            ))}
+          </div>
+          {days.map((day) => (
+            <div key={day.toString()} data-daycol={day.toDateString()}>
+              <DayColumn
+                day={day}
+                posts={getPostsForDay(day)}
+                hourHeight={HOUR_HEIGHT_SM}
+                isAdmin={isAdmin}
+                now={now}
+                unresolvedByPost={unresolvedByPost}
+                allowDragCreate={false}
+                onOpenAddPost={onOpenAddPost}
+                onPostClick={onPostClick}
+                onDropPost={onDropPost}
+                dragCreate={null}
+                setDragCreate={() => {}}
+              />
+            </div>
+          ))}
+        </div>
+        {rangeHasToday && (
+          <div className="absolute inset-0 pointer-events-none grid" style={{ gridTemplateColumns }}>
+            <div />
+            {days.map((day) => (
+              <div key={day.toString()} className="relative">
+                {isSameDay(day, new Date(now)) && <NowLine hourHeight={HOUR_HEIGHT_SM} now={now} />}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

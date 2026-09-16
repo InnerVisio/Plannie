@@ -256,23 +256,32 @@ export default function PostModal({ post, client, onClose }: PostModalProps) {
       title={post.title}
       size="md"
       subtitle={
-        <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
           <span>Naplánováno na {format(new Date(post.scheduledDate), "d. MMMM yyyy 'v' H:mm", { locale: cs })}</span>
-          <a
-            href={getGoogleCalendarUrl(post, client?.name || 'Klient')}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-secondary bg-subtle hover:bg-hover px-2.5 py-1 rounded-md transition-colors w-fit"
-          >
-            <Calendar className="w-3 h-3" />
-            Přidat do G. Kalendáře
-          </a>
+          {currentUser && (
+            <button
+              onClick={() => setIsMoving(true)}
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-secondary bg-subtle hover:bg-hover px-2.5 py-1 rounded-md transition-colors w-fit"
+            >
+              <CalendarClock className="w-3 h-3" />
+              Přesunout
+            </button>
+          )}
         </div>
       }
       headerActions={
         currentUser ? (
           <>
-            <IconButton icon={CalendarClock} label="Přesunout" variant="ghost" onClick={() => setIsMoving(true)} />
+            <a
+              href={getGoogleCalendarUrl(post, client?.name || 'Klient')}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Přidat do Google Kalendáře"
+              aria-label="Přidat do Google Kalendáře"
+              className="w-10 h-10 rounded-full inline-flex items-center justify-center text-secondary hover:bg-hover hover:text-primary transition-colors shrink-0"
+            >
+              <Calendar className="w-[18px] h-[18px]" />
+            </a>
             <IconButton icon={Copy} label="Duplikovat příspěvek" variant="ghost" onClick={() => setIsDuplicating(true)} />
             <IconButton icon={Pencil} label="Upravit příspěvek" variant="ghost" onClick={() => setIsEditing(true)} />
             <IconButton icon={Trash2} label="Smazat příspěvek" variant="danger" onClick={handleDelete} disabled={isDeleting} />
